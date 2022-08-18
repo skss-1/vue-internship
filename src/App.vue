@@ -75,12 +75,11 @@
       </form>
     </Form>
     <ul class="task-list">
-      <Task>
-        <li 
-          class="list-item"
-          v-for="item in list" 
-          :key="item.id"
-          slot="task-slot"
+      <Task 
+      v-for="item in list" 
+      :key="item.id"
+      >
+        <div slot="task-slot"
         >
         <div class="wrapper">
           <input 
@@ -104,7 +103,7 @@
             v-for="(value, key) of item.description" :key="key + value"
             >{{key}}: {{value}}</li>
           </ul>
-        </li>
+        </div>
       </Task>
     </ul>
   </div>
@@ -126,12 +125,12 @@ export default {
   data() {
     return {
         list: [
-            {title: "bread", done: false, description: {description:"losadddddddddssasssa"}, showDescription: false, id: uuidv4()},
-            {title: "butter", done: false, description: {description:"losadddddddddssasssa"}, showDescription: false, id: uuidv4()},
-            {title: "milk", done: false, description: {description:"losadddddddddssasssa"}, showDescription: false, id: uuidv4()},
-            {title: "shrimps", done: false, description: {description:"losadddddddddssasssa"}, showDescription: false, id: uuidv4()},
-            {title: "potato", done: false, description: {description:"losadddddddddssasssa"}, showDescription: false, id: uuidv4()},
-            {title: "water", done: false, description: {description:"losadddddddddssasssa"}, showDescription: false, id: uuidv4()},
+            {title: "bread", done: false, description: {description:"data"}, showDescription: false, id: uuidv4()},
+            {title: "butter", done: false, description: {description:"data"}, showDescription: false, id: uuidv4()},
+            {title: "milk", done: false, description: {description:"data"}, showDescription: false, id: uuidv4()},
+            {title: "shrimps", done: false, description: {description:"data"}, showDescription: false, id: uuidv4()},
+            {title: "potato", done: false, description: {description:"data"}, showDescription: false, id: uuidv4()},
+            {title: "water", done: false, description: {description:"data"}, showDescription: false, id: uuidv4()},
         ],
         task: '',
         description: {},

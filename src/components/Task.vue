@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <li class="list-item">
         <slot name="task-slot"></slot>
-    </div>
+    </li>
 </template>
 
 <script>
