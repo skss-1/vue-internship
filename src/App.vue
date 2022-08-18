@@ -1,8 +1,112 @@
 <template>
   <div id="app">
-    <h1 v-bind:class="classObject">Task list</h1>
-    <Form v-on:add-task = "addTask"/>
-    <TaskList v-bind:list = 'list' v-on:remove-task = "removeTask"/>
+    <h1 :class="classObject">Task list</h1>
+    <Form>
+      <form 
+        class="task-form" 
+        @submit.prevent="addTask"
+        slot="form-slot"
+      >
+        <div class="wrapper">
+          <input 
+            type="text" 
+            placeholder="Task" 
+            v-model="task"
+          >
+          <button type="submit">ADD</button>
+        </div>
+        <textarea 
+          maxlength="150"
+          placeholder="Description for task" 
+          v-model="description.description"
+        ></textarea>
+        <button 
+          class="optional-button"
+          type="button"
+          @click="optional = !optional"
+        >OPTIONAL</button>
+          <div 
+            class="optional-form" 
+            v-if="optional"
+            >
+            <div class="quality-option">
+              <label>
+                <input 
+                type="radio" 
+                name="quality" 
+                value="low"
+                v-model="description.quality"
+                >Low quality
+              </label>
+              <label>
+                <input 
+                type="radio" 
+                name="quality" 
+                value="best"
+                v-model="description.quality"
+                >Best quality
+              </label>
+            </div>
+            <div class="sale-option">
+              <label>
+                <input 
+                type="checkbox" 
+                value="on-sale"
+                v-model="description.onSale"
+                >ON SALE
+              </label>
+            </div>
+            <div class="date-option" >
+              <label>
+                Exp. date
+                <input 
+                type="date"
+                v-model="description.expDate"
+                >
+              </label>
+            </div>
+            <div class="comment-option" >
+              <label>
+                Comment
+                <textarea v-model="description.comment"></textarea>
+              </label>
+            </div>
+          </div>
+      </form>
+    </Form>
+    <ul class="task-list">
+      <Task>
+        <li 
+          class="list-item"
+          v-for="item in list" 
+          :key="item.id"
+          slot="task-slot"
+        >
+        <div class="wrapper">
+          <input 
+            type="checkbox" 
+            @change="item.done = !item.done">
+          <p 
+            class="task-title"
+            :class="{completed:item.done}"
+            @click="item.showDescription = !item.showDescription"
+          >{{item.title}}</p>
+          <button 
+            type="button" 
+            @click="removeTask(item.id)"
+          >X</button>
+        </div>
+          <ul 
+          class="task-description" 
+          v-if="item.showDescription"
+          >
+            <li 
+            v-for="(value, key) of item.description" :key="key + value"
+            >{{key}}: {{value}}</li>
+          </ul>
+        </li>
+      </Task>
+    </ul>
   </div>
 </template>
 
@@ -10,30 +114,28 @@
 
 import {v4 as uuidv4} from 'uuid';
 import Form from './components/Form.vue'
-import TaskList from './components/TaskList.vue'
+import Task from './components/Task.vue'
 
 
 export default {
   name: 'App',
   components: {
     Form,
-    TaskList
+    Task
   },
   data() {
     return {
         list: [
-            {title: "bread", done: false, id: uuidv4()},
-            {title: "butter", done: false, id: uuidv4()},
-            {title: "milk", done: false, id: uuidv4()},
-            {title: "shrimps", done: false, id: uuidv4()},
-            {title: "potato", done: false, id: uuidv4()},
-            {title: "water", done: false, id: uuidv4()},
+            {title: "bread", done: false, description: {description:"losadddddddddssasssa"}, showDescription: false, id: uuidv4()},
+            {title: "butter", done: false, description: {description:"losadddddddddssasssa"}, showDescription: false, id: uuidv4()},
+            {title: "milk", done: false, description: {description:"losadddddddddssasssa"}, showDescription: false, id: uuidv4()},
+            {title: "shrimps", done: false, description: {description:"losadddddddddssasssa"}, showDescription: false, id: uuidv4()},
+            {title: "potato", done: false, description: {description:"losadddddddddssasssa"}, showDescription: false, id: uuidv4()},
+            {title: "water", done: false, description: {description:"losadddddddddssasssa"}, showDescription: false, id: uuidv4()},
         ],
-        headerStyles: {
-          red(){return this.list.filter(item=>!item.done).length === this.list.length},
-          green(){return this.list.filter(item=>item.done).length === this.list.length},
-          yellow(){return this.list.filter(item=>!item.done).length === Math.floor(this.list.length/2)},
-        }
+        task: '',
+        description: {},
+        optional: false
     }
 },
 computed: {
@@ -49,15 +151,20 @@ methods: {
   removeTask(id) {
     this.list = this.list.filter(item => item.id !== id)
   },
-  addTask(task) {
-    this.list = [...this.list, task]
-  }
+  addTask() {
+    if (this.task.trim()) {
+      const newTask = {title:this.task, done:false, description: this.description, showDescription: false, id:uuidv4()}
+      this.list = [...this.list, newTask]
+      this.task = ''
+      this.description = {}
+    }
+  },
 }
 }
 </script>
 
 <style lang="scss">
-@import "~bootstrap/scss/bootstrap";
+
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -82,5 +189,18 @@ methods: {
 .green {
   color: green
 }
+
+.task-list {
+  padding: 20px 0 0 0;
+  max-width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+p {
+  padding: 0;
+  margin: 0;
+}
+
 
 </style>
