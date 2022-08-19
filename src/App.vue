@@ -96,12 +96,17 @@
           >X</button>
         </div>
           <ul 
-          class="task-description" 
-          v-if="item.showDescription"
+            class="task-description" 
+            v-if="item.showDescription"
           >
-            <li 
-            v-for="(value, key) of item.description" :key="key + value"
-            >{{key}}: {{value}}</li>
+            <Description 
+              v-for="(value, key) of item.description" 
+              :key="key + value"
+            >
+              <div slot="description-slot">
+                {{key}}: {{value}}
+              </div>
+            </Description>
           </ul>
         </div>
       </Task>
@@ -114,13 +119,15 @@
 import {v4 as uuidv4} from 'uuid';
 import Form from './components/Form.vue'
 import Task from './components/Task.vue'
+import Description from './components/Description.vue'
 
 
 export default {
   name: 'App',
   components: {
     Form,
-    Task
+    Task,
+    Description
   },
   data() {
     return {
