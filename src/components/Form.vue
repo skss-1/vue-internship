@@ -1,13 +1,69 @@
 <template>
     <div>
-        <slot name="form-slot"></slot>
+        <form 
+            class="task-form" 
+            @submit.prevent="addTask"
+        >
+            <div class="wrapper">
+            <input 
+                type="text" 
+                placeholder="Task" 
+                v-model.trim="task"
+            >
+            <button type="submit">ADD</button>
+            </div>
+            <textarea 
+                maxlength="150"
+                placeholder="Description for task" 
+                v-model.trim="description"
+            ></textarea>
+            <button 
+                class="optional-button"
+                type="button"
+                @click="optional = !optional"
+            >OPTIONAL</button>
+            <div 
+                class="optional-form" 
+                v-if="optional"
+            >
+                <FormOptional @add-details="addDetails"/>
+            </div>
+        </form>
     </div>
 </template>
 
 <script>
 
+import {v4 as uuidv4} from 'uuid';
+import FormOptional from './FormOptional.vue'
+
 export default {
-    name: 'Form'
+    name: 'Form',
+    components: {
+        FormOptional
+    },
+    data() {
+        return {
+            task: '',
+            description: '',
+            optional: false,
+            details: {}
+        }
+    },
+    methods: {
+        addTask() {
+            if (this.task) {
+                const newTask = {title:this.task, done:false, description: {...this.details, description: this.description}, showDescription: false, id:uuidv4()}
+                this.task = ''
+                this.description = ''
+                this.optional = false
+                this.$emit('add-task', newTask)
+            }
+        },
+        addDetails(detail) {
+            this.details = {...this.details, ...detail}
+        }
+    }
 }
 </script>
 
@@ -79,27 +135,6 @@ export default {
         margin-right: auto;
     }
 
-    label {
-        display: flex;
-        align-items: center;
-        input {
-            margin: 0;
-        }
-    }
 
-    .quality-option, .sale-option {
-        margin-top: 10px;
-        input {
-            margin-right: 5px;
-        }
-    }
-
-    .date-option, .comment-option {
-        margin-top: 10px;
-        input, textarea {
-            margin-left: 10px;
-        }
-
-    }
 
 </style>

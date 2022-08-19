@@ -1,115 +1,17 @@
 <template>
   <div id="app">
     <h1 :class="classObject">Task list</h1>
-    <Form>
-      <form 
-        class="task-form" 
-        @submit.prevent="addTask"
-        slot="form-slot"
-      >
-        <div class="wrapper">
-          <input 
-            type="text" 
-            placeholder="Task" 
-            v-model="task"
-          >
-          <button type="submit">ADD</button>
-        </div>
-        <textarea 
-          maxlength="150"
-          placeholder="Description for task" 
-          v-model="description.description"
-        ></textarea>
-        <button 
-          class="optional-button"
-          type="button"
-          @click="optional = !optional"
-        >OPTIONAL</button>
-          <div 
-            class="optional-form" 
-            v-if="optional"
-            >
-            <div class="quality-option">
-              <label>
-                <input 
-                type="radio" 
-                name="quality" 
-                value="low"
-                v-model="description.quality"
-                >Low quality
-              </label>
-              <label>
-                <input 
-                type="radio" 
-                name="quality" 
-                value="best"
-                v-model="description.quality"
-                >Best quality
-              </label>
-            </div>
-            <div class="sale-option">
-              <label>
-                <input 
-                type="checkbox" 
-                value="on-sale"
-                v-model="description.onSale"
-                >ON SALE
-              </label>
-            </div>
-            <div class="date-option" >
-              <label>
-                Exp. date
-                <input 
-                type="date"
-                v-model="description.expDate"
-                >
-              </label>
-            </div>
-            <div class="comment-option" >
-              <label>
-                Comment
-                <textarea v-model="description.comment"></textarea>
-              </label>
-            </div>
-          </div>
-      </form>
-    </Form>
+    <Form @add-task="addTask"/>
     <ul class="task-list">
       <Task 
-      v-for="item in list" 
-      :key="item.id"
-      >
-        <div slot="task-slot"
-        >
-        <div class="wrapper">
-          <input 
-            type="checkbox" 
-            @change="item.done = !item.done">
-          <p 
-            class="task-title"
-            :class="{completed:item.done}"
-            @click="item.showDescription = !item.showDescription"
-          >{{item.title}}</p>
-          <button 
-            type="button" 
-            @click="removeTask(item.id)"
-          >X</button>
-        </div>
-          <ul 
-            class="task-description" 
-            v-if="item.showDescription"
-          >
-            <Description 
-              v-for="(value, key) of item.description" 
-              :key="key + value"
-            >
-              <div slot="description-slot">
-                {{key}}: {{value}}
-              </div>
-            </Description>
-          </ul>
-        </div>
-      </Task>
+        v-for="task in list" 
+        :key="task.id"
+        :title="task.title"
+        :description="task.description"
+        :id="task.id"
+        @remove-task="removeTask"
+        @change-status="changeStatus"
+      />
     </ul>
   </div>
 </template>
@@ -119,53 +21,55 @@
 import {v4 as uuidv4} from 'uuid';
 import Form from './components/Form.vue'
 import Task from './components/Task.vue'
-import Description from './components/Description.vue'
 
 
 export default {
   name: 'App',
   components: {
     Form,
-    Task,
-    Description
+    Task
   },
   data() {
     return {
         list: [
-            {title: "bread", done: false, description: {description:"data"}, showDescription: false, id: uuidv4()},
-            {title: "butter", done: false, description: {description:"data"}, showDescription: false, id: uuidv4()},
-            {title: "milk", done: false, description: {description:"data"}, showDescription: false, id: uuidv4()},
-            {title: "shrimps", done: false, description: {description:"data"}, showDescription: false, id: uuidv4()},
-            {title: "potato", done: false, description: {description:"data"}, showDescription: false, id: uuidv4()},
-            {title: "water", done: false, description: {description:"data"}, showDescription: false, id: uuidv4()},
+            {title: "bread", description: {description:"data"}, id: uuidv4()},
+            {title: "butter", description: {description:"data"}, id: uuidv4()},
+            {title: "milk", description: {description:"data"}, id: uuidv4()},
+            {title: "shrimps", description: {description:"data"}, id: uuidv4()},
+            {title: "potato", description: {description:"data"}, id: uuidv4()},
+            {title: "water", description: {description:"data"}, id: uuidv4()},
         ],
-        task: '',
-        description: {},
-        optional: false
+        status: 0
     }
-},
-computed: {
-  classObject() {
-    return {
-      red:this.list.filter(item=>!item.done).length === this.list.length,
-      green:this.list.filter(item=>item.done).length === this.list.length,
-      yellow:this.list.filter(item=>!item.done).length < this.list.length,
+  },
+  computed: {
+    classObject() {
+      if (!this.status) {
+        return 'red'
+      } else if (this.status === this.list.length) {
+        return 'green'
+      } else {
+        return 'yellow'
+      }
+    }
+  },
+  methods: {
+    removeTask(id, done) {
+      if (done) {
+        this.status-=1
+      }
+      this.list = this.list.filter(item => item.id !== id)
+    },
+    addTask(task) {
+        this.list = [...this.list, task]
+    },
+    changeStatus(done) {
+      if (!done) {
+        done = -1
+      }
+      this.status+=done
     }
   }
-},
-methods: {
-  removeTask(id) {
-    this.list = this.list.filter(item => item.id !== id)
-  },
-  addTask() {
-    if (this.task.trim()) {
-      const newTask = {title:this.task, done:false, description: this.description, showDescription: false, id:uuidv4()}
-      this.list = [...this.list, newTask]
-      this.task = ''
-      this.description = {}
-    }
-  },
-}
 }
 </script>
 

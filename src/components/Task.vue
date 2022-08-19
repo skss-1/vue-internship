@@ -1,14 +1,68 @@
 <template>
-    <li class="list-item">
-        <slot name="task-slot"></slot>
+    <li class="list-item" >
+        <div class="wrapper">
+            <input 
+                type="checkbox" 
+                v-model="done"
+                @change="changeStatus(done)"
+            >
+            <p class="task-title"
+                :class="{completed:done}"
+                @click="show = !show"
+            >{{title}}</p>
+            <button type="button" 
+                    @click="removeTask(id)"
+            >X</button>
+        </div>
+        <ul class="task-description" 
+            v-if="show"
+        >
+            <Description 
+                v-for="(value, key) of description" 
+                :key="key + ' ' +  id" 
+                :title="key"
+                :descr="value"
+                />
+        </ul>
     </li>
 </template>
 
 <script>
 
+import Description from './Description.vue'
+
 export default {
-    name: 'Task'
+    name: 'Task',
+    components: {
+        Description
+    },
+    props: {
+        title : String,
+        description: {
+            description: String,
+            quality: String,
+            expDate: String,
+            onSale: Boolean,
+            comment: String
+        },
+        id: String
+    },
+    data() {
+        return {
+            done: false,
+            show: false
+        }
+    },
+    methods: {
+        removeTask(id) {
+            this.$emit('remove-task', id,this.done)
+        },
+        changeStatus(done) {
+            this.$emit('change-status', done)
+        }
+    }
 }
+
 </script>
 
 <style lang="scss" scoped>
@@ -71,12 +125,6 @@ export default {
         background-color: rgb(175, 2, 2);
     }
 
-    .task-description {
-        padding: 10px 30px;
-        li {
-            text-align: left;
-            list-style: none;
-        }
-    }
+
 
 </style>
