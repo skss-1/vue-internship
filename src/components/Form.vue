@@ -47,7 +47,7 @@ export default {
             task: '',
             description: '',
             optional: false,
-            details: {}
+            details: {},
         }
     },
     methods: {
@@ -56,6 +56,7 @@ export default {
                 const newTask = {title:this.task, done:false, description: {...this.details, description: this.description}, showDescription: false, id:uuidv4()}
                 this.task = ''
                 this.description = ''
+                this.details = {}
                 this.optional = false
                 this.$emit('add-task', newTask)
             }

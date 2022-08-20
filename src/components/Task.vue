@@ -14,16 +14,11 @@
                     @click="removeTask(id)"
             >X</button>
         </div>
-        <ul class="task-description" 
+        <Description 
+            :description="description"
             v-if="show"
-        >
-            <Description 
-                v-for="(value, key) of description" 
-                :key="key + ' ' +  id" 
-                :title="key"
-                :descr="value"
-                />
-        </ul>
+        />
+
     </li>
 </template>
 
@@ -50,7 +45,7 @@ export default {
     data() {
         return {
             done: false,
-            show: false
+            show: false,
         }
     },
     methods: {
