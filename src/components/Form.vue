@@ -5,12 +5,12 @@
             @submit.prevent="addTask"
         >
             <div class="wrapper">
-            <input 
-                type="text" 
-                placeholder="Task" 
-                v-model.trim="task"
-            >
-            <button type="submit">ADD</button>
+                <input 
+                    type="text" 
+                    placeholder="Task" 
+                    v-model.trim="task"
+                >
+                <button type="submit">ADD</button>
             </div>
             <textarea 
                 maxlength="150"
