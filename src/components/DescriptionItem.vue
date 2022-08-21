@@ -70,6 +70,9 @@ export default {
         text-transform: uppercase;
         font-style: italic;
         width: 30%;
+        margin-right: 10px;
+        white-space: nowrap;
+        display: block;
     }
     .input-description {
         outline: none;
@@ -82,7 +85,7 @@ export default {
         text-transform: uppercase;
         font-style: italic;
         word-break: break-word;
-        width: 70%;
+        width: 100%;
     }
 
     .input-description:focus {

@@ -43,7 +43,7 @@
         class="save-button"
         type="button"
         @click="
-          (saved = !saved), updateProps(id), (edit = !edit), (saved = !saved)
+          (saved = !saved), updateProps(inputTitle,id), (edit = !edit), (saved = !saved)
         "
         v-if="edit"
       >
@@ -96,9 +96,9 @@ export default {
     changeStatus(done) {
       this.$emit("change-status", done);
     },
-    updateProps(id) {
+    updateProps(inputTitle,id) {
       if (this.saved) {
-        this.$emit("update-props", id);
+        this.$emit("update-props", inputTitle,id);
       }
     },
   },
