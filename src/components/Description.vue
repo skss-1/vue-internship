@@ -1,54 +1,57 @@
 <template>
-    <ul 
-        class="task-description"
-        v-if="Object.keys(isAvailable).length"
-        >
-        <li v-for="(value, key) of isAvailable" 
-            :key="key" >
-            <div>
-                {{key}}: {{value}}
-            </div>
-        </li>
-    </ul>
-    <div v-else>No data to display</div>
+  <ul class="task-description">
+    <DescriptionItem
+      v-for="(description, title) of descriptionValues"
+      :key="title"
+      :description="description"
+      :title="title"
+      :edit="edit"
+      :canceled="canceled"
+      @change-values="changeValues"
+    />
+  </ul>
 </template>
 
-
 <script>
+import DescriptionItem from "./DescriptionItem.vue";
 
 export default {
-    name: 'Description',
+    name: "Description",
+    components: {
+        DescriptionItem,
+    },
     props: {
         description: {
             description: String,
             quality: String,
             expDate: String,
             onSale: Boolean,
-            comment: String
+            comment: String,
         },
+        edit: Boolean,
+        canceled: Boolean,
+        saved:Boolean,
     },
-    computed: {
-        isAvailable() {
-            const newObj = {}
-            for(let key in this.description) {
-                if (this.description[key] !== '') {
-                    newObj[key] = this.description[key]
-                }
-            }
-            return newObj
+    data() {
+        return {
+            descriptionValues: this.description
         }
+    },
+    methods: {
+        changeValues(key, value) {  
+            this.descriptionValues[key] = value;
+            this.$emit('update-props', this.descriptionValues)
+        },
     }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-
-    .task-description {
-        padding: 10px 30px;
-        li {
-            text-align: left;
-            list-style: none;
-        }
-    }
-
+.task-description {
+  padding: 10px 30px;
+  li {
+    text-align: left;
+    list-style: none;
+  }
+}
 </style>
