@@ -5,14 +5,14 @@
 </template>
 
 <script>
-import TaskItem from "./TaskItem.vue";
+import TaskItem from "../components/TaskItem.vue";
 export default {
   components: { TaskItem },
-  name: "TaskArea",
+  name: "TodoHistory",
   computed: {
     tasks() {
-      console.log(this.$store.getters.getCurrentTasks);
-      return this.$store.getters.getCurrentTasks;
+      console.log(this.$store.getters.getAllTasks);
+      return this.$store.getters.getAllTasks;
     },
   },
 };

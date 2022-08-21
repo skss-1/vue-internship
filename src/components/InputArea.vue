@@ -8,16 +8,10 @@
 <script>
 export default {
   name: "InputArea",
-  props: {
-    addTask: {
-      type: Function,
-      require: true,
-    },
-  },
   methods: {
     AddNewTask() {
       if (this.taskInput) {
-        this.addTask(this.taskInput);
+        this.$store.dispatch("addNewTask", this.taskInput);
         this.taskInput = "";
       }
     },
