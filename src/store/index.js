@@ -11,7 +11,7 @@ export default new Vuex.Store({
   },
   mutations: {
     addElement(state, value) {
-      state.tasks = [...value]
+      state.tasks = [...state.tasks, value]
     }
   },
   actions: {

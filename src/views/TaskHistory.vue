@@ -1,6 +1,10 @@
 <template>
   <ul class="task-history">
-    <li class="list-item" v-for="task in elements" :key="task.id">
+    <li 
+      class="list-item" 
+      v-for="task in elements" 
+      :key="task.id"
+    >
       <div class="task-title">
         {{ task.title }}
       </div>

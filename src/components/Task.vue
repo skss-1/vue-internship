@@ -7,7 +7,11 @@
         v-model="done"
         @change="changeStatus(done)"
       />
-      <div class="task-title" @click="show = !show" v-if="!edit">
+      <div 
+        class="task-title" 
+        @click="show = !show" 
+        v-if="!edit"
+      >
         <input
           class="input-title"
           :class="{ completed: done }"
@@ -15,7 +19,11 @@
           v-model="inputTitle"
           v-if="edit"
         />
-        <div class="input-title" :class="{ completed: done }" v-else>
+        <div 
+          class="input-title" 
+          :class="{ completed: done }" 
+          v-else
+        >
           {{ title }}
         </div>
       </div>
@@ -27,7 +35,11 @@
           v-model="inputTitle"
           v-if="edit"
         />
-        <div class="input-title" :class="{ completed: done }" v-else>
+        <div 
+          class="input-title" 
+          :class="{ completed: done }" 
+          v-else
+        >
           {{ title }}
         </div>
       </div>
@@ -42,14 +54,15 @@
       <button
         class="save-button"
         type="button"
-        @click="
-          (saved = !saved), updateProps(inputTitle,id), (edit = !edit), (saved = !saved)
-        "
+        @click="(saved = !saved), updateProps(inputTitle,id), (edit = !edit), (saved = !saved)"
         v-if="edit"
       >
         SAVE
       </button>
-      <button type="button" @click="removeTask(id)">X</button>
+      <button 
+        type="button" 
+        @click="removeTask(id)"
+      >X</button>
     </div>
     <Description
       :description="description"
