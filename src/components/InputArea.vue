@@ -6,7 +6,7 @@
       maxlength="150"
       v-model.trim="detailsInput"
     />
-    <h5><input type="checkbox" v-model="highPriority" />High Priority</h5>
+    <div><input type="checkbox" v-model="highPriority" />High Priority</div>
     <button @click="AddNewTask">Add task</button>
   </div>
 </template>

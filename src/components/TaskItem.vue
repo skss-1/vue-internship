@@ -1,6 +1,7 @@
 <template>
   <div class="task-item" :class="{ 'item-checked': task.checked }">
     <input
+      class="task-checkbox"
       type="checkbox"
       :checked="task.checked"
       @click.stop="task.checked = !task.checked"

@@ -1,5 +1,5 @@
 <template>
-  <div class="task-description">
+  <div class="home-page">
     <InputArea :addTask="addTask" />
     <task-area :tasks="tasks" />
   </div>
