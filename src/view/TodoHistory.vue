@@ -11,7 +11,6 @@ export default {
   name: "TodoHistory",
   computed: {
     tasks() {
-      console.log(this.$store.getters.getAllTasks);
       return this.$store.getters.getAllTasks;
     },
   },

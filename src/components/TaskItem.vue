@@ -17,15 +17,19 @@
     <button @click.stop="task.hidden = true">Hide</button>
     <button @click.stop="editMode = !editMode">Edit</button>
 
-    <div v-show="showDetails" class="task-details">
+    <slot name="prioroty"></slot>
+
+    <task-details v-show="showDetails" :task="task" :editMode="editMode">
       <div v-if="!editMode">{{ task.details }}</div>
       <textarea v-else v-model="task.details" maxlength="150" />
-    </div>
+    </task-details>
   </div>
 </template>
 
 <script>
+import TaskDetails from "./TaskDetails.vue";
 export default {
+  components: { TaskDetails },
   name: "TaskItem",
   props: {
     task: {

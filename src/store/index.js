@@ -18,10 +18,11 @@ export default new Vuex.Store({
   mutations: {
     addNewTask(state, payload) {
       state.tasks.push({
-        title: payload,
+        title: payload.title,
         checked: false,
         hidden: false,
-        details: "no detail yet",
+        highPriority: payload.highPriority,
+        details: payload.details,
         id: Math.random() * 100000,
       });
     },

@@ -1,6 +1,5 @@
 <template>
   <div class="task-description">
-    <h1 :class="getStatusClass">{{ test }}</h1>
     <InputArea :addTask="addTask" />
     <task-area :tasks="tasks" />
   </div>
@@ -30,7 +29,6 @@ export default {
         details: "no detail yet",
         id: Math.random() * 100000,
       });
-      console.log(this.tasks);
     },
   },
   computed: {

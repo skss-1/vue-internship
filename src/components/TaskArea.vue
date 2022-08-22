@@ -1,9 +1,12 @@
 <template>
   <div class="task-area">
-    <task-item v-for="task in tasks" :key="task.id" :task="task" />
+    <task-item v-for="task in tasks" :key="task.id" :task="task">
+      <div slot="prioroty" v-if="task.highPriority" class="high-priority">
+        high priority
+      </div>
+    </task-item>
   </div>
 </template>
-
 <script>
 import TaskItem from "./TaskItem.vue";
 export default {
@@ -11,7 +14,6 @@ export default {
   name: "TaskArea",
   computed: {
     tasks() {
-      console.log(this.$store.getters.getCurrentTasks);
       return this.$store.getters.getCurrentTasks;
     },
   },
