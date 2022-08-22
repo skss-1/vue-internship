@@ -33,11 +33,16 @@ export default {
         { title: "bread", description: { description: "data" }, id: uuidv4() },
         { title: "butter", description: { description: "data" }, id: uuidv4() },
         { title: "milk", description: { description: "data" }, id: uuidv4() },
-        { title: "shrimps", description: { description: "data" }, id: uuidv4() },
+        {
+          title: "shrimps",
+          description: { description: "data" },
+          id: uuidv4(),
+        },
         { title: "potato", description: { description: "data" }, id: uuidv4() },
         { title: "water", description: { description: "data" }, id: uuidv4() },
       ],
       status: 0,
+      history: [],
     };
   },
   computed: {
@@ -60,6 +65,7 @@ export default {
     },
     addTask(task) {
       this.list = [...this.list, task];
+      this.history.push(task)
     },
     changeStatus(done) {
       if (!done) {
@@ -70,11 +76,18 @@ export default {
     updateProps(inputTitle, id, obj) {
       this.list.forEach((item, i) => {
         if (item.id === id) {
-          const newElem = {...item, title: inputTitle, description: { ...item.description, ...obj }};
+          const newElem = {
+            ...item,
+            title: inputTitle,
+            description: { ...item.description, ...obj },
+          };
           this.list.splice(i, 1, newElem);
         }
       });
     },
+  },
+  updated() {
+    this.$store.commit("addElement", this.history);
   },
 };
 </script>
