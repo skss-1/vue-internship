@@ -10,12 +10,12 @@
       width="20"
     >
     <input
-      v-model="searchValue"
+      v-model.trim="searchValue"
       class="search-input"
       type="text"
       placeholder="Search"
     >
-    <label class="search-adult">
+    <label class="search-adult">  
       <span>Include adult</span>
       <input
         v-model="adultIncluded"
@@ -31,15 +31,19 @@ export default {
   data() {
     return {
       searchValue: '',
+      prevSearchValue: '',
       adultIncluded: false,
     };
   },
   methods: {
     onSubmit() {
-      this.$store.dispatch('searchMovie', {
-        searchValue: this.searchValue,
-        adultIncluded: this.adultIncluded,
-      });
+      if (this.searchValue !== '' && this.searchValue !== this.prevSearchValue) {
+        this.prevSearchValue = this.searchValue
+        this.$store.dispatch('searchMovie', {
+          searchValue: this.searchValue,
+          adultIncluded: this.adultIncluded,
+        });
+      }
     },
   },
 };
