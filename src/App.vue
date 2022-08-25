@@ -1,20 +1,16 @@
 <template>
   <div id="app">
-    <AppHeader>
-      <SearchForm />
-    </AppHeader>
+    <app-header />
   </div>
 </template>
 
 <script>
 import AppHeader from './components/AppHeader.vue';
-import SearchForm from './components/SearchForm.vue';
 
 export default {
   name: 'App',
   components: {
     AppHeader,
-    SearchForm,
   },
 };
 </script>

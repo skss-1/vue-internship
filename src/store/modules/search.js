@@ -1,15 +1,14 @@
 import axios from 'axios'
 import { API_KEY, path } from '../../api/tmdb-api'
 
-
 export const search = {
+  namespaced: true,
   state: () => ({
     itemsList: []
   }),
   mutations: {
     stateUpdate(state, payload) {
-    state.itemsList = [...payload]
-    console.log(state.itemsList)
+      state.itemsList = [...payload]
     }
   },
   actions: {

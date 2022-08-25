@@ -22,7 +22,7 @@
     </div>
     <div class="search-wrapper">
       <div class="container">
-        <SearchForm />
+        <search-form />
       </div>
     </div>
   </header>
@@ -77,12 +77,4 @@ nav {
   display: flex;
   justify-content: flex-start;
 }
-
-.container {
-  padding: 0 20px;
-}
-
-
-
-
 </style>

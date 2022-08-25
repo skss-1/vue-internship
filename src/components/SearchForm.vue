@@ -33,13 +33,29 @@ export default {
       searchValue: '',
       prevSearchValue: '',
       adultIncluded: false,
+      prevAdultIncluded: ''
     };
+  },
+  computed: {
+    isSameSearchValue() {
+      return this.searchValue !== this.prevSearchValue
+    },
+    isSameAdultIncluded() {
+      return this.adultIncluded !== this.prevAdultIncluded
+    },
+    searchCondition() {
+      if (this.isSameSearchValue === false && this.isSameAdultIncluded === false) {
+        return false
+      }
+      return true
+    }
   },
   methods: {
     onSubmit() {
-      if (this.searchValue !== '' && this.searchValue !== this.prevSearchValue) {
+      if (this.searchValue && this.searchCondition) {
         this.prevSearchValue = this.searchValue
-        this.$store.dispatch('searchMovie', {
+        this.prevAdultIncluded = this.adultIncluded
+        this.$store.dispatch('search/searchMovie', {
           searchValue: this.searchValue,
           adultIncluded: this.adultIncluded,
         });
@@ -68,14 +84,11 @@ export default {
 }
 
 .search-adult {
-  display: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
   color: #888888;
-  @media screen and (min-width: 425px) {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    white-space: nowrap;
-  }
 }
 </style>
