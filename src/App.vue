@@ -12,6 +12,11 @@ export default {
   components: {
     AppHeader,
   },
+  computed: {
+    env() {
+      return process.env
+    }
+  }
 };
 </script>
 

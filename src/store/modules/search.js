@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { API_KEY, path } from '../../api/tmdb-api'
+import { path } from '../../api/tmdb-api'
 
 export const search = {
   namespaced: true,
@@ -7,14 +7,14 @@ export const search = {
     itemsList: []
   }),
   mutations: {
-    stateUpdate(state, payload) {
+    setItems(state, payload) {
       state.itemsList = [...payload]
     }
   },
   actions: {
     async searchMovie({ commit }, { searchValue, adultIncluded }) {
-      const res = await axios.get(`${path}/search/movie?api_key=${API_KEY}&include_adult=${adultIncluded}&query=${searchValue}`)
-      commit('stateUpdate', res.data.results)
+      const res = await axios.get(`${path}/search/movie?api_key=${process.env.VUE_APP_API_KEY}&include_adult=${adultIncluded}&query=${searchValue}`)
+      commit('setItems', res.data.results)
     }
   }
 }
