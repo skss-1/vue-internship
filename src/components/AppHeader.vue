@@ -20,11 +20,7 @@
         </nav>
       </div>
     </div>
-    <div class="search-wrapper">
-      <div class="container">
-        <search-form />
-      </div>
-    </div>
+    <search-form />
   </header>
 </template>
 
@@ -66,11 +62,6 @@ nav {
   padding: 20px 0;
   background: linear-gradient(90deg, rgba(57,117,11,1) 0%, 
           rgba(121,193,66,1) 35%, rgb(177, 245, 125) 100%);
-}
-
-.search-wrapper {
-  padding: 10px 0;
-  background-color: #2f2f2f;
 }
 
 .nav-wrapper {
