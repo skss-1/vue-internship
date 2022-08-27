@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { path } from '../../api/tmdb-api'
+import { path } from '@/api/tmdb-api'
 
 export const search = {
   namespaced: true,
