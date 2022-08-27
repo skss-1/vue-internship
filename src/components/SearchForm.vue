@@ -17,13 +17,20 @@
           type="text"
           placeholder="Search"
         >
-        <label class="search-adult">  
-          <span>Include adult</span>
+        <div class="form-check">
+          <label
+            class="form-check-label"
+            for="flexCheckDefault"
+          >
+            Include adult
+          </label>
           <input
+            id="flexCheckDefault"
             v-model="adultIncluded"
+            class="form-check-input"
             type="checkbox"
           >
-        </label>
+        </div>
       </form>
     </div>
   </div> 
@@ -84,13 +91,19 @@ export default {
   }
 }
 
-.search-adult {
+.form-check {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  white-space: nowrap;
+  padding: 0;
+  margin: 0;
   color: #888888;
+  label {
+    white-space: nowrap;
+  }
+  input {
+    margin-left: 0;
+  }
 }
 
 .search-wrapper {
