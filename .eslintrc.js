@@ -3,13 +3,13 @@ module.exports = {
   env: {
     node: true,
   },
-  extends: ['plugin:vue/recommended', 'eslint:recommended'],
+  extends: [
+    'plugin:vue/recommended', 
+    'eslint:recommended'],
   parserOptions: {
     parser: 'babel-eslint',
   },
   rules: {
-    'vue/html-self-closing': 0, //this will be deleted after i fix my prittier problem
-
     'no-unused-vars': 'off',
     quotes: ['error', 'single'],
     'comma-dangle': ['error', 'only-multiline'], // require or disallow trailing commas
