@@ -41,22 +41,19 @@ export default {
     };
   },
   computed: {
-    isSameSearchValue() {
+    isNewSearchValue() {
       return this.searchValue !== this.prevSearchValue
     },
-    isSameAdultIncluded() {
+    isNewAdultIncluded() {
       return this.adultIncluded !== this.prevAdultIncluded
     },
-    searchCondition() {
-      if (this.isSameSearchValue === false && this.isSameAdultIncluded === false) {
-        return false
-      }
-      return true
+    isNewSearch() {
+      return this.isNewSearchValue || this.isNewAdultIncluded
     }
   },
   methods: {
     onSubmit() {
-      if (this.searchValue && this.searchCondition) {
+      if (this.searchValue && this.isNewSearch) {
         this.prevSearchValue = this.searchValue
         this.prevAdultIncluded = this.adultIncluded
         this.$store.dispatch('search/searchMovie', {
