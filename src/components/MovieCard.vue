@@ -15,16 +15,16 @@
           {{ item.title }}
         </div>
         <div class="card-text fs-6 fw-lighter">
-          <p class="card-rating">
+          <div class="card-rating">
             Rate: {{ item.vote_average }}
-          </p>
-          <p class="card-date">
+          </div>
+          <div class="card-date">
             Date: {{ item.release_date }}
-          </p>
+          </div>
         </div>
         <a
           href="#"
-          class="btn btn-xs btn-primary"
+          class="btn btn-xs btn-primary fs-6 p-1"
         >Details</a>
       </div>
     </div>
@@ -54,7 +54,7 @@ export default {
 }
 .card-title{
     overflow:hidden;
-    height: 4rem;
+    white-space: nowrap;
     
 }
 .card-img-top{

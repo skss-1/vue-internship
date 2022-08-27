@@ -24,6 +24,18 @@ export const search = {
       );
       commit('setItems', res.data.results);
     },
+    async fetchTopRatedMovies({ commit }) {
+      const res = await axios.get(
+        `${path}/movie/top_rated?api_key=${process.env.VUE_APP_API_KEY}`
+      );
+      commit('setItems', res.data.results);
+    },
+    async fetchUpcomingMovies({ commit }) {
+      const res = await axios.get(
+        `${path}/movie/upcoming?api_key=${process.env.VUE_APP_API_KEY}`
+      );
+      commit('setItems', res.data.results);
+    },
   },
   getters:{
     getItems:(state) => state.itemsList
