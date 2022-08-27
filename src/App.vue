@@ -11,11 +11,6 @@ export default {
   name: 'App',
   components: {
     AppHeader,
-  },
-  computed: {
-    env() {
-      return process.env
-    }
   }
 };
 </script>
