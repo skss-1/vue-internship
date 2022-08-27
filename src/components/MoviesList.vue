@@ -1,6 +1,6 @@
 <template>
-  <div class="movie-list container ">
-    <div class="row  ">
+  <div class="movie-list container p-0">
+    <div class="row justify-content-evenly ">
       <movie-card
         v-for="item in items"
         :key="item.id"
