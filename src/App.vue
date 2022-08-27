@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <app-header />
+    <router-view />
   </div>
 </template>
 
@@ -14,12 +15,12 @@ export default {
   },
   computed: {
     env() {
-      return process.env
-    }
-  }
+      return process.env;
+    },
+  },
 };
 </script>
 
 <style lang="scss">
-  @import "~bootstrap/scss/bootstrap";
+@import '~bootstrap/scss/bootstrap';
 </style>
