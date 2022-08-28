@@ -1,5 +1,8 @@
 <template>
-  <div class="movie-card col-lg-2 col-md-2  col-sm-3 col-5 m-3 p-0">
+  <div
+    class="movie-card col-lg-2 col-md-2  col-sm-3 col-5 m-3 p-0"
+    @click="goToMoviePage"
+  >
     <div
       class="card card-hover "
     >
@@ -39,6 +42,11 @@ export default {
       url(){
         return `https://image.tmdb.org/t/p/original${this.item.poster_path}`
       }
+  },
+  methods:{
+    goToMoviePage(){
+      this.$router.push({ name: 'movie-page', params: { id: this.item.id } })
+    }
   }
 }
 </script>
