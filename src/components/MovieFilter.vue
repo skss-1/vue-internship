@@ -1,19 +1,19 @@
 <template>
-  <div class="movie-filter container text-end  px-3">
+  <div class="movie-filter container text-center  px-3 py-2">
     <select
       class="form-select form-select-sm"
       @change="$emit('change',$event.target.value)"
     >
       <option value="popular">
-        PopularMovies
+        Popular
       </option>
       <option
         value="top-rated"
       >
-        TopRated
+        Top Rated
       </option>
       <option value="upcoming">
-        UpcomingMovies
+        Upcoming
       </option>
     </select>
   </div>
@@ -28,6 +28,8 @@ model:{
 }
 </script>
 
-<style>
-
+<style scoped>
+.form-select{
+  width:25%;
+}
 </style>

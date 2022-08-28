@@ -1,13 +1,12 @@
 <template>
   <div class="home-page py-3">
-    <div
-      v-show="!items"
-      class="spinner-border"
-      role="status"
-    >
-      <span class="visually-hidden">Loading...</span>
-    </div>
     <movie-filter v-model="selectValue" />
+    <div
+      v-show="!items.length"
+      class="container p-5 h3"
+    >
+      No movies found 
+    </div>
     <movies-list
       v-if="!!items"
       :items="items"
