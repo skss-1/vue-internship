@@ -1,8 +1,8 @@
 <template>
   <header>
-    <nav>
+    <div class="nav-wrapper">
       <div class="container">
-        <div class="nav-wrapper">
+        <nav>
           <a
             class="logo-link"
             href="/"
@@ -15,9 +15,9 @@
             >
             <span class="logo-title">CINEMA-PROJECT</span>
           </a>
-        </div>
+        </nav>
       </div>
-    </nav>
+    </div>
     <search-form />
   </header>
 </template>
@@ -52,13 +52,13 @@ export default {
   white-space: nowrap;
 }
 
-nav {
+.nav-wrapper {
   padding: 20px 0;
   background: linear-gradient(90deg, rgba(57,117,11,1) 0%, 
           rgba(121,193,66,1) 35%, rgb(177, 245, 125) 100%);
 }
 
-.nav-wrapper {
+.nav {
   display: flex;
   justify-content: flex-start;
 }
