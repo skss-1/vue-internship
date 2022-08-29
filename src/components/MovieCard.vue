@@ -1,7 +1,7 @@
 <template>
   <div class="movie-card col-lg-2 col-md-2  col-sm-3 col-5 m-3 p-0">
     <div
-      class="card card-hover "
+      class="card"
     >
       <img
         class="card-img-top "
@@ -50,6 +50,10 @@ export default {
 }
 .card{
   transition-duration: 0.2s;
+}
+.card:active{
+  color:white;
+  background-color: #13152E;
 }
 .card-title{
     overflow:hidden;
