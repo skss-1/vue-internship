@@ -7,7 +7,7 @@
       >
         <img
           class="search-icon"
-          src="../assets/search.svg"
+          src="@/assets/search.svg"
           alt="Search"
           width="20"
         >
@@ -38,7 +38,7 @@
 
 <script>
 export default {
-  name: 'SearchComponent',
+  name: 'SearchForm',
   data() {
     return {
       searchValue: '',
@@ -57,6 +57,9 @@ export default {
     isNewSearch() {
       return this.isNewSearchValue || this.isNewAdultIncluded
     }
+  },
+  created() {
+    this.$router.push({ query:{} }).catch(err => {})
   },
   methods: {
     onSubmit() {

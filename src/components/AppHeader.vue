@@ -9,7 +9,7 @@
           >
             <img
               class="logo-image"
-              src="../assets/logo.svg"
+              src="@/assets/logo.svg"
               alt="logo"
               width="50"
             >
