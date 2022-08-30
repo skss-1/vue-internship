@@ -44,7 +44,8 @@ export default {
       searchValue: '',
       prevSearchValue: '',
       adultIncluded: false,
-      prevAdultIncluded: ''
+      prevAdultIncluded: '',
+      queryParams: {}
     };
   },
   computed: {
@@ -58,8 +59,20 @@ export default {
       return this.isNewSearchValue || this.isNewAdultIncluded
     }
   },
+  watch: { 
+      '$route.query': {
+          handler: function(query) {
+            this.searchValue = this.$route.query.query
+            this.adultIncluded = this.$route.query.include_adult
+          },
+          deep: true,
+          immediate: true
+        }
+  },
   created() {
-    this.$router.push({ query:{} }).catch(err => {})
+    if (this.$route.path === '/') {
+      this.$router.push({ query:{} }).catch(err => {})
+    }
   },
   methods: {
     onSubmit() {
@@ -72,7 +85,7 @@ export default {
         });
       }
     },
-  },
+  }
 };
 </script>
 
