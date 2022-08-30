@@ -32,5 +32,7 @@ export default {
 <style scoped>
 .form-select{
   width:25%;
+  background-color:#13152E ;
+  color: white;
 }
 </style>

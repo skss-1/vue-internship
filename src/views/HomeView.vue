@@ -57,3 +57,10 @@ export default {
   }
 };
 </script>
+
+
+<style scoped>
+.home-page{
+  background-color: #020916 ;
+}
+</style>
