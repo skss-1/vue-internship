@@ -44,8 +44,7 @@ export default {
       searchValue: '',
       prevSearchValue: '',
       adultIncluded: false,
-      prevAdultIncluded: '',
-      queryParams: {}
+      prevAdultIncluded: ''
     };
   },
   computed: {
