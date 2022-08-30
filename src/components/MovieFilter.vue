@@ -21,10 +21,11 @@
 
 <script>
 export default {
-model:{
+  name: 'MovieFilter',
+  model:{
     prop:'value',
     event:'change',
-}
+  }
 }
 </script>
 

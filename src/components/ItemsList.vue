@@ -13,6 +13,7 @@
 <script>
 import MovieCard from './MovieCard.vue'
 export default {
+    name: 'ItemsList',
     components:{
         MovieCard
     },
