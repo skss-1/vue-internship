@@ -19,12 +19,6 @@ export const search = {
         if (!res.status) {
           throw new Error('Response is not ok')
         }
-        router.push({
-          query: {
-            include_adult:adultIncluded,
-            query: searchValue
-          }
-        })
         commit('setItems', res.data.results)
       } catch (error) {
         console.warn(error)

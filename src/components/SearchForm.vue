@@ -49,41 +49,60 @@ export default {
   },
   computed: {
     isNewSearchValue() {
-      return this.searchValue !== this.prevSearchValue
+      return this.searchValue !== this.$route.query.query
     },
     isNewAdultIncluded() {
-      return this.adultIncluded !== this.prevAdultIncluded
+      return this.adultIncluded !== this.booleanQueryAdultIncluded
     },
     isNewSearch() {
       return this.isNewSearchValue || this.isNewAdultIncluded
+    },
+    booleanQueryAdultIncluded() {
+      return this.$route.query.include_adult === 'true'? true : false
     }
   },
   watch: { 
       '$route.query': {
-          handler: function(query) {
-            this.searchValue = this.$route.query.query
-            this.adultIncluded = this.$route.query.include_adult
+          handler: function() {
+            if (!!this.$route.query.query && this.isNewSearchValue) {
+              this.searchValue = this.$route.query.query
+              this.adultIncluded = this.booleanQueryAdultIncluded
+              this.fetchData()
+            } else if (this.$route.query.query === undefined) {
+              this.searchValue = ''
+              this.adultIncluded = false
+            }
           },
           deep: true,
           immediate: true
         }
   },
   created() {
-    if (this.$route.path === '/') {
-      this.$router.push({ query:{} }).catch(err => {})
-    }
+    this.searchValue = this.$route.query.query
+    this.adultIncluded = this.booleanQueryAdultIncluded
   },
   methods: {
     onSubmit() {
       if (this.searchValue && this.isNewSearch) {
         this.prevSearchValue = this.searchValue
         this.prevAdultIncluded = this.adultIncluded
-        this.$store.dispatch('search/searchMovie', {
-          searchValue: this.searchValue,
-          adultIncluded: this.adultIncluded,
-        });
+        this.fetchData()
+          .then(() => {
+            this.$router.push({
+              query: {
+                include_adult:this.adultIncluded,
+                query: this.searchValue
+              }
+            })
+          })
       }
     },
+    fetchData() {
+      return this.$store.dispatch('search/searchMovie', {
+        searchValue: this.searchValue,
+        adultIncluded: this.adultIncluded,
+      })
+    }
   }
 };
 </script>
