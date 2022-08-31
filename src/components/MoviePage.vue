@@ -1,8 +1,8 @@
 <template>
   <div class="movie-page">
+    <div class="background-image" :style="backgroundUrl"></div>
     <div 
-      class="top-container d-flex flex-row justify-content-center w-100 p-5 gap-5"
-      :style="backgroundUrl"
+      class="top-container d-flex flex-row justify-content-center align-items-end w-100 gap-5"
     >
       <div class="poster">
         <img
@@ -11,24 +11,23 @@
           class="poster-img"
           width="100%"
         >
-        <p class="h5 p-1 fw-light text-center">
+        <p class="item-status h5 p-1 fw-light text-center">
           Status: {{ item.status }}
         </p>
       </div>
-      <div class="item-info">
-        <p class="h1">
+      <div class="item-title h1">
           {{ item.title }}
-        </p>
+      </div>
+    </div>
+    <div class="bottom-container">
+      <div class="container py-5">
+        
         <p class="h5 px-3">
           Avarage score: {{ item.vote_average }}
         </p>
         <p class="h3 px-2">
           Release Date: {{ releaseDate }}
         </p>
-      </div>
-    </div>
-    <div class="bottom-container">
-      <div class="container py-5">
         <p class="fs-4">
           Overview
         </p>
@@ -76,7 +75,7 @@ export default {
       return `https://image.tmdb.org/t/p/original${this.item.poster_path}`
     },
     backgroundUrl(){
-      return `backgroundImage:linear-gradient(0deg, rgba(19, 21, 46, 0.95), rgba(19, 21, 46, 0.50)) ,url(https://image.tmdb.org/t/p/original${this.item.backdrop_path})`
+      return `backgroundImage:linear-gradient(0deg, rgba(19, 21, 46, 0.7), rgba(19, 21, 46, 0.7)) ,url(https://image.tmdb.org/t/p/original${this.item.backdrop_path})`
     },
     releaseDate(){
         const month= ['January','February','March','April','May','June','July','August','September','October','November','December']
@@ -91,21 +90,40 @@ export default {
 </script>
 
 <style scoped>
-.top-container{
+.movie-page{
+  position: relative;
+  background-color: #13152E;
+}
+.background-image{
+  width: 100%;
+    height: 50vh;
     background-size: cover;
     background-position: center;
-    box-shadow: inset 0px -66px 66px #13152E;
 }
+.top-container{
+  height: 20vh;
+  border:3px solid white;
+}
+.poster{
+  border:3px solid white;
+    color: white;
+    width:20vw;
+}
+.item-title{
+  border:3px solid white;
+    color: white;
+    width:40vw;
+}
+
 .bottom-container{
     color: white;
     background-color: #13152E;
 }
-.poster{
-    color: white;
-    width:20vw;
+.item-status{
+  margin: 0;
+  position:absolute;
+  bottom: 0;
+  background-color: #13152E;
 }
-.item-info{
-    color: white;
-    width:50vw;
-}
+
 </style>
