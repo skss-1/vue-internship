@@ -42,9 +42,7 @@ export default {
   data() {
     return {
       searchValue: '',
-      prevSearchValue: '',
       adultIncluded: false,
-      prevAdultIncluded: ''
     };
   },
   computed: {
@@ -84,8 +82,6 @@ export default {
   methods: {
     onSubmit() {
       if (this.searchValue && this.isNewSearch) {
-        this.prevSearchValue = this.searchValue
-        this.prevAdultIncluded = this.adultIncluded
         this.fetchData()
           .then(() => {
             this.$router.push({
