@@ -1,6 +1,6 @@
 <template>
   <div class="items-list container p-0">
-    <div class="row justify-content-evenly ">
+    <div class="row justify-content-evenly">
       <movie-card
         v-for="item in items"
         :key="item.id"
@@ -12,20 +12,17 @@
 
 <script>
 import MovieCard from './MovieCard.vue'
+
 export default {
   name: 'ItemsList',
-  components:{
+  components: {
     MovieCard
   },
-  props:{
-    items:{
-      type:Array,
-      required:true,
+  props: {
+    items: {
+      type: Array,
+      required: true,
     }
   }
 }
 </script>
-
-<style scoped>
-
-</style>

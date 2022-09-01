@@ -23,23 +23,26 @@ import ItemsList from '../components/ItemsList.vue';
 // @ is an alias to /src
 export default {
   name: 'HomeView',
-  components: { ItemsList, MovieFilter },
-  data(){
-    return{
-      selectValue:'popular'
+  components: { 
+    ItemsList,
+    MovieFilter 
+  },
+  data() {
+    return {
+      selectValue: 'popular'
     }
   },
-  computed:{
-    items(){
-      return this.$store.getters['search/getItems']
+  computed: {
+    items() {
+      return this.$store.getters['search/getItems'];
     }
   },
   mounted() {
-    this.fetchMovies()
+    this.fetchMovies();
   },
-  methods:{
-    fetchMovies(){
-      switch(this.selectValue){
+  methods: {
+    fetchMovies() {
+      switch(this.selectValue) {
         case 'top-rated':
           this.$store.dispatch('search/fetchTopRatedMovies');
           break;
@@ -50,7 +53,7 @@ export default {
           this.$store.dispatch('search/fetchPopularMovies');
           break;
         default:
-          console.log('Something broke')
+          console.log('Something broke');
           break;
       }
     }
@@ -58,9 +61,8 @@ export default {
 };
 </script>
 
-
-<style scoped>
+<style scoped lang="scss">
 .home-page{
-  background-color: #020916 ;
+  background-color: #020916;
 }
 </style>

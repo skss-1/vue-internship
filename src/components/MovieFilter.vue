@@ -1,15 +1,13 @@
 <template>
-  <div class="movie-filter container text-center  px-3 py-2">
+  <div class="movie-filter container text-center px-3 py-2">
     <select
       class="form-select form-select-sm"
-      @change="$emit('change',$event.target.value)"
+      @change="$emit('change', $event.target.value)"
     >
       <option value="popular">
         Popular
       </option>
-      <option
-        value="top-rated"
-      >
+      <option value="top-rated">
         Top Rated
       </option>
       <option value="upcoming">
@@ -22,17 +20,17 @@
 <script>
 export default {
   name: 'MovieFilter',
-  model:{
-    prop:'value',
-    event:'change',
+  model: {
+    prop: 'value',
+    event: 'change',
   }
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .form-select{
-  width:25%;
-  background-color:#13152E ;
-  color: white;
+  width: 25%;
+  background-color: #13152E;
+  color: #fff;
 }
 </style>
