@@ -1,22 +1,20 @@
 <template>
   <header>
-    <div class="header-wrapper">
+    <div class="nav-wrapper">
       <div class="container">
         <nav>
-          <div class="nav-wrapper">
-            <a
-              class="logo-link"
-              href="/"
+          <a
+            class="logo-link"
+            href="/"
+          >
+            <img
+              class="logo-image"
+              src="@/assets/logo.svg"
+              alt="logo"
+              width="50"
             >
-              <img
-                class="logo-image"
-                src="../assets/logo.svg"
-                alt="logo"
-                width="50"
-              >
-              <span class="logo-title">CINEMA-PROJECT</span>
-            </a>
-          </div>
+            <span class="logo-title">CINEMA-PROJECT</span>
+          </a>
         </nav>
       </div>
     </div>
@@ -54,17 +52,13 @@ export default {
   white-space: nowrap;
 }
 
-nav {
-  padding: 0;
-}
-
-.header-wrapper {
+.nav-wrapper {
   padding: 20px 0;
   background: linear-gradient(90deg, rgba(57,117,11,1) 0%, 
           rgba(121,193,66,1) 35%, rgb(177, 245, 125) 100%);
 }
 
-.nav-wrapper {
+.nav {
   display: flex;
   justify-content: flex-start;
 }
