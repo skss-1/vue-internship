@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import { pathFooPoster } from '@/api/tmdb-api'
+
 export default {
   name: 'MovieCard',
   props: {
@@ -39,7 +41,7 @@ export default {
   },
   computed: {
     url() {
-      return `https://image.tmdb.org/t/p/original${this.item.poster_path}`
+      return `${pathFooPoster}${this.item.poster_path}`
     }
   }
 }
