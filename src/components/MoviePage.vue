@@ -1,8 +1,11 @@
 <template>
   <div class="movie-page">
-    <div class="background-image" :style="backgroundUrl"></div>
+    <div
+      class="background-image"
+      :style="backgroundUrl"
+    />
     <div 
-      class="top-container d-flex flex-row justify-content-center align-items-end w-100 gap-5"
+      class="top-container container d-flex flex-column justify-content-end align-items-center flex-md-row justify-content-md-center align-items-md-end gap-md-5 my-3"
     >
       <div class="poster">
         <img
@@ -15,13 +18,12 @@
           Status: {{ item.status }}
         </p>
       </div>
-      <div class="item-title h1">
-          {{ item.title }}
+      <div class="item-title h1 m-0 ">
+        {{ item.title }}
       </div>
     </div>
     <div class="bottom-container">
       <div class="container py-5">
-        
         <p class="h5 px-3">
           Avarage score: {{ item.vote_average }}
         </p>
@@ -96,28 +98,32 @@ export default {
 }
 .background-image{
   width: 100%;
-    height: 50vh;
-    background-size: cover;
-    background-position: center;
+  height: 50vh;
+  background-size: cover;
+  background-position: center;
 }
 .top-container{
-  height: 20vh;
-  border:3px solid white;
+  height: 6rem;
 }
 .poster{
-  border:3px solid white;
-    color: white;
-    width:20vw;
+  box-sizing: content-box;
+  border:20px solid #13152E;
+  color: white;
+  width: 20vw;
+  min-width: 300px;
+}
+.poster-img{
+  width:100%;
 }
 .item-title{
-  border:3px solid white;
-    color: white;
-    width:40vw;
+  height: 100%;
+  color: white;
+  width:40vw;
 }
 
 .bottom-container{
-    color: white;
-    background-color: #13152E;
+  color: white;
+  background-color: #13152E;
 }
 .item-status{
   margin: 0;
