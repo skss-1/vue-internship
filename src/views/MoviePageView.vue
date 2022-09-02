@@ -38,14 +38,17 @@
             class="fs-6 fw-lighter" 
           > {{ genre.name }} </span> 
         </p> 
-        <p class="fs-4"> 
-          Actors  
-          <span 
-            v-for="actor in credits" 
-            :key="actor.id" 
-            class="fs-6 fw-lighter" 
-          > {{ actor.name }}, </span> 
-        </p> 
+        <div class="fs-4 actors"> 
+          <div
+            v-for="actor in credits"
+            :key="actor.id"
+            class="actor-card fs-6 fw-lighter" 
+          >
+            <p class="m-2 ">
+              {{ actor.name }}
+            </p>
+          </div> 
+        </div> 
         <p class="fs-4"> 
           Companies  
           <span 
@@ -87,6 +90,37 @@ export default {
 </script>
 
 <style scoped lang="scss">
+::-webkit-scrollbar{
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: none;
+}
+::-webkit-scrollbar-thumb {
+  margin: 2px;
+  background: #020418;
+  border-radius:10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  
+  background: #050824;
+}
+.actors{
+  width: 100%;
+  white-space: nowrap;
+  overflow: auto;
+  padding: 0;
+}
+
+.actor-card{
+  width: 8vw;
+  height: 200px;
+  display:inline-block;
+  margin:0 20px; 
+  background-color: #1f2466;
+}
+
+
 .movie-page{
   --image-height-for-movie-page:500px;
   --title-height-for-movie-page:150px;
