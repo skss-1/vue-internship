@@ -4,7 +4,7 @@
       class="background-poster"
       :style="backgroundUrl"
     />
-    <div class="top-container container d-flex flex-column justify-content-end align-items-center flex-md-row justify-content-md-center align-items-md-end gap-md-5 my-3"> 
+    <div class="top-container container d-flex flex-column justify-content-end align-items-center flex-md-row justify-content-md-center align-items-md-end gap-md-5"> 
       <div class="poster"> 
         <img 
           :src="posterUrl" 
@@ -12,13 +12,50 @@
           class="poster-img"
         >
       </div> 
-      <div class="item-title h1 m-0 w-50 "> 
+      <div class="item-title h1 m-0 w-50 py-4"> 
         {{ item.title }} 
       </div> 
     </div> 
-    <div class="qqq">
-      asd
-    </div>
+    <div class="bottom-container"> 
+      <div class="container py-5"> 
+        <p class="h5 px-3">
+          Avarage score: {{ item.vote_average }}
+        </p> 
+        <p class="h3 px-2"> 
+          Release Date: {{ releaseDate }} 
+        </p> 
+        <p class="fs-4"> 
+          Overview 
+        </p> 
+        <p class="fs-5 fw-lighter"> 
+          {{ item.overview }} 
+        </p> 
+        <p class="fs-4"> 
+          Genres  
+          <span 
+            v-for="genre in item.genres" 
+            :key="genre.id" 
+            class="fs-6 fw-lighter" 
+          > {{ genre.name }} </span> 
+        </p> 
+        <p class="fs-4"> 
+          Actors  
+          <span 
+            v-for="actor in credits" 
+            :key="actor.id" 
+            class="fs-6 fw-lighter" 
+          > {{ actor.name }}, </span> 
+        </p> 
+        <p class="fs-4"> 
+          Companies  
+          <span 
+            v-for="company in item.production_companies" 
+            :key="company.id" 
+            class="fs-6 fw-lighter" 
+          > {{ company.name }}, </span> 
+        </p> 
+      </div> 
+    </div> 
   </div>
 </template>
 <script>
@@ -56,9 +93,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-:root{
-  --test-var: white;
-}
 .movie-page{
   padding-top: v-bind(titleHeight);
   position: relative;
@@ -80,15 +114,15 @@ export default {
 }
 .top-container{
   position: relative;
-  color: black;
   height: v-bind(imageHeight);
 
   .item-title{
-    color: white;
+    color: #fff;
     height: v-bind(titleHeight);
   }
   .poster{
     img{
+      border:30px solid #13152E;
       height: v-bind(imageHeight);
     }
   }
