@@ -66,9 +66,6 @@ export default {
     box-shadow: 0 0px 1.5rem 0px rgba(255, 255, 255, 0.15);
     transform: scale(1.1);
   }
-  .card-body{
-    border: 2px solid #fff;
-  }
 }
 .card:active .card-body{
   color: black;

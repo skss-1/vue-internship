@@ -1,11 +1,10 @@
 <template>
-  <div class="movie-page">
-    <div
-      class="background-image"
-      :style="backgroundUrl"
-    />
+  <div
+    class="movie-page"
+    :style="backgroundUrl"
+  >
     <div 
-      class="top-container container d-flex flex-column justify-content-end align-items-center flex-md-row justify-content-md-center align-items-md-end gap-md-5 my-3"
+      class="top-container container d-flex flex-row justify-content-center align-items-end gap-5 "
     >
       <div class="poster">
         <img
@@ -66,70 +65,84 @@
 </template>
 <script>
 export default {
-  name: 'MoviePage',
+  name: 'MoviePageView',
   computed:{
-    item(){
+    item() {
       return this.$store.getters['movie/getItem']
-    },credits(){
+    },
+    credits() {
       return this.$store.getters['movie/getActors']
     },
-    posterUrl(){
+    posterUrl() {
       return `https://image.tmdb.org/t/p/original${this.item.poster_path}`
     },
-    backgroundUrl(){
-      return `backgroundImage:linear-gradient(0deg, rgba(19, 21, 46, 0.7), rgba(19, 21, 46, 0.7)) ,url(https://image.tmdb.org/t/p/original${this.item.backdrop_path})`
+    backgroundUrl() {
+      return `backgroundImage: linear-gradient(0deg, rgba(19, 21, 46, 0.7), rgba(19, 21, 46, 0.7)), url(https://image.tmdb.org/t/p/original${this.item.backdrop_path}), linear-gradient(0deg, #13152E, #13152E)`
     },
-    releaseDate(){
+    releaseDate() {
         const month= ['January','February','March','April','May','June','July','August','September','October','November','December']
         let date=`${month[+this.item.release_date.slice(5,7) -1]} ${+this.item.release_date.slice(8,10)} ${this.item.release_date.slice(0,4)}`
         return date
     }
   },
    mounted() {
-    this.$store.dispatch('movie/fetchMovieDetails',{ id:this.$route.params.id } );
+    this.$store.dispatch('movie/fetchMovieDetails',{ id:this.$route.params.id });
   }
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .movie-page{
+  background-size:auto, 100% 400px;
+  background-repeat: no-repeat;
+  background-position: top center;
+
+  
   position: relative;
-  background-color: #13152E;
+  *{
+    border:2px solid tomato;
+  }
 }
 .background-image{
-  width: 100%;
-  height: 50vh;
+  z-index: 0 ;
+  position: absolute;
+  top:0;
+  left: 0;
+  height: 60vh;
+  width:100%;
   background-size: cover;
   background-position: center;
 }
 .top-container{
-  height: 6rem;
+  z-index: 100 ;
+  height: 60vh;
 }
 .poster{
   box-sizing: content-box;
   border:20px solid #13152E;
   color: white;
-  width: 20vw;
-  min-width: 300px;
+  height: 100%;
 }
 .poster-img{
-  width:100%;
+  height: 100%;
 }
 .item-title{
   height: 100%;
   color: white;
-  width:40vw;
+  width:40%;
 }
 
-.bottom-container{
-  color: white;
-  background-color: #13152E;
-}
+
 .item-status{
   margin: 0;
   position:absolute;
   bottom: 0;
   background-color: #13152E;
+}
+
+.bottom-container{
+  color: white;
+  background-color: #13152e2a;
 }
 
 </style>
