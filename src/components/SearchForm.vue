@@ -7,7 +7,7 @@
       >
         <img
           class="search-icon"
-          src="../assets/search.svg"
+          src="@/assets/search.svg"
           alt="Search"
           width="20"
         >
@@ -17,13 +17,20 @@
           type="text"
           placeholder="Search"
         >
-        <label class="search-adult">  
-          <span>Include adult</span>
+        <div class="form-check">
+          <label
+            class="form-check-label"
+            for="flexCheckDefault"
+          >
+            Include adult
+          </label>
           <input
+            id="flexCheckDefault"
             v-model="adultIncluded"
+            class="form-check-input"
             type="checkbox"
           >
-        </label>
+        </div>
       </form>
     </div>
   </div> 
@@ -31,41 +38,68 @@
 
 <script>
 export default {
-  name: 'SearchComponent',
+  name: 'SearchForm',
   data() {
     return {
       searchValue: '',
-      prevSearchValue: '',
       adultIncluded: false,
-      prevAdultIncluded: ''
     };
   },
   computed: {
-    isSameSearchValue() {
-      return this.searchValue !== this.prevSearchValue
+    isNewSearchValue() {
+      return this.searchValue !== this.$route.query.query
     },
-    isSameAdultIncluded() {
-      return this.adultIncluded !== this.prevAdultIncluded
+    isNewAdultIncluded() {
+      return this.adultIncluded !== this.booleanQueryAdultIncluded
     },
-    searchCondition() {
-      if (this.isSameSearchValue === false && this.isSameAdultIncluded === false) {
-        return false
-      }
-      return true
+    isNewSearch() {
+      return this.isNewSearchValue || this.isNewAdultIncluded
+    },
+    booleanQueryAdultIncluded() {
+      return this.$route.query.include_adult === 'true'? true : false
     }
+  },
+  watch: { 
+      '$route.query': {
+          handler: function() {
+            if (!!this.$route.query.query && this.isNewSearchValue) {
+              this.searchValue = this.$route.query.query
+              this.adultIncluded = this.booleanQueryAdultIncluded
+              this.fetchData()
+            } else if (this.$route.query.query === undefined) {
+              this.searchValue = ''
+              this.adultIncluded = false
+            }
+          },
+          deep: true,
+          immediate: true
+        }
+  },
+  created() {
+    this.searchValue = this.$route.query.query
+    this.adultIncluded = this.booleanQueryAdultIncluded
   },
   methods: {
     onSubmit() {
-      if (this.searchValue && this.searchCondition) {
-        this.prevSearchValue = this.searchValue
-        this.prevAdultIncluded = this.adultIncluded
-        this.$store.dispatch('search/searchMovie', {
-          searchValue: this.searchValue,
-          adultIncluded: this.adultIncluded,
-        });
+      if (this.searchValue && this.isNewSearch) {
+        this.fetchData()
+          .then(() => {
+            this.$router.push({
+              query: {
+                include_adult:this.adultIncluded,
+                query: this.searchValue
+              }
+            })
+          })
       }
     },
-  },
+    fetchData() {
+      return this.$store.dispatch('search/searchMovie', {
+        searchValue: this.searchValue,
+        adultIncluded: this.adultIncluded,
+      })
+    }
+  }
 };
 </script>
 
@@ -87,13 +121,19 @@ export default {
   }
 }
 
-.search-adult {
+.form-check {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  white-space: nowrap;
+  padding: 0;
+  margin: 0;
   color: #888888;
+  label {
+    white-space: nowrap;
+  }
+  input {
+    margin-left: 0;
+  }
 }
 
 .search-wrapper {

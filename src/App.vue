@@ -11,12 +11,7 @@ import AppHeader from './components/AppHeader.vue';
 export default {
   name: 'App',
   components: {
-    AppHeader,
-  },
-  computed: {
-    env() {
-      return process.env;
-    },
+    AppHeader
   },
 };
 </script>
