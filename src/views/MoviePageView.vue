@@ -61,12 +61,6 @@
 <script>
 export default {
   name: 'MoviePageView',
-  data() {
-    return {
-      titleHeight:'150px',
-      imageHeight:'500px',
-    }
-  },
   computed: {
     item() {
       return this.$store.getters['movie/getItem']
@@ -94,7 +88,10 @@ export default {
 
 <style scoped lang="scss">
 .movie-page{
-  padding-top: v-bind(titleHeight);
+  --image-height-for-movie-page:500px;
+  --title-height-for-movie-page:150px;
+
+  padding-top: var(--title-height-for-movie-page);
   position: relative;
   background-color: #13152E;
   color: #fff;
@@ -103,7 +100,7 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  height: v-bind(imageHeight);
+  height: var(--image-height-for-movie-page);
   width: 100%;
   background-size: cover;
   background-position: center;
@@ -114,16 +111,16 @@ export default {
 }
 .top-container{
   position: relative;
-  height: v-bind(imageHeight);
+  height: var(--image-height-for-movie-page);
 
   .item-title{
     color: #fff;
-    height: v-bind(titleHeight);
+    height: var(--title-height-for-movie-page);
   }
   .poster{
     img{
       border:30px solid #13152E;
-      height: v-bind(imageHeight);
+      height: var(--image-height-for-movie-page);
     }
   }
 }
