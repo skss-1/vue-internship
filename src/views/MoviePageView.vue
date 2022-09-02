@@ -105,9 +105,6 @@ export default {
   background-size: cover;
   background-position: center;
   }
-  *{
-    border:2px solid tomato;
-  }
 }
 .top-container{
   position: relative;

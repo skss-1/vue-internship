@@ -3,7 +3,7 @@
     class="movie-card col-lg-2 col-md-2 col-sm-3 col-5 m-3 p-0"
     @click="goToMoviePage"
   >
-    <div class="card border-light">
+    <div class="card">
       <div class="card-image flex-grow-1">
         <img
           class="card-img-top"
@@ -62,9 +62,10 @@ export default {
   color: #fff;
   background-color: #13152E;
   overflow: hidden;
+  box-shadow: 0 4px 1.5rem 0px rgba(0, 0, 0, 0.6);
   &:hover{
-    box-shadow: 0 0px 1.5rem 0px rgba(255, 255, 255, 0.15);
     transform: scale(1.1);
+    box-shadow: 0 0px 1rem 0px rgba(255, 255, 255, 0.4);
   }
 }
 .card:active .card-body{
