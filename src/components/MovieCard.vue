@@ -47,8 +47,8 @@ export default {
         return `${posterPath}${this.item.poster_path}`
       }
   },
-  methods:{
-    goToMoviePage(){
+  methods: {
+    goToMoviePage() {
       this.$router.push({ name: 'movie-page', params: { id: this.item.id } })
     }
   }
