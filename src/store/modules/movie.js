@@ -25,7 +25,7 @@ export const movie = {
         this.dispatch('movie/fetchMovieCredits',{ id:id });
         commit('setItem', res.data);
       } catch (error) {
-        console.warn(error)
+        console.warn(error);
       }
     },
     async fetchMovieCredits({ commit },{ id }) {
@@ -36,7 +36,7 @@ export const movie = {
         }
         commit('setActors', res.data.cast.slice(0,20));
       } catch (error) {
-        console.warn(error)
+        console.warn(error);
       }
     }
   },

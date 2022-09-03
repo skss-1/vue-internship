@@ -49,7 +49,7 @@ export default {
 ::-webkit-scrollbar-thumb {
   margin: 2px;
   background: #020418;
-  border-radius:10px;
+  border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
   

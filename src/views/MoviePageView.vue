@@ -29,7 +29,8 @@
         <div class="fs-4 genres-heading d-flex gap-3 m-3"> 
           <p class="m-0">
             Genres
-          </p><div class="genres d-flex gap-3">
+          </p>
+          <div class="genres d-flex gap-3">
             <div 
               v-for="genre in item.genres" 
               :key="genre.id" 
@@ -49,15 +50,12 @@
           Credits 
         </div>
         <credits-scroll :credits="credits" />
-        
-        
         <p class="fs-4 companies-heading d-flex gap-3 m-0 px-2">
           Companies
         </p>
-        <div class="companies d-flex justify-content-center flex-wrap gap-3 p-4">
+        <div class="companies d-flex flex-wrap gap-3 p-4">
           <div 
             v-for="company in item.production_companies" 
-              
             :key="company.id"  
             class="fs-6 fw-lighter border border-light rounded py-2 px-3" 
           >
@@ -104,8 +102,8 @@ export default {
 <style scoped lang="scss">
 
 .movie-page{
-  --image-height-for-movie-page:500px;
-  --title-height-for-movie-page:150px;
+  --image-height-for-movie-page: 500px;
+  --title-height-for-movie-page: 150px;
 
   padding-top: var(--title-height-for-movie-page);
   position: relative;
@@ -132,24 +130,24 @@ export default {
   }
   .poster{
     img{
-      border:30px solid #13152E;
+      border: 30px solid #13152E;
       height: var(--image-height-for-movie-page);
     }
   }
 }
 
 .overview-heading{
-  padding:5px 10px;
-  border-left:10px double #fff ;
+  padding: 5px 10px;
+  border-left: 10px double #fff;
 }
 .overview{
-  padding:15px 5px;
+  padding: 15px 5px;
 }
 .credits-heading{
-  border-bottom:2px solid #fff ;
+  border-bottom: 2px solid #fff;
 }
 .companies-heading{
-  border-left:5px solid #fff ;
+  border-left: 5px solid #fff;
 }
 
 </style>
