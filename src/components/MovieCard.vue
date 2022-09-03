@@ -55,7 +55,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .card{
   min-height: 100%;
   transition-duration: 0.2s;

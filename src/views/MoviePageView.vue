@@ -17,53 +17,65 @@
       </div> 
     </div> 
     <div class="bottom-container"> 
-      <div class="container py-5"> 
-        <p class="h5 px-3">
-          Avarage score: {{ item.vote_average }}
-        </p> 
-        <p class="h3 px-2"> 
-          Release Date: {{ releaseDate }} 
-        </p> 
-        <p class="fs-4"> 
+      <div class="container"> 
+        <div class="top-row d-flex justify-content-center">
+          <p class="fs-5 px-3 fw-light">
+            Avarage score: <span class="fs-6 fw-normal">{{ item.vote_average }}</span>
+          </p> 
+          <p class="fs-5 px-2 fw-light"> 
+            Release Date: <span class="fs-6 fw-normal">{{ releaseDate }} </span>
+          </p>
+        </div>
+        <div class="fs-4 genres-heading d-flex gap-3 m-3"> 
+          <p class="m-0">
+            Genres
+          </p><div class="genres d-flex gap-3">
+            <div 
+              v-for="genre in item.genres" 
+              :key="genre.id" 
+              class="fs-6 fw-lighter border border-light rounded py-2 px-3" 
+            >
+              {{ genre.name }}
+            </div> 
+          </div>
+        </div> 
+        <div class="fs-2 overview-heading"> 
           Overview 
-        </p> 
-        <p class="fs-5 fw-lighter"> 
+        </div> 
+        <p class="fs-5 fw-lighter overview m-0"> 
           {{ item.overview }} 
         </p> 
-        <p class="fs-4"> 
-          Genres  
-          <span 
-            v-for="genre in item.genres" 
-            :key="genre.id" 
-            class="fs-6 fw-lighter" 
-          > {{ genre.name }} </span> 
-        </p> 
-        <div class="fs-4 actors"> 
-          <div
-            v-for="actor in credits"
-            :key="actor.id"
-            class="actor-card fs-6 fw-lighter" 
-          >
-            <p class="m-2 ">
-              {{ actor.name }}
-            </p>
-          </div> 
+        <div class="fs-4 credits-heading mx-3"> 
+          Credits 
+        </div>
+        <credits-scroll :credits="credits" />
+        
+        <div class="fs-4 companies-heading d-flex gap-3 m-3"> 
+          <p class="m-0">
+            Companies
+          </p><div class="companies d-flex gap-3">
+            <div 
+              v-for="company in item.production_companies" 
+              
+              :key="company.id"  
+              class="fs-6 fw-lighter border border-light rounded py-2 px-3" 
+            >
+              {{ company.name }}
+            </div> 
+          </div>
         </div> 
-        <p class="fs-4"> 
-          Companies  
-          <span 
-            v-for="company in item.production_companies" 
-            :key="company.id" 
-            class="fs-6 fw-lighter" 
-          > {{ company.name }}, </span> 
-        </p> 
       </div> 
     </div> 
   </div>
 </template>
 <script>
+import CreditsScroll from '@/components/CreditsScroll.vue'
+
 export default {
   name: 'MoviePageView',
+  components: {
+    CreditsScroll,
+  },
   computed: {
     item() {
       return this.$store.getters['movie/getItem']
@@ -90,36 +102,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-::-webkit-scrollbar{
-  height: 10px;
-}
-::-webkit-scrollbar-track {
-  background: none;
-}
-::-webkit-scrollbar-thumb {
-  margin: 2px;
-  background: #020418;
-  border-radius:10px;
-}
-::-webkit-scrollbar-thumb:hover {
-  
-  background: #050824;
-}
-.actors{
-  width: 100%;
-  white-space: nowrap;
-  overflow: auto;
-  padding: 0;
-}
-
-.actor-card{
-  width: 8vw;
-  height: 200px;
-  display:inline-block;
-  margin:0 20px; 
-  background-color: #1f2466;
-}
-
 
 .movie-page{
   --image-height-for-movie-page:500px;
@@ -154,6 +136,17 @@ export default {
       height: var(--image-height-for-movie-page);
     }
   }
+}
+
+.overview-heading{
+  padding:5px 10px;
+  border-left:10px double #fff ;
+}
+.overview{
+  padding:15px 5px;
+}
+.credits-heading{
+  border-bottom:2px solid #fff ;
 }
 
 </style>
