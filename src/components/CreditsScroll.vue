@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import { posterPath } from '@/api/tmdb-api'
+
 export default {
     name: 'CreditsScroll',
     props: {
@@ -30,7 +32,7 @@ export default {
     },
     methods: {
         imageUrl(profile_path) {
-            return `https://image.tmdb.org/t/p/original${profile_path}`
+            return `${posterPath}${profile_path}`
         },
     }
 }

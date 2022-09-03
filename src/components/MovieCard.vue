@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { pathFooPoster } from '@/api/tmdb-api'
+import { posterPath } from '@/api/tmdb-api'
 
 export default {
   name: 'MovieCard',
@@ -44,7 +44,7 @@ export default {
   },
     computed: {
       url() {
-        return `${pathFooPoster}${this.item.poster_path}`
+        return `${posterPath}${this.item.poster_path}`
       }
   },
   methods:{
@@ -85,7 +85,6 @@ export default {
   top: 0;
   left: 0;
   background-color: #13152E;
-  border: 1px solid #fff;
   border-left: none;
   border-top: none;
   border-bottom-right-radius: 5px;
