@@ -50,20 +50,20 @@
         </div>
         <credits-scroll :credits="credits" />
         
-        <div class="fs-4 companies-heading d-flex gap-3 m-3"> 
-          <p class="m-0">
-            Companies
-          </p><div class="companies d-flex gap-3">
-            <div 
-              v-for="company in item.production_companies" 
+        
+        <p class="fs-4 companies-heading d-flex gap-3 m-0 px-2">
+          Companies
+        </p>
+        <div class="companies d-flex justify-content-center flex-wrap gap-3 p-4">
+          <div 
+            v-for="company in item.production_companies" 
               
-              :key="company.id"  
-              class="fs-6 fw-lighter border border-light rounded py-2 px-3" 
-            >
-              {{ company.name }}
-            </div> 
-          </div>
-        </div> 
+            :key="company.id"  
+            class="fs-6 fw-lighter border border-light rounded py-2 px-3" 
+          >
+            {{ company.name }}
+          </div> 
+        </div>
       </div> 
     </div> 
   </div>
@@ -147,6 +147,9 @@ export default {
 }
 .credits-heading{
   border-bottom:2px solid #fff ;
+}
+.companies-heading{
+  border-left:5px solid #fff ;
 }
 
 </style>
