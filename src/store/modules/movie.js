@@ -22,7 +22,7 @@ export const movie = {
         if (!res.status) {
           throw new Error('Response is not ok')
         }
-        this.dispatch('movie/fetchMovieCredits',{ id:id });
+        this.dispatch('movie/fetchMovieCredits', { id: id });
         commit('setItem', res.data);
       } catch (error) {
         console.warn(error);

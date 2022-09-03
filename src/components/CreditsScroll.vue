@@ -4,6 +4,7 @@
       v-for="actor in credits"
       :key="actor.id"
       class="card actor-card"
+      @click="goToPersonPage(actor.id)"
     >
       <img
         :src="imageUrl(actor.profile_path)"
@@ -23,18 +24,21 @@
 import { posterPath } from '@/api/tmdb-api'
 
 export default {
-    name: 'CreditsScroll',
-    props: {
-        credits: {
-            type: Array,
-            required: true
-        }
-    },
-    methods: {
-        imageUrl(profile_path) {
-            return `${posterPath}${profile_path}`
-        },
+  name: 'CreditsScroll',
+  props: {
+    credits: {
+      type: Array,
+      required: true
     }
+  },
+  methods: {
+    imageUrl(profile_path) {
+      return `${posterPath}${profile_path}`
+      },
+    goToPersonPage(id) {
+      this.$router.push({ name: 'person-page', params: { id: id } })
+    }
+  }
 }
 </script>
 
