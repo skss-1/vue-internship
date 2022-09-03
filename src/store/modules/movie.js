@@ -17,18 +17,27 @@ export const movie = {
   },
   actions: {
     async fetchMovieDetails({ commit },{ id }) {
-        const res = await axios.get(
-          `${path}/movie/${id}?api_key=${process.env.VUE_APP_API_KEY}`
-        );
-        console.log(res)
+      try {
+        const res = await axios.get(`${path}/movie/${id}?api_key=${process.env.VUE_APP_API_KEY}`);
+        if (!res.status) {
+          throw new Error('Response is not ok')
+        }
         this.dispatch('movie/fetchMovieCredits',{ id:id });
         commit('setItem', res.data);
+      } catch (error) {
+        console.warn(error)
+      }
     },
     async fetchMovieCredits({ commit },{ id }) {
-        const res = await axios.get(
-          `${path}/movie/${id}/credits?api_key=${process.env.VUE_APP_API_KEY}`
-        );
+      try {
+        const res = await axios.get(`${path}/movie/${id}/credits?api_key=${process.env.VUE_APP_API_KEY}`);
+        if (!res.status) {
+          throw new Error('Response is not ok')
+        }
         commit('setActors', res.data.cast.slice(0,20));
+      } catch (error) {
+        console.warn(error)
+      }
     }
   },
   getters:{
