@@ -1,24 +1,42 @@
 <template>
-  <header>
-    <div class="nav-wrapper">
-      <div class="container">
-        <nav>
+  <header class="py-sm-4 py-md-5">
+    <div class="container text-white">
+      <nav class="row gx-3 nav mb-4">
+        <div class="col-12 col-md-3 col-lg-2">
           <a
             class="logo-link"
             href="/"
           >
-            <img
-              class="logo-image"
-              src="@/assets/logo.svg"
-              alt="logo"
-              width="50"
-            >
-            <span class="logo-title">CINEMA-PROJECT</span>
+            <span class="navbar-brand logo-icon material-symbols-outlined text-white">
+              movie
+            </span>
           </a>
-        </nav>
-      </div>
+        </div>
+        <div class="col col-md-9 col-lg-10 col-xl-10 d-flex align-items-center">
+          <ul class="navbar-nav flex-row">
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="#"
+              >Popular</a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="#"
+              >Top Rated</a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="#"
+              >Recent</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <search-form />
     </div>
-    <search-form />
   </header>
 </template>
 
@@ -34,32 +52,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.logo-image {
-  display: block;
-  margin-right: auto;
-}
+  header {
+    background-color: #0F1622;
+  }
 
-.logo-link {
-  display: inline-flex;
-  align-items: flex-end;
-  color: #fff;
-  text-decoration: none;
-}
-
-.logo-title {
-  margin-left: 10px;
-  font-size: 25px;
-  white-space: nowrap;
-}
-
-.nav-wrapper {
-  padding: 20px 0;
-  background: linear-gradient(90deg, rgba(57,117,11,1) 0%, 
-          rgba(121,193,66,1) 35%, rgb(177, 245, 125) 100%);
-}
-
-.nav {
-  display: flex;
-  justify-content: flex-start;
-}
+  .logo-icon {
+    font-size: 89px;
+  }
+  .nav-item {
+    font-size: 32px;
+    line-height: 38.73px;
+  }
+  .nav-item:not(:last-child) {
+    margin-right: 50px;
+  }
 </style>
