@@ -1,7 +1,7 @@
 <template>
   <div class="row g-4">
     <form
-      class="col-xl-12 col-xxl d-flex justify-content-between position-relative"
+      class="col-lg-9 col-xl-8 col-xxl-7 d-flex justify-content-between position-relative"
     >
       <input
         v-model.trim="searchValue"
@@ -14,7 +14,7 @@
         search
       </span>
       <button 
-        class="btn btn-light ms-sm-3 ms-md-4 ms-xl-3" 
+        class="btn btn-light ms-sm-3 ms-md-4 ms-xl-3 ms-xxl-4" 
         type="submit"
         @click.prevent="onSubmit"
       >
@@ -22,7 +22,7 @@
       </button>
     </form>
     <div class="col search-filter d-flex flex-wrap align-items-center justify-content-center">
-      <div class="row w-100 g-sm-3 g-md-0 justify-content-between justify-content-lg-evenly justify-content-xxl-between">
+      <div class="row w-100 g-sm-3 g-md-0 justify-content-start">
         <div class="col ps-sm-0 col-md-6 w-auto align-self-center order-last order-md-first form-checks">
           <input
             id="flexCheckDefault"
@@ -37,7 +37,7 @@
             Include adult
           </label>
         </div>
-        <select
+        <!-- <select
           class="col col-sm-6 col-md-6 form-select"
           aria-label="Select year"
         >
@@ -87,7 +87,7 @@
           <option>
             empty
           </option>
-        </select>
+        </select> -->
       </div>
     </div>
   </div>
@@ -142,6 +142,7 @@ export default {
         this.fetchData()
           .then(() => {
             this.$router.push({
+              path: '/search',
               query: {
                 include_adult:this.adultIncluded,
                 query: this.searchValue
@@ -165,12 +166,12 @@ form {
   color: #fff;
 }
 .form-control {
-  padding: 18px 20px 18px 92px;
-  max-width: 1092px;
-  background-color: #19202D;
+  padding: 13px 30px 13px 85px;
+  max-width: 600px;
+  background-color: $details-bg-color;
   color: #fff;
   &::placeholder {
-    color: #fff;
+    color: $white;
   }
   &:focus {
     &::placeholder, + .search {
@@ -181,17 +182,17 @@ form {
 
 .form-check-input {
   background-color: inherit;
-  border: 2px solid #fff;
+  border: 2px solid $white;
 }
 .search {
   left: 38px;
-  top: 17px;
+  top: 11px;
   font-size: 32px;
   color: currentColor;
 }
 
 .btn {
-  padding: 18px 48px;
+  padding: 0px 40px;
 }
 
 select {
@@ -200,7 +201,7 @@ select {
   height: 32px;
   border: none;
   color: #fff;
-  background-color: #19202D;
+  background-color: $details-bg-color;
   font-size: 16px;
   line-height: 19.36px;
 }

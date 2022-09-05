@@ -7,7 +7,28 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
+    redirect: '/popular',
     name: 'home',
+    component: HomeView
+  },
+  {
+    path: '/popular',
+    name: 'popular',
+    component: HomeView
+  },
+  {
+    path: '/top-rated',
+    name: 'top-rated',
+    component: HomeView
+  },
+  {
+    path: '/upcoming',
+    name: 'upcoming',
+    component: HomeView
+  },
+  {
+    path: '/search',
+    name: 'search',
     component: HomeView
   },
   {

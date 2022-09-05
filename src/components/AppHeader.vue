@@ -15,22 +15,28 @@
         <div class="col col-md-9 col-lg-10 col-xl-10 d-flex align-items-center">
           <ul class="navbar-nav flex-row">
             <li class="nav-item">
-              <a
+              <router-link
+                to="/popular"
                 class="nav-link"
-                href="#"
-              >Popular</a>
+              >
+                Popular
+              </router-link>
             </li>
             <li class="nav-item">
-              <a
+              <router-link
+                to="/top-rated"
                 class="nav-link"
-                href="#"
-              >Top Rated</a>
+              >
+                Top Rated
+              </router-link>
             </li>
             <li class="nav-item">
-              <a
+              <router-link
+                to="/upcoming"
                 class="nav-link"
-                href="#"
-              >Recent</a>
+              >
+                Upcoming
+              </router-link>
             </li>
           </ul>
         </div>
@@ -53,15 +59,14 @@ export default {
 
 <style lang="scss" scoped>
   header {
-    background-color: #0F1622;
+    background-color: $secondary-bg-color;
   }
 
   .logo-icon {
     font-size: 89px;
   }
   .nav-item {
-    font-size: 32px;
-    line-height: 38.73px;
+    font-size: 28px;
   }
   .nav-item:not(:last-child) {
     margin-right: 50px;
