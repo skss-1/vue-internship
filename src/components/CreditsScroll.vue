@@ -1,16 +1,16 @@
 <template>
-  <div class="credits my-3">
+  <div class="credits-scroll my-3">
     <div
       v-for="actor in credits"
       :key="actor.id"
-      class="card actor-card"
+      class="card actor-card d-flex"
     >
       <img
         :src="imageUrl(actor.profile_path)"
-        class="card-img-top"
+        class="card-img-top flex-grow-1"
         :alt="`${actor.name}-image`"
       >
-      <div class="card-body p-1">
+      <div class="card-body p-1 flex-grow-0">
         <p class="card-text text-center fw-lighter">
           {{ actor.name }}
         </p>
@@ -20,26 +20,25 @@
 </template>
 
 <script>
-import { posterPath } from '@/api/tmdb-api'
+import { posterPath } from '@/api/tmdb-api';
 
 export default {
-    name: 'CreditsScroll',
-    props: {
-        credits: {
-            type: Array,
-            required: true
-        }
-    },
-    methods: {
-        imageUrl(profile_path) {
-            return `${posterPath}${profile_path}`
-        },
+  name: 'CreditsScroll',
+  props: {
+    credits: {
+      type: Array,
+      required: true,
     }
+  },
+  methods: {
+    imageUrl(profile_path) {
+      return `${posterPath}${profile_path}`;
+    },
+  }
 }
 </script>
 
 <style scoped lang="scss">
-
 ::-webkit-scrollbar{
   height: 10px;
 }
@@ -52,22 +51,21 @@ export default {
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  
   background: #050824;
 }
-.credits{
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: 12%;
-    gap: 10px;
-    overflow-x: auto;
+.credits-scroll{
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 12%;
+  gap: 10px;
+  overflow-x: auto;
 }
 
 .actor-card{
-    padding: 5px;
-    background-color: #1f2466;
-    img{
-        inline-size: 100%;
-    }
+  padding: 5px;
+  background-color: #1f2466;
+  img{
+    inline-size: 100%;
+  }
 }
 </style>
