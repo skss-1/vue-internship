@@ -67,7 +67,8 @@
   </div>
 </template>
 <script>
-import CreditsScroll from '@/components/CreditsScroll.vue'
+import CreditsScroll from '@/components/CreditsScroll.vue';
+import { posterPath } from '@/api/tmdb-api';
 
 export default {
   name: 'MoviePageView',
@@ -76,21 +77,20 @@ export default {
   },
   computed: {
     item() {
-      return this.$store.getters['movie/getItem']
+      return this.$store.getters['movie/getItem'];
     },
     credits() {
-      return this.$store.getters['movie/getActors']
+      return this.$store.getters['movie/getActors'];
     },
     posterUrl() {
-      return `https://image.tmdb.org/t/p/original${this.item.poster_path}`
+      return `${posterPath}${this.item.poster_path}`;
     },
     backgroundUrl() {
-      return `backgroundImage: linear-gradient(0deg, rgba(19, 21, 46, 0.7), rgba(19, 21, 46, 0.7)), url(https://image.tmdb.org/t/p/original${this.item.backdrop_path})`
+      return `backgroundImage: linear-gradient(0deg, rgba(19, 21, 46, 0.7), rgba(19, 21, 46, 0.7)), url(${posterPath}${this.item.backdrop_path})`;
     },
     releaseDate() {
-        const month= ['January','February','March','April','May','June','July','August','September','October','November','December']
-        let date=`${month[+this.item.release_date.slice(5,7) -1]} ${+this.item.release_date.slice(8,10)} ${this.item.release_date.slice(0,4)}`
-        return date
+      const releaseDate = new Date(Date.parse(this.item.release_date));
+      return releaseDate.toLocaleString('en', { dateStyle: 'long' });
     }
   },
    mounted() {
@@ -100,16 +100,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 .movie-page{
   --image-height-for-movie-page: 500px;
   --title-height-for-movie-page: 150px;
-
   padding-top: var(--title-height-for-movie-page);
   position: relative;
   background-color: #13152E;
   color: #fff;
-
   .background-poster{ 
   position: absolute;
   top: 0;
@@ -123,7 +120,6 @@ export default {
 .top-container{
   position: relative;
   height: var(--image-height-for-movie-page);
-
   .item-title{
     color: #fff;
     height: var(--title-height-for-movie-page);
@@ -135,7 +131,6 @@ export default {
     }
   }
 }
-
 .overview-heading{
   padding: 5px 10px;
   border-left: 10px double #fff;
@@ -149,5 +144,4 @@ export default {
 .companies-heading{
   border-left: 5px solid #fff;
 }
-
 </style>

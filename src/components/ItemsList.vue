@@ -1,5 +1,8 @@
 <template>
-  <div class="items-list container p-0">
+  <div
+    class="items-list container p-0"
+    tabindex="0"
+  >
     <div class="row justify-content-evenly">
       <movie-card
         v-for="item in items"
@@ -11,12 +14,12 @@
 </template>
 
 <script>
-import MovieCard from './MovieCard.vue'
+import MovieCard from './MovieCard.vue';
 
 export default {
   name: 'ItemsList',
   components: {
-    MovieCard
+    MovieCard,
   },
   props: {
     items: {

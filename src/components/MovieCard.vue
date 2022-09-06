@@ -1,9 +1,11 @@
 <template>
-  <div
-    class="movie-card col-lg-2 col-md-2 col-sm-3 col-5 m-3 p-0"
-    @click="goToMoviePage"
-  >
-    <div class="card">
+  <div class="movie-card col-lg-2 col-md-2 col-sm-3 col-5 m-3 p-0"> 
+    <div
+      class="card"
+      tabindex="0"
+      @click="goToMoviePage"
+      @keydown.enter.esc="goToMoviePage"
+    >
       <div class="card-image flex-grow-1">
         <img
           class="card-img-top"
@@ -32,7 +34,7 @@
 </template>
 
 <script>
-import { posterPath } from '@/api/tmdb-api'
+import { posterPath } from '@/api/tmdb-api';
 
 export default {
   name: 'MovieCard',
@@ -42,14 +44,14 @@ export default {
       required: true,
     }
   },
-    computed: {
-      url() {
-        return `${posterPath}${this.item.poster_path}`
-      }
+  computed: {
+    url() {
+      return `${posterPath}${this.item.poster_path}`;
+    }
   },
   methods: {
     goToMoviePage() {
-      this.$router.push({ name: 'movie-page', params: { id: this.item.id } })
+      this.$router.push({ name: 'movie-page', params: { id: this.item.id } });
     }
   }
 }
@@ -57,13 +59,14 @@ export default {
 
 <style scoped lang="scss">
 .card{
+  cursor: pointer;
   min-height: 100%;
   transition-duration: 0.2s;
   color: #fff;
   background-color: #13152E;
   overflow: hidden;
   box-shadow: 0 4px 1.5rem 0px rgba(0, 0, 0, 0.6);
-  &:hover{
+  &:hover {
     transform: scale(1.1);
     box-shadow: 0 0px 1rem 0px rgba(255, 255, 255, 0.4);
   }

@@ -1,8 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import HomeView from '@/views/HomeView.vue';
-import MoviePageView from '@/views/MoviePageView';
-import PersonPageView from '@/views/PersonPageView';
 
 Vue.use(VueRouter)
 
@@ -10,17 +7,17 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: () => import('@/views/HomeView.vue'),
   },
   {
     path: '/movie/:id',
     name: 'movie-page',
-    component: MoviePageView,
+    component: () => import('@/views/MoviePageView'),
   },
   {
     path: '/person/:id',
     name: 'person-page',
-    component: PersonPageView,
+    component: () => import('@/views/PersonPageView'),
   },
   {
     path: '/about',
