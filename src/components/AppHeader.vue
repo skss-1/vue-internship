@@ -65,9 +65,11 @@ export default {
   .logo-icon {
     font-size: 89px;
   }
+
   .nav-item {
     font-size: 28px;
   }
+  
   .nav-item:not(:last-child) {
     margin-right: 50px;
   }
