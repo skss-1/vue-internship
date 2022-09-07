@@ -18,4 +18,7 @@ export default {
 
 <style lang="scss">
 @import '~bootstrap/scss/bootstrap';
+#app {
+  font-family: 'Inter', sans-serif;
+}
 </style>

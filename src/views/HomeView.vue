@@ -1,9 +1,5 @@
 <template>
   <div class="home-page py-3">
-    <movie-filter
-      v-model="selectValue"
-      @change="fetchMovies"
-    />
     <div
       v-show="!items.length"
       class="container p-5 h3"
@@ -18,14 +14,12 @@
 </template>
 
 <script>
-import MovieFilter from '../components/MovieFilter.vue';
 import ItemsList from '../components/ItemsList.vue';
 // @ is an alias to /src
 export default {
   name: 'HomeView',
   components: { 
-    ItemsList,
-    MovieFilter 
+    ItemsList
   },
   data() {
     return {
@@ -37,23 +31,27 @@ export default {
       return this.$store.getters['search/getItems'];
     }
   },
-  mounted() {
-    this.fetchMovies();
+  beforeRouteEnter(to, from, next) {
+      next(vm => {
+        if (vm.$route.path !== '/') {
+          vm.fetchMovies(vm.$route.path)
+        }
+    })
   },
   methods: {
-    fetchMovies() {
-      switch(this.selectValue) {
-        case 'top-rated':
+    fetchMovies(path) {
+      switch(path) {
+        case '/top-rated':
           this.$store.dispatch('search/fetchTopRatedMovies');
           break;
-        case 'upcoming':
+        case '/upcoming':
           this.$store.dispatch('search/fetchUpcomingMovies');
           break;
-        case 'popular':
+        case '/popular':
           this.$store.dispatch('search/fetchPopularMovies');
           break;
         default:
-          console.log('Something broke');
+          console.info('Un-handled path: ', path)
           break;
       }
     }
