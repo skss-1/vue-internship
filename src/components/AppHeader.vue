@@ -90,10 +90,6 @@ export default {
   .nav-link {
     color: $white;
   }
-  
-  .nav-item:not(:last-child) {
-    margin-right: 50px;
-  }
 
   .navbar-toggler {
     width: 50px;
