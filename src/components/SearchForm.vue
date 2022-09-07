@@ -12,7 +12,7 @@
         search
       </span>
       <button 
-        class="btn btn-light ms-sm-3 ms-md-4 ms-xl-3 ms-xxl-4" 
+        class="btn btn-light ms-sm-3 ms-md-4 ms-xl-3 ms-xxl-4 d-none d-md-inline-block" 
         type="submit"
         @click.prevent="onSubmit"
       >
@@ -21,7 +21,7 @@
     </form>
     <div class="col search-filter d-flex flex-wrap align-items-center justify-content-center">
       <div class="row w-100 g-sm-3 g-md-0 justify-content-start">
-        <div class="col ps-sm-0 col-md-6 w-auto align-self-center order-last order-md-first form-checks">
+        <div class="col ps-0 col-md-6 w-auto align-self-center order-last order-md-first form-checks">
           <input
             id="flexCheckDefault"
             v-model="adultIncluded"
