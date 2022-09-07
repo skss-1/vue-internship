@@ -1,13 +1,17 @@
 <template>
   <div class="home-page py-3">
     <div
-      v-show="!items.length"
+      v-if="!loaded"
+      class="spinner d-flex justify-content-center align-items-center"
+    />
+    <div
+      v-show="!items.length && loaded"
       class="container p-5 h3"
     >
       No movies found 
     </div>
     <items-list
-      v-if="!!items"
+      v-if="!!items && loaded"
       :items="items"
     />
   </div>
@@ -23,13 +27,17 @@ export default {
   },
   data() {
     return {
-      selectValue: 'popular'
+      selectValue: 'popular',
+      loaded: false
     }
   },
   computed: {
     items() {
       return this.$store.getters['search/getItems'];
     }
+  },
+  beforeUpdate() {
+    this.loaded = true
   },
   beforeRouteEnter(to, from, next) {
       next(vm => {
@@ -62,5 +70,9 @@ export default {
 <style scoped lang="scss">
 .home-page{
   background-color: #020916;
+}
+svg {
+  width: 50%;
+  height: 50%;
 }
 </style>

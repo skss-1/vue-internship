@@ -1,5 +1,8 @@
 <template>
-  <div id="app">
+  <div
+    id="app"
+    class="vh-100"
+  >
     <app-header />
     <router-view />
   </div>
@@ -20,5 +23,6 @@ export default {
 @import '~bootstrap/scss/bootstrap';
 #app {
   font-family: 'Inter', sans-serif;
+  background-color: $base-bg-color;
 }
 </style>
