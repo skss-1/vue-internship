@@ -23,8 +23,7 @@ export default {
   },
   data() {
     return {
-      selectValue: 'popular',
-      mount: false
+      selectValue: 'popular'
     }
   },
   computed: {
@@ -35,7 +34,6 @@ export default {
   beforeRouteEnter(to, from, next) {
       next(vm => {
         if (vm.$route.path !== '/') {
-          console.log('fetch')
           vm.fetchMovies(vm.$route.path)
         }
     })
