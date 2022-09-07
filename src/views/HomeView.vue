@@ -23,7 +23,8 @@ export default {
   },
   data() {
     return {
-      selectValue: 'popular'
+      selectValue: 'popular',
+      mount: false
     }
   },
   computed: {
@@ -34,6 +35,7 @@ export default {
   beforeRouteEnter(to, from, next) {
       next(vm => {
         if (vm.$route.path !== '/') {
+          console.log('fetch')
           vm.fetchMovies(vm.$route.path)
         }
     })
@@ -50,13 +52,8 @@ export default {
         case '/popular':
           this.$store.dispatch('search/fetchPopularMovies');
           break;
-        case '/search':
-          break;
-        case '/':
-          this.$store.dispatch('search/fetchPopularMovies');
-          break;
         default:
-          console.log('Something broke');
+          console.info('Un-handled path: ', path)
           break;
       }
     }

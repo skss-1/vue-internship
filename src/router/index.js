@@ -11,6 +11,26 @@ const routes = [
     component: () => import('@/views/HomeView.vue')
   },
   {
+    path: '/popular',
+    name: 'popular',
+    component: () => import('@/views/HomeView.vue')
+  },
+  {
+    path: '/top-rated',
+    name: 'top-rated',
+    component: () => import('@/views/HomeView.vue')
+  },
+  {
+    path: '/upcoming',
+    name: 'upcoming',
+    component: () => import('@/views/HomeView.vue')
+  },
+  {
+    path: '/search',
+    name: 'search',
+    component: () => import('@/views/HomeView.vue')
+  },
+  {
     path: '/movie/:id',
     name: 'movie-page',
     component: () => import('@/views/MoviePageView')

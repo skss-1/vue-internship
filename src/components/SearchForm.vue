@@ -1,8 +1,6 @@
 <template>
   <div class="row g-4">
-    <form
-      class="col-lg-9 col-xl-8 col-xxl-7 d-flex justify-content-between position-relative"
-    >
+    <form class="col-lg-9 col-xl-8 col-xxl-7 d-flex justify-content-between position-relative">
       <input
         v-model.trim="searchValue"
         class="form-control border-0 rounded-5"
