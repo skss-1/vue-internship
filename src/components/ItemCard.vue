@@ -1,10 +1,10 @@
 <template>
-  <div class="movie-card col-lg-2 col-md-2 col-sm-3 col-5 m-3 p-0"> 
+  <div class="item-card col-lg-2 col-md-2 col-sm-3 col-5 m-3 p-0"> 
     <div
       class="card"
       tabindex="0"
-      @click="goToMoviePage"
-      @keydown.enter.esc="goToMoviePage"
+      @click="goToItemPage"
+      @keydown.enter.esc="goToItemPage"
     >
       <div class="card-image flex-grow-1">
         <img
@@ -52,7 +52,7 @@ export default {
   },
   computed: {
     title() {
-      switch(this.item.media_type){
+      switch(this.item.media_type) {
         case 'movie':
           return this.item.title;
         case 'tv':
@@ -64,7 +64,7 @@ export default {
       }
     },
     type() {
-      switch(this.item.media_type){
+      switch(this.item.media_type) {
         case 'movie':
           return 'Movie';
         case 'tv':
@@ -76,7 +76,7 @@ export default {
       }
     },
     url() {
-      switch(this.item.media_type){
+      switch(this.item.media_type) {
         case 'movie':
           return `${posterPath}${this.item.poster_path}`;
         case 'tv':
@@ -88,7 +88,7 @@ export default {
       }
     },
     date() {
-      if(this.item.release_date){
+      if(this.item.release_date) {
         const  itemDate = new Date(Date.parse(this.item.release_date));
         return itemDate.toLocaleString('en', { year: 'numeric' });
       }
@@ -96,8 +96,22 @@ export default {
     }
   },
   methods: {
-    goToMoviePage() {
-      this.$router.push({ name: 'movie-page', params: { id: this.item.id } });
+    goToItemPage() {
+      switch(this.item.media_type) {
+        case 'movie':
+          this.$router.push({ name: 'movie-page', params: { id: this.item.id } });
+          break;
+        case 'tv':
+          // this.$router.push({ name: 'tv-page', params: { id: this.item.id } });
+          break;
+        case 'person':
+            // this.$router.push({ name: 'person-page', params: { id: this.item.id } });
+          break;
+        default:
+          return 'unknown';
+          // incert 404 page here
+      }
+      
     }
   }
 }
