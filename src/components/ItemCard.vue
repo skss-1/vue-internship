@@ -12,20 +12,26 @@
           :src="url"
           :alt="item.title+' poster image'"
         >
-        <p class="h4 card-rating">
+        <p
+          v-if="item.vote_average"
+          class="h4 card-rating"
+        >
           {{ item.vote_average }}
         </p>
       </div>
       <div class="card-body flex-grow-0">
         <div class="card-title h5 overflow-hidden">
-          {{ item.title }}
+          {{ title }}
         </div>
         <div class="card-text d-flex justify-content-start gap-2">
-          <p class="h6 card-date fw-lighter">
-            {{ item.release_date.slice(0,4) }}  
-          </p>
           <p class="card-type h6 fw-normal">
-            Film 
+            {{ type }}
+          </p>
+          <p
+            v-show="date"
+            class="h6 card-date fw-lighter"
+          >
+            {{ date }}  
           </p>
         </div>
       </div>
@@ -37,7 +43,7 @@
 import { posterPath } from '@/api/tmdb-api';
 
 export default {
-  name: 'MovieCard',
+  name: 'ItemCard',
   props: {
     item: {
       type: Object,
@@ -45,8 +51,48 @@ export default {
     }
   },
   computed: {
+    title() {
+      switch(this.item.media_type){
+        case 'movie':
+          return this.item.title;
+        case 'tv':
+          return this.item.name;
+        case 'person':
+          return this.item.name;
+        default:
+          return 'unknown';
+      }
+    },
+    type() {
+      switch(this.item.media_type){
+        case 'movie':
+          return 'Movie';
+        case 'tv':
+          return 'TV';
+        case 'person':
+          return 'Person';
+        default:
+          return 'unknown';
+      }
+    },
     url() {
-      return `${posterPath}${this.item.poster_path}`;
+      switch(this.item.media_type){
+        case 'movie':
+          return `${posterPath}${this.item.poster_path}`;
+        case 'tv':
+          return `${posterPath}${this.item.poster_path}`;
+        case 'person':
+          return `${posterPath}${this.item.profile_path}`;
+        default:
+          return 'unknown';
+      }
+    },
+    date() {
+      if(this.item.release_date){
+        const  itemDate = new Date(Date.parse(this.item.release_date));
+        return itemDate.toLocaleString('en', { year: 'numeric' });
+      }
+        return null;
     }
   },
   methods: {

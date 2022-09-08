@@ -150,7 +150,7 @@ export default {
       }
     },
     fetchData() {
-      return this.$store.dispatch('search/searchMovie', {
+      return this.$store.dispatch('search/search', {
         searchValue: this.searchValue,
         adultIncluded: this.adultIncluded,
       })

@@ -13,9 +13,9 @@ export const search = {
     },
   },
   actions: {
-    async searchMovie({ commit }, { searchValue, adultIncluded }) {
+    async search({ commit }, { searchValue, adultIncluded }) {
       try {
-        const res = await axios.get(`${path}/search/movie?api_key=${process.env.VUE_APP_API_KEY}&include_adult=${adultIncluded}&query=${searchValue}`)
+        const res = await axios.get(`${path}/search/multi?api_key=${process.env.VUE_APP_API_KEY}&include_adult=${adultIncluded}&query=${searchValue}`)
         if (!res.status) {
           throw new Error('Response is not ok')
         }
