@@ -12,11 +12,16 @@
         search
       </span>
       <button 
-        class="btn btn-light ms-sm-3 ms-md-4 ms-xl-3 ms-xxl-4 d-none d-md-inline-block" 
+        class="btn btn-light ms-2 ms-sm-3 ms-md-4 ms-xl-3 ms-xxl-4 d-md-inline-block px-3 px-md-4 d-flex justify-content-center align-items-center" 
         type="submit"
         @click.prevent="onSubmit"
       >
-        Search
+        <span class="material-symbols-outlined d-md-none">
+          subdirectory_arrow_left
+        </span>
+        <span class="d-none d-md-inline-block px-lg-2">
+          Search
+        </span>
       </button>
     </form>
     <div class="col search-filter d-flex flex-wrap align-items-center justify-content-center">
@@ -187,10 +192,6 @@ form {
   top: 11px;
   font-size: 32px;
   color: currentColor;
-}
-
-.btn {
-  padding: 0px 40px;
 }
 
 select {
