@@ -10,51 +10,92 @@
       v-if="!!items"
       :items="items"
     />
+    <pagination 
+      :total-pages="totalPages"
+      :page="page"
+      @onChange="changePage"
+    />
   </div>
 </template>
 
 <script>
-import ItemsList from '../components/ItemsList.vue';
+import ItemsList from '@/components/ItemsList.vue';
+import Pagination from '@/components/Pagination.vue';
 // @ is an alias to /src
 export default {
   name: 'HomeView',
   components: { 
-    ItemsList
+    ItemsList,
+    Pagination
   },
   data() {
     return {
-      selectValue: 'popular'
+      page: this.$store.getters['search/getCurrentPage'],
+      currentRoute: this.$route.path
     }
   },
   computed: {
     items() {
       return this.$store.getters['search/getItems'];
+    },
+    totalPages() {
+      return this.$store.getters['search/getTotalPages'];
+    },
+    currentPage() {
+      return this.$store.getters['search/getCurrentPage'];
     }
   },
   beforeRouteEnter(to, from, next) {
       next(vm => {
-        if (vm.$route.path !== '/') {
-          vm.fetchMovies(vm.$route.path)
+        if (vm.$route.path !== '/' && vm.$route.path !== '/search') {
+          vm.fetchMovies(vm.$route.path, vm.currentPage).then(() => {
+            vm.$router.push({
+              query: {
+                query:vm.$route.query.query,
+                include_adult:vm.$route.query.include_adult,
+                page: vm.currentPage
+              }
+            })
+          })
         }
     })
   },
   methods: {
-    fetchMovies(path) {
+    fetchMovies(path, page) {
+      if(path !== this.currentRoute) {
+        page = 1
+        this.currentRoute = path
+      }
       switch(path) {
         case '/top-rated':
-          this.$store.dispatch('search/fetchTopRatedMovies');
-          break;
+          return this.$store.dispatch('search/fetchTopRatedMovies', { page });
         case '/upcoming':
-          this.$store.dispatch('search/fetchUpcomingMovies');
-          break;
+          return this.$store.dispatch('search/fetchUpcomingMovies', { page });
         case '/popular':
-          this.$store.dispatch('search/fetchPopularMovies');
-          break;
+          return this.$store.dispatch('search/fetchPopularMovies', { page });
+        case '/search':
+          return this.$store.dispatch('search/searchMovie', {
+            searchValue:this.$route.query.query,
+            adultIncluded:this.$route.query.include_adult,
+            page: this.page,
+          });
         default:
           console.info('Un-handled path: ', path)
           break;
       }
-    }
+    },
+    changePage(newPage) {
+      this.page = newPage
+      this.fetchMovies(this.$route.path, this.page).then(() => {
+        this.$router.push({
+          query: {
+            include_adult:this.$route.query.include_adult,
+            query:this.$route.query.query,
+            page: this.page
+          }
+        })
+      })
+    },
   }
 };
 </script>

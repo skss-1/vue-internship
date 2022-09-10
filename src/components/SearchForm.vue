@@ -112,6 +112,9 @@ export default {
     },
     booleanQueryAdultIncluded() {
       return this.$route.query.include_adult === 'true'? true : false
+    },
+    currentPage() {
+      return this.$store.getters['search/getCurrentPage'];
     }
   },
   watch: { 
@@ -143,7 +146,8 @@ export default {
               path: '/search',
               query: {
                 include_adult:this.adultIncluded,
-                query: this.searchValue
+                query: this.searchValue,
+                page: 1
               }
             })
           })
@@ -153,6 +157,7 @@ export default {
       return this.$store.dispatch('search/searchMovie', {
         searchValue: this.searchValue,
         adultIncluded: this.adultIncluded,
+        page: 1
       })
     }
   }
