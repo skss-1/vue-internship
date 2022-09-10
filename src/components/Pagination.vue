@@ -180,6 +180,7 @@ export default {
     'currentPage': {
       handler: function() {
         this.$emit('onChange', this.currentPage)
+        document.querySelector('header').scrollIntoView({ block: 'center', behavior: 'smooth' })
       }
     },
     '$route.path': {
