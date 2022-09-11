@@ -6,10 +6,18 @@ export const search = {
   namespaced: true,
   state: () => ({
     itemsList: [],
+    regions: [],
+    languages: [],
   }),
   mutations: {
     setItems(state, payload) {
       state.itemsList = [...payload];
+    },
+    setRegions(state, payload) {
+      state.regions = [...payload];
+    },
+    setLanguages(state, payload) {
+      state.languages = [...payload];
     },
   },
   actions: {
@@ -56,9 +64,33 @@ export const search = {
       } catch (error) {
         console.warn(error)
       }
+    },
+    async fetchRegions({ commit }) {
+      try {
+        const res = await axios.get(`${path}/watch/providers/regions?api_key=${process.env.VUE_APP_API_KEY}`);
+        if (!res.status) {
+          throw new Error('Response is not ok')
+        }
+        commit('setRegions', res.data.results);
+      } catch (error) {
+        console.warn(error)
+      }
+    },
+    async fetchLanguages({ commit }) {
+      try {
+        const res = await axios.get(`${path}/configuration/languages?api_key=${process.env.VUE_APP_API_KEY}`);
+        if (!res.status) {
+          throw new Error('Response is not ok')
+        }
+        commit('setLanguages', res.data.results);
+      } catch (error) {
+        console.warn(error)
+      }
     }
   },
   getters: {
-    getItems:(state) => state.itemsList
+    getItems:(state) => state.itemsList,
+    getRegions:(state) => state.regions,
+    getLanguages:(state) => state.languages
   }
 }
