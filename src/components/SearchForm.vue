@@ -35,57 +35,63 @@
             Include adult
           </label>
         </div>
-        <!-- <select
+        <select
+          v-model="year"
           class="col col-sm-6 col-md-6 form-select"
           aria-label="Select year"
         >
-          <option selected>
-            Year
+          <option
+            selected
+            value=""
+          >
+            Any Year
           </option>
-          <option>
-            empty
-          </option>
-          <option>
-            empty
-          </option>
-          <option>
-            empty
+          <option
+            v-for="y in years"
+            :key="y"
+            :value="y"
+          >
+            {{ y }}
           </option>
         </select>
         <select
+          v-model="region"
           class="col col-sm-6 col-md-6 form-select"
           aria-label="Select region"
         >
-          <option selected>
-            Region
+          <option
+            selected
+            value=""
+          >
+            Any Region
           </option>
-          <option>
-            empty
-          </option>
-          <option>
-            empty
-          </option>
-          <option>
-            empty
+          <option
+            v-for="reg in regions"
+            :key="reg.iso_3166_1"
+            :value="reg.iso_3166_1"
+          >
+            {{ reg.english_name }}
           </option>
         </select>
         <select
+          v-model="language"
           class="col col-sm-6 col-md-6 form-select"
           aria-label="Select language"
         >
-          <option selected>
-            Language
+          <option
+            selected
+            value=""
+          >
+            Any Language
           </option>
-          <option>
-            empty
+          <option
+            v-for="lang in languages"
+            :key="lang.iso_639_1"
+            :value="lang.iso_639_1"
+          >
+            {{ lang.english_name }}
           </option>
-          <option>
-            empty
-          </option>
-          <option>
-            empty
-          </option>
-        </select> -->
+        </select>
       </div>
     </div>
   </div>
@@ -98,6 +104,9 @@ export default {
     return {
       searchValue: '',
       adultIncluded: false,
+      region: '',
+      language: '',
+      year:'',
     };
   },
   computed: {
@@ -108,11 +117,45 @@ export default {
       return this.adultIncluded !== this.booleanQueryAdultIncluded
     },
     isNewSearch() {
-      return this.isNewSearchValue || this.isNewAdultIncluded
+      if(JSON.stringify(this.query) === JSON.stringify(this.$route.query)) {
+        return false
+      } else {
+        return true
+      }
     },
     booleanQueryAdultIncluded() {
       return this.$route.query.include_adult === 'true'? true : false
-    }
+    },
+    regions() {
+      return this.$store.getters['search/getRegions'];
+    },
+    languages() {
+      return this.$store.getters['search/getLanguages'];
+    },
+    query() {
+      const query = { query: this.searchValue } 
+      if(this.adultIncluded){
+        query.include_adult = this.adultIncluded;
+      }
+      if(this.region){
+        query.region = this.region;
+      }
+      if(this.language){
+        query.language = this.language;
+      }
+      if(this.year){
+        query.year = this.year;
+      }
+      return query
+    },
+    years() {
+      const currentYear = new Date().getFullYear();
+      const years =[];
+      for(let i = currentYear;i>=1900;i--){
+        years.push(i)
+      }
+      return years
+    },
   },
   watch: { 
       '$route.query': {
@@ -133,18 +176,17 @@ export default {
   created() {
     this.searchValue = this.$route.query.query
     this.adultIncluded = this.booleanQueryAdultIncluded
+    this.$store.dispatch('search/fetchRegions');
+    this.$store.dispatch('search/fetchLanguages');
   },
   methods: {
     onSubmit() {
-      if (this.searchValue && this.isNewSearch) {
+      if (this.isNewSearch && this.searchValue) {
         this.fetchData()
           .then(() => {
             this.$router.push({
               path: '/search',
-              query: {
-                include_adult:this.adultIncluded,
-                query: this.searchValue
-              }
+              query: this.query,
             })
           })
       }
@@ -153,6 +195,9 @@ export default {
       return this.$store.dispatch('search/search', {
         searchValue: this.searchValue,
         adultIncluded: this.adultIncluded,
+        region: this.region,
+        language: this.language,
+        year: this.year,
       })
     }
   }
