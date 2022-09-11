@@ -247,12 +247,6 @@ export default {
             this.changePage()
             this.scrollUp()
           }
-          // if (this.currentRoute !== this.$route.path) {
-          //   this.pageReset()
-          //   this.currentRoute = this.$route.path
-          //   this.changeParams()
-          //   this.changePage()
-          // }
         }
         if (this.currentRoute === '/search') {
           if (this.currentPage !== this.page) {
@@ -271,16 +265,6 @@ export default {
             this.currentRoute = this.$route.path
             this.pageReset()
           }
-          // if (this.$route.query.query !== this.currentQuery) {
-          //   this.pageReset()
-          //   this.currentQuery = this.$route.query.query
-          //   this.changeParams()
-          // }
-          // if (this.$route.query.include_adult !== this.currentAdultIncludet) {
-          //   this.pageReset()
-          //   this.currentAdultIncludet = this.$route.query.include_adult
-          //   this.changeParams()
-          // }
           if (this.$route.path === this.currentRoute && Object.keys(this.$route.query).length === 0) {
             this.pageReset()
             this.changeParams()
@@ -301,7 +285,6 @@ export default {
     }
   },
   created() {
-    let screenWidth = document.querySelector('header').offsetWidth
     this.currentPage = +this.$route.query.page || 1
   },
   methods: {
