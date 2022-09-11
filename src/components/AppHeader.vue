@@ -18,6 +18,7 @@
               <router-link
                 to="/popular"
                 class="nav-link"
+                :class="popularDisabledClass"
               >
                 Popular
               </router-link>
@@ -26,6 +27,7 @@
               <router-link
                 to="/top-rated"
                 class="nav-link"
+                :class="topRatedDisabledClass"
               >
                 Top Rated
               </router-link>
@@ -34,6 +36,7 @@
               <router-link
                 to="/upcoming"
                 class="nav-link"
+                :class="upcomingDisabledClass"
               >
                 Upcoming
               </router-link>
@@ -54,6 +57,17 @@ export default {
     components: {
         SearchForm,
     },
+    computed: {
+      popularDisabledClass() {
+        return { disabled : (this.$route.path === '/popular' && this.$route.query.page === '1') }
+      },
+      topRatedDisabledClass() {
+        return { disabled : (this.$route.path === '/top-rated' && this.$route.query.page === '1') }
+      },
+      upcomingDisabledClass() {
+        return { disabled : (this.$route.path === '/upcoming' && this.$route.query.page === '1') }
+      }
+    }
 };
 </script>
 

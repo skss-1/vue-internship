@@ -98,6 +98,7 @@ export default {
     return {
       searchValue: '',
       adultIncluded: false,
+      page: 1
     };
   },
   computed: {
@@ -107,8 +108,11 @@ export default {
     isNewAdultIncluded() {
       return this.adultIncluded !== this.booleanQueryAdultIncluded
     },
+    isNewPage() {
+      return this.page !== +this.$route.query.page
+    },
     isNewSearch() {
-      return this.isNewSearchValue || this.isNewAdultIncluded
+      return this.isNewSearchValue || this.isNewAdultIncluded || this.isNewPage
     },
     booleanQueryAdultIncluded() {
       return this.$route.query.include_adult === 'true'? true : false
@@ -123,10 +127,12 @@ export default {
             if (!!this.$route.query.query && this.isNewSearchValue) {
               this.searchValue = this.$route.query.query
               this.adultIncluded = this.booleanQueryAdultIncluded
+              this.page = +this.$route.query.page
               this.fetchData()
             } else if (this.$route.query.query === undefined) {
               this.searchValue = ''
               this.adultIncluded = false
+              this.page = 1
             }
           },
           deep: true,
@@ -136,16 +142,18 @@ export default {
   created() {
     this.searchValue = this.$route.query.query
     this.adultIncluded = this.booleanQueryAdultIncluded
+    this.page = +this.$route.query.page
   },
   methods: {
     onSubmit() {
       if (this.searchValue && this.isNewSearch) {
+        this.page = 1
         this.fetchData()
           .then(() => {
             this.$router.push({
               path: '/search',
               query: {
-                include_adult:this.adultIncluded,
+                include_adult:this.booleanQueryAdultIncluded,
                 query: this.searchValue,
                 page: 1
               }
@@ -157,7 +165,7 @@ export default {
       return this.$store.dispatch('search/searchMovie', {
         searchValue: this.searchValue,
         adultIncluded: this.adultIncluded,
-        page: 1
+        page: this.page
       })
     }
   }

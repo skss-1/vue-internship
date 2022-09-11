@@ -11,9 +11,14 @@
       :items="items"
     />
     <pagination 
+      v-if="items.length"
       :total-pages="totalPages"
       :page="page"
+      :route="route"
+      :query="query"
+      :adult="adultIncluded"
       @onChange="changePage"
+      @change-params="changeParams"
     />
   </div>
 </template>
@@ -30,8 +35,10 @@ export default {
   },
   data() {
     return {
-      page: this.$store.getters['search/getCurrentPage'],
-      currentRoute: this.$route.path
+      page: +this.$route.query.page || 1,
+      route: this.$route.path,
+      query: this.$route.query.query,
+      adultIncluded: this.booleanQueryAdultIncluded
     }
   },
   computed: {
@@ -43,17 +50,24 @@ export default {
     },
     currentPage() {
       return this.$store.getters['search/getCurrentPage'];
+    },
+    booleanQueryAdultIncluded() {
+      return this.$route.query.include_adult === 'true'? true : false
     }
   },
   beforeRouteEnter(to, from, next) {
       next(vm => {
         if (vm.$route.path !== '/' && vm.$route.path !== '/search') {
-          vm.fetchMovies(vm.$route.path, vm.currentPage).then(() => {
+          console.log('BeforeRouteEnter')
+          vm.fetchMovies(vm.$route.path, vm.page).then(() => {
+            vm.route = vm.$route.path
+            vm.query = vm.$route.query.query
+            vm.adultIncluded = vm.booleanQueryAdultIncluded
             vm.$router.push({
               query: {
-                query:vm.$route.query.query,
-                include_adult:vm.$route.query.include_adult,
-                page: vm.currentPage
+                // query:vm.$route.query.query,
+                // include_adult:vm.$route.query.include_adult,
+                page: vm.page
               }
             })
           })
@@ -63,7 +77,7 @@ export default {
   methods: {
     fetchMovies(path, page) {
       if(path !== this.currentRoute) {
-        page = 1
+        page = this.$route.query.page
         this.currentRoute = path
       }
       switch(path) {
@@ -96,6 +110,12 @@ export default {
         })
       })
     },
+    changeParams(page, query, route, adultIncluded) {
+      this.page = page,
+      this.query = query,
+      this.route = route,
+      this.adultIncluded = adultIncluded
+    }
   }
 };
 </script>

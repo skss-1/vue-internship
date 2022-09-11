@@ -45,3 +45,18 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .page-link {
+    background-color: $secondary-bg-color;
+    color: $white;
+  }
+  .active {
+    background-color: $white;
+    color: $secondary-bg-color;
+    border-color: $white;
+  }
+  .disabled {
+    color: gray;
+  }
+</style>
