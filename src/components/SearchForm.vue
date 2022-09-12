@@ -1,39 +1,94 @@
 <template>
-  <div class="search-wrapper">
-    <div class="container">
-      <form
-        class="search-form"
-        @submit.prevent="onSubmit"
+  <div class="row g-4">
+    <form class="col-lg-9 col-xl-8 col-xxl-7 d-flex justify-content-between position-relative">
+      <input
+        v-model.trim="searchValue"
+        class="form-control border-0 rounded-5"
+        type="search"
+        placeholder="Search"
+        aria-label="Search"
       >
-        <img
-          class="search-icon"
-          src="@/assets/search.svg"
-          alt="Search"
-          width="20"
-        >
-        <input
-          v-model.trim="searchValue"
-          class="search-input"
-          type="text"
-          placeholder="Search"
-        >
-        <div class="form-check">
+      <span class="search material-symbols-outlined position-absolute">
+        search
+      </span>
+      <button 
+        class="btn btn-light ms-sm-3 ms-md-4 ms-xl-3 ms-xxl-4" 
+        type="submit"
+        @click.prevent="onSubmit"
+      >
+        Search
+      </button>
+    </form>
+    <div class="col search-filter d-flex flex-wrap align-items-center justify-content-center">
+      <div class="row w-100 g-sm-3 g-md-0 justify-content-start">
+        <div class="col ps-sm-0 col-md-6 w-auto align-self-center order-last order-md-first form-checks">
+          <input
+            id="flexCheckDefault"
+            v-model="adultIncluded"
+            class="form-check-input me-2"
+            type="checkbox"
+          >
           <label
             class="form-check-label"
             for="flexCheckDefault"
           >
             Include adult
           </label>
-          <input
-            id="flexCheckDefault"
-            v-model="adultIncluded"
-            class="form-check-input"
-            type="checkbox"
-          >
         </div>
-      </form>
+        <!-- <select
+          class="col col-sm-6 col-md-6 form-select"
+          aria-label="Select year"
+        >
+          <option selected>
+            Year
+          </option>
+          <option>
+            empty
+          </option>
+          <option>
+            empty
+          </option>
+          <option>
+            empty
+          </option>
+        </select>
+        <select
+          class="col col-sm-6 col-md-6 form-select"
+          aria-label="Select region"
+        >
+          <option selected>
+            Region
+          </option>
+          <option>
+            empty
+          </option>
+          <option>
+            empty
+          </option>
+          <option>
+            empty
+          </option>
+        </select>
+        <select
+          class="col col-sm-6 col-md-6 form-select"
+          aria-label="Select language"
+        >
+          <option selected>
+            Language
+          </option>
+          <option>
+            empty
+          </option>
+          <option>
+            empty
+          </option>
+          <option>
+            empty
+          </option>
+        </select> -->
+      </div>
     </div>
-  </div> 
+  </div>
 </template>
 
 <script>
@@ -85,6 +140,7 @@ export default {
         this.fetchData()
           .then(() => {
             this.$router.push({
+              path: '/search',
               query: {
                 include_adult:this.adultIncluded,
                 query: this.searchValue
@@ -104,40 +160,47 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.search-form {
-  display: flex;
+form {
+  color: #fff;
 }
-
-.search-input {
-  padding: 0;
-  margin-left: 10px;
-  width: 100%;
-  border: none;
-  outline: 0;
-  background-color: transparent;
-  color: #888888;
+.form-control {
+  padding: 13px 30px 13px 85px;
+  max-width: 600px;
+  background-color: $details-bg-color;
+  color: #fff;
   &::placeholder {
-    color: #505050;
+    color: $white;
+  }
+  &:focus {
+    &::placeholder, + .search {
+      color: #000;
+    }
   }
 }
 
-.form-check {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0;
-  margin: 0;
-  color: #888888;
-  label {
-    white-space: nowrap;
-  }
-  input {
-    margin-left: 0;
-  }
+.form-check-input {
+  background-color: inherit;
+  border: 2px solid $white;
+}
+.search {
+  left: 38px;
+  top: 11px;
+  font-size: 32px;
+  color: currentColor;
 }
 
-.search-wrapper {
-  padding: 10px 0;
-  background-color: #2f2f2f;
+.btn {
+  padding: 0px 40px;
+}
+
+select {
+  padding: 7px 75px 7px 20px;
+  width: auto;
+  height: 32px;
+  border: none;
+  color: #fff;
+  background-color: $details-bg-color;
+  font-size: 16px;
+  line-height: 19.36px;
 }
 </style>
