@@ -35,57 +35,63 @@
             Include adult
           </label>
         </div>
-        <!-- <select
+        <select
+          v-model="year"
           class="col col-sm-6 col-md-6 form-select"
           aria-label="Select year"
         >
-          <option selected>
-            Year
+          <option
+            selected
+            value=""
+          >
+            Any Year
           </option>
-          <option>
-            empty
-          </option>
-          <option>
-            empty
-          </option>
-          <option>
-            empty
+          <option
+            v-for="y in yearsForForm"
+            :key="y"
+            :value="y"
+          >
+            {{ y }}
           </option>
         </select>
         <select
+          v-model="region"
           class="col col-sm-6 col-md-6 form-select"
           aria-label="Select region"
         >
-          <option selected>
-            Region
+          <option
+            selected
+            value=""
+          >
+            Any Region
           </option>
-          <option>
-            empty
-          </option>
-          <option>
-            empty
-          </option>
-          <option>
-            empty
+          <option
+            v-for="reg in regions"
+            :key="reg.iso_3166_1"
+            :value="reg.iso_3166_1"
+          >
+            {{ reg.english_name }}
           </option>
         </select>
         <select
+          v-model="language"
           class="col col-sm-6 col-md-6 form-select"
           aria-label="Select language"
         >
-          <option selected>
-            Language
+          <option
+            selected
+            value=""
+          >
+            Any Language
           </option>
-          <option>
-            empty
+          <option
+            v-for="lang in languages"
+            :key="lang.iso_639_1"
+            :value="lang.iso_639_1"
+          >
+            {{ lang.english_name }}
           </option>
-          <option>
-            empty
-          </option>
-          <option>
-            empty
-          </option>
-        </select> -->
+        </select>
       </div>
     </div>
   </div>
@@ -98,41 +104,52 @@ export default {
     return {
       searchValue: '',
       adultIncluded: false,
-      page: 1
+      region: '',
+      language: '',
+      year: '',
+      page: 1,
     };
   },
   computed: {
-    isNewSearchValue() {
-      return this.searchValue !== this.$route.query.query
-    },
-    isNewAdultIncluded() {
-      return this.adultIncluded !== this.booleanQueryAdultIncluded
-    },
-    isNewPage() {
-      return this.page !== +this.$route.query.page
-    },
     isNewSearch() {
-      return this.isNewSearchValue || this.isNewAdultIncluded || this.isNewPage
+      if(JSON.stringify(this.query) === JSON.stringify(this.$route.query)) {
+        return false;
+      } else {
+        return true;
+      }
     },
-    booleanQueryAdultIncluded() {
-      return this.$route.query.include_adult === 'true'? true : false
+    regions() {
+      return this.$store.getters['search/getRegions'];
     },
-    currentPage() {
-      return this.$store.getters['search/getCurrentPage'];
-    }
+    languages() {
+      return this.$store.getters['search/getLanguages'];
+    },
+    query() {
+      let query = {
+        ...(this.searchValue) && { query: this.searchValue || '' },
+        ...(this.include_adult) && { include_adult: this.adultIncluded || false },
+        ...(this.region) && { region: this.region || '' },
+        ...(this.language) && { language: this.language || '' },
+        ...(this.year) && { year: this.year || '' },
+        ...(this.page) && { page: this.page || 1 },
+      }
+      return query;
+    },
+    yearsForForm() {
+      const currentYear = new Date().getFullYear();
+      const years =[];
+      for(let i = currentYear; i>=1900; i--){
+        years.push(i);
+      }
+      return years;
+    },
   },
   watch: { 
       '$route.query': {
           handler: function() {
-            if (!!this.$route.query.query && this.isNewSearchValue) {
-              this.searchValue = this.$route.query.query
-              this.adultIncluded = this.booleanQueryAdultIncluded
-              this.page = +this.$route.query.page
-              this.fetchData()
-            } else if (this.$route.query.query === undefined) {
-              this.searchValue = ''
-              this.adultIncluded = false
-              this.page = 1
+            if (!!this.$route.query.query && this.isNewSearch) {
+              this.getDataFromRoute();
+              this.fetchData();
             }
           },
           deep: true,
@@ -140,34 +157,33 @@ export default {
         }
   },
   created() {
-    this.searchValue = this.$route.query.query
-    this.adultIncluded = this.booleanQueryAdultIncluded
-    this.page = +this.$route.query.page
+    this.$store.dispatch('search/fetchRegions');
+    this.$store.dispatch('search/fetchLanguages');
+    this.getDataFromRoute();
   },
   methods: {
     onSubmit() {
-      if (this.searchValue && this.isNewSearch) {
-        this.page = 1
+      if (this.isNewSearch && this.searchValue) {
         this.fetchData()
           .then(() => {
             this.$router.push({
               path: '/search',
-              query: {
-                include_adult:this.booleanQueryAdultIncluded,
-                query: this.searchValue,
-                page: 1
-              }
+              query: this.query,
             })
           })
       }
     },
     fetchData() {
-      return this.$store.dispatch('search/searchMovie', {
-        searchValue: this.searchValue,
-        adultIncluded: this.adultIncluded,
-        page: this.page
-      })
-    }
+      return this.$store.dispatch('search/search', { ...this.query });
+    },
+    getDataFromRoute() {
+      this.searchValue = this.$route.query.query? this.$route.query.query: '';
+      this.adultIncluded = this.$route.query.include_adult === 'true'? true: false;
+      this.region = this.$route.query.region? this.$route.query.region: '';
+      this.language = this.$route.query.language? this.$route.query.language: '';
+      this.year = this.$route.query.year? this.$route.query.year: '';
+      this.page = this.$route.query.page? this.$route.query.page: 1;
+    },
   }
 };
 </script>
