@@ -23,23 +23,7 @@ export const search = {
   actions: {
     async search({ commit }, { query, include_adult, region, language, year, page }) {
       try {
-        let searchRequest = '';
-        if(include_adult) {
-          searchRequest+=`&include_adult=${include_adult}`;
-        }
-        if(region) {
-          searchRequest+=`&region=${region}`;
-        }
-        if(language) {
-          searchRequest+=`&language=${language}`;
-        }
-        if(year) {
-          searchRequest+=`&year=${year}`;
-        }
-        if(page) {
-          searchRequest+=`&page=${page}`;
-        }
-        const res = await axios.get(`${path}/search/multi?api_key=${process.env.VUE_APP_API_KEY}&query=${query}${searchRequest}`)
+        const res = await axios.get(`${path}/search/multi`, { params: { api_key: process.env.VUE_APP_API_KEY, query, include_adult, region, language, year, page } })
         if (!res.status) {
           throw new Error('Response is not ok');
         }
@@ -50,40 +34,40 @@ export const search = {
     },
     async fetchPopularMovies({ commit }) {
       try {
-        const res = await axios.get(`${path}/movie/popular?api_key=${process.env.VUE_APP_API_KEY}`);
+        const res = await axios.get(`${path}/movie/popular`, { params: { api_key: process.env.VUE_APP_API_KEY } });
         if (!res.status) {
-          throw new Error('Response is not ok')
+          throw new Error('Response is not ok');
         }
         commit('setItems', res.data.results);
       } catch (error) {
-        console.warn(error)
+        console.warn(error);
       }
     },
     async fetchTopRatedMovies({ commit }) {
       try {
-        const res = await axios.get(`${path}/movie/top_rated?api_key=${process.env.VUE_APP_API_KEY}`);
+        const res = await axios.get(`${path}/movie/top_rated`, { params: { api_key: process.env.VUE_APP_API_KEY } });
         if (!res.status) {
-          throw new Error('Response is not ok')
+          throw new Error('Response is not ok');
         }
         commit('setItems', res.data.results);
       } catch (error) {
-        console.warn(error)
+        console.warn(error);
       }
     },
     async fetchUpcomingMovies({ commit }) {
       try {
-        const res = await axios.get(`${path}/movie/upcoming?api_key=${process.env.VUE_APP_API_KEY}`);
+        const res = await axios.get(`${path}/movie/upcoming`, { params: { api_key: process.env.VUE_APP_API_KEY } });
         if (!res.status) {
-          throw new Error('Response is not ok')
+          throw new Error('Response is not ok');
         }
         commit('setItems', res.data.results);
       } catch (error) {
-        console.warn(error)
+        console.warn(error);
       }
     },
     async fetchRegions({ commit }) {
       try {
-        const res = await axios.get(`${path}/watch/providers/regions?api_key=${process.env.VUE_APP_API_KEY}`);
+        const res = await axios.get(`${path}/watch/providers/regions`, { params: { api_key: process.env.VUE_APP_API_KEY } });
         if (!res.status) {
           throw new Error('Response is not ok');
         }
@@ -94,7 +78,7 @@ export const search = {
     },
     async fetchLanguages({ commit }) {
       try {
-        const res = await axios.get(`${path}/configuration/languages?api_key=${process.env.VUE_APP_API_KEY}`);
+        const res = await axios.get(`${path}/configuration/languages`, { params: { api_key: process.env.VUE_APP_API_KEY } });
         if (!res.status) {
           throw new Error('Response is not ok');
         }

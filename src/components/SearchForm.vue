@@ -125,28 +125,20 @@ export default {
       return this.$store.getters['search/getLanguages'];
     },
     query() {
-      const query = { query: this.searchValue } ;
-      if(this.adultIncluded) {
-        query.include_adult = this.adultIncluded;
-      }
-      if(this.region) {
-        query.region = this.region;
-      }
-      if(this.language) {
-        query.language = this.language;
-      }
-      if(this.year) {
-        query.year = this.year;
-      }
-      if(this.page) {
-        query.page = this.page;
+      let query = {
+        ...(this.searchValue) && { query: this.searchValue || '' },
+        ...(this.include_adult) && { include_adult: this.adultIncluded || false },
+        ...(this.region) && { region: this.region || '' },
+        ...(this.language) && { language: this.language || '' },
+        ...(this.year) && { year: this.year || '' },
+        ...(this.page) && { page: this.page || 1 },
       }
       return query;
     },
     yearsForForm() {
       const currentYear = new Date().getFullYear();
       const years =[];
-      for(let i = currentYear;i>=1900;i--){
+      for(let i = currentYear; i>=1900; i--){
         years.push(i);
       }
       return years;
@@ -185,41 +177,12 @@ export default {
       return this.$store.dispatch('search/search', { ...this.query });
     },
     getDataFromRoute() {
-      if(this.$route.query.query) {
-        this.searchValue = this.$route.query.query;
-      }else{
-        this.searchValue = '';
-      }
-
-      if(this.$route.query.include_adult === 'true') {
-        this.adultIncluded = true;
-      }else{
-        this.adultIncluded = false;
-      }
-
-      if(this.$route.query.region) {
-        this.region =this.$route.query.region;
-      }else{
-        this.region = '';
-      }
-
-      if(this.$route.query.language){
-        this.language = this.$route.query.language;
-      }else{
-        this.language = '';
-      }
-
-      if(this.$route.query.year) {
-        this.year = this.$route.query.year;
-      }else{
-        this.year = '';
-      }
-      
-      if(this.$route.query.page) {
-        this.page = this.$route.query.page;
-      }else{
-        this.page = 1;
-      }
+      this.searchValue = this.$route.query.query? this.$route.query.query: '';
+      this.adultIncluded = this.$route.query.include_adult === 'true'? true: false;
+      this.region = this.$route.query.region? this.$route.query.region: '';
+      this.language = this.$route.query.language? this.$route.query.language: '';
+      this.year = this.$route.query.year? this.$route.query.year: '';
+      this.page = this.$route.query.page? this.$route.query.page: 1;
     },
   }
 };

@@ -23,7 +23,7 @@
         <div class="card-title h5 overflow-hidden">
           {{ itemInfo.title }}
         </div>
-        <div class="card-text d-flex justify-content-start gap-2">
+        <div class="card-text d-flex justify-content-between gap-2">
           <p class="card-type h6 fw-normal">
             {{ itemInfo.type }}
           </p>
@@ -54,20 +54,20 @@ export default {
     itemInfo() {
       switch(this.item.media_type) {
         case 'tv':
-          return { title: this.item.name, type: 'TV',url: `${posterPath}${this.item.poster_path}` };
+          return { title: this.item.name, type: 'TV', url: `${posterPath}${this.item.poster_path}` };
         case 'person':
-          return { title: this.item.name, type: 'Person',url: `${posterPath}${this.item.profile_path}` };
+          return { title: this.item.name, type: 'Person', url: `${posterPath}${this.item.profile_path}` };
         case 'movie':
         default:
-          return { title: this.item.title, type: 'Movie',url: `${posterPath}${this.item.poster_path}` };
+          return { title: this.item.title, type: 'Movie', url: `${posterPath}${this.item.poster_path}` };
       }
     },
     date() {
       if(this.item.release_date) {
         const  itemDate = new Date(Date.parse(this.item.release_date));
-        return itemDate.toLocaleString('en', {  dateStyle: 'long'  });
+        return itemDate.toLocaleString('en', {  year: 'numeric'  });
       }
-        return null;
+        return '';
     }
   },
   methods: {
@@ -77,14 +77,13 @@ export default {
           // this.$router.push({ name: 'tv-page', params: { id: this.item.id } });
           break;
         case 'person':
-            // this.$router.push({ name: 'person-page', params: { id: this.item.id } });
+            this.$router.push({ name: 'person-page', params: { id: this.item.id } });
           break;
         default:
         case 'movie':
           this.$router.push({ name: 'movie-page', params: { id: this.item.id } });
           break;
       }
-      
     }
   }
 }
