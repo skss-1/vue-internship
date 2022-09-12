@@ -4,7 +4,7 @@
       class="card"
       tabindex="0"
       @click="goToMoviePage"
-      @keydown.enter.esc="goToMoviePage"
+      @keydown.enter.space="goToMoviePage"
     >
       <div class="card-image flex-grow-1">
         <img

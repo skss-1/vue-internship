@@ -1,15 +1,12 @@
 <template>
-  <div 
-    class="credits-scroll my-3 p-2"
-    tabindex="0"
-  >
+  <div class="credits-scroll my-3 p-2">
     <div
       v-for="actor in credits"
       :key="actor.id"
       class="card actor-card d-flex"
       tabindex="0"
       @click="goToPersonPage(actor.id)"
-      @keydown.enter.esc="goToPersonPage(actor.id)"
+      @keydown.enter.space="goToPersonPage(actor.id)"
     >
       <img
         :src="imageUrl(actor.profile_path)"

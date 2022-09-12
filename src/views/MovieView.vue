@@ -26,7 +26,7 @@
             Release Date: <span class="fs-6 fw-normal">{{ releaseDate }} </span>
           </p>
         </div>
-        <div class="fs-4 genres-heading d-flex gap-3 m-3"> 
+        <div class="fs-4 genres-heading d-flex gap-3 m-3 py-4"> 
           <p class="m-0">
             Genres
           </p>
@@ -34,7 +34,7 @@
             <div 
               v-for="genre in item.genres" 
               :key="genre.id" 
-              class="fs-6 fw-lighter border border-light rounded py-2 px-3" 
+              class="fs-6 fw-lighter rounded-pill border border-light rounded py-2 px-3" 
             >
               {{ genre.name }}
             </div> 
@@ -46,7 +46,7 @@
         <p class="fs-5 fw-lighter overview m-0"> 
           {{ item.overview }} 
         </p> 
-        <div class="fs-4 credits-heading mx-3"> 
+        <div class="fs-4 credits-heading m-3 "> 
           Credits 
         </div>
         <credits-scroll :credits="credits" />
@@ -57,7 +57,7 @@
           <div 
             v-for="company in item.production_companies" 
             :key="company.id"  
-            class="fs-6 fw-lighter border border-light rounded py-2 px-3" 
+            class="fs-6 fw-lighter rounded-pill border border-light rounded py-2 px-3" 
           >
             {{ company.name }}
           </div> 
@@ -100,7 +100,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.movie-page{
+.movie-view{
   --image-height-for-movie-page: 500px;
   --title-height-for-movie-page: 150px;
   padding-top: var(--title-height-for-movie-page);

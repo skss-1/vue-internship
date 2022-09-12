@@ -18,17 +18,17 @@
           </p>
           <p
             v-if="person.birthday"
-            class="birthday h3 fw-lighter"
+            class="birthday fs-4 fw-lighter"
           >
             <span class="fw-normal">Birthday:</span> {{ birthdayDate }}
           </p>
           <p
             v-if="person.deathday"
-            class="deathday h3 fw-lighter"
+            class="deathday fs-4 fw-lighter"
           >
             <span class="fw-normal">Deathday:</span> {{ deathdayDate }}
           </p>
-          <div class="fs-3 biography-heading px-2 my-2"> 
+          <div class="fs-3 biography-heading p-2 my-2"> 
             Biography  
           </div> 
           <p class="fs-6 fw-light biography m-0"> 
@@ -41,17 +41,14 @@
       <p class="h2 roles-heading fw-normal text-center">
         Roles
       </p>
-      <div 
-        tabindex="0"
-        class="d-flex flex-wrap justify-content-center gap-3"
-      >
+      <div class="d-flex flex-wrap justify-content-center gap-3">
         <div
           v-for="role in credits"
           :key="role.id"
           tabindex="0"
           class="role-card"
           @click="goToMoviePage(role.id)"
-          @keydown.enter.esc="goToMoviePage(role.id)"
+          @keydown.enter.space="goToMoviePage(role.id)"
         >
           <img
             :src="roleImageUrl(role.poster_path)"
@@ -114,7 +111,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.person-page{
+.person-view{
   background-color: #13152E;
   color: #fff;
 }
