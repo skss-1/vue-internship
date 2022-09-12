@@ -1,5 +1,19 @@
 <template>
-  <div class="movie-view">
+  <div
+    v-if="loading"
+    class="loader text-center p-5"
+  >
+    <div
+      class="spinner-border"
+      role="status"
+    >
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  <div
+    v-else
+    class="movie-view"
+  >
     <div
       class="background-poster"
       :style="backgroundUrl"
@@ -76,6 +90,10 @@ export default {
     CreditsScroll,
   },
   computed: {
+    loading() {
+      console.log(this.$store.getters['movie/getLoading'])
+      return this.$store.getters['movie/getLoading'];
+    },
     item() {
       return this.$store.getters['movie/getItem'];
     },
@@ -100,6 +118,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.loader{
+  background-color: #13152E;
+  color: #fff;
+  height: 30vh;
+}
+
 .movie-view{
   --image-height-for-movie-page: 500px;
   --title-height-for-movie-page: 150px;

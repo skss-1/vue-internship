@@ -5,7 +5,8 @@ export const movie = {
   namespaced: true,
   state: () => ({
     item: {},
-    actors:[]
+    actors: [],
+    loading: true,
   }),
   mutations: {
     setItem(state, payload) {
@@ -14,10 +15,14 @@ export const movie = {
     setActors(state, payload) {
       state.actors = [...payload];
     },
+    setLoading(state, payload) {
+      state.loading = payload;
+    },
   },
   actions: {
     async fetchMovieDetails({ commit },{ id }) {
       try {
+        commit('setLoading', true);
         const res = await axios.get(`${path}/movie/${id}?api_key=${process.env.VUE_APP_API_KEY}`);
         if (!res.status) {
           throw new Error('Response is not ok')
@@ -35,6 +40,7 @@ export const movie = {
           throw new Error('Response is not ok')
         }
         commit('setActors', res.data.cast.slice(0,20));
+        commit('setLoading', false);
       } catch (error) {
         console.warn(error);
       }
@@ -42,6 +48,7 @@ export const movie = {
   },
   getters:{
     getItem:(state) => state.item,
-    getActors:(state) => state.actors
+    getActors:(state) => state.actors,
+    getLoading:(state) => state.loading,
   }
 };

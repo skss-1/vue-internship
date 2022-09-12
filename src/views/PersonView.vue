@@ -1,5 +1,19 @@
 <template>
-  <div class="person-view py-5">
+  <div
+    v-if="loading"
+    class="loader text-center p-5"
+  >
+    <div
+      class="spinner-border"
+      role="status"
+    >
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  <div
+    v-else
+    class="person-view py-5"
+  >
     <div class="person-info container">
       <div class="row">
         <div class="col-4">
@@ -78,6 +92,9 @@ import { posterPath } from '@/api/tmdb-api'
 export default {
   name: 'PersonView',
   computed: {
+    loading() {
+      return this.$store.getters['person/getLoading'];
+    },
     person() {
       return this.$store.getters['person/getPerson'];
     },  
@@ -111,6 +128,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.loader{
+  background-color: #13152E;
+  color: #fff;
+  height: 30vh;
+}
 .person-view{
   background-color: #13152E;
   color: #fff;
