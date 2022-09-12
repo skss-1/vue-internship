@@ -45,7 +45,11 @@
         </div> 
         <p class="fs-5 fw-lighter overview m-0"> 
           {{ item.overview }} 
-        </p> 
+        </p>
+        <videos-scroll
+          v-if="videos"
+          :videos="videos"
+        />
         <div class="fs-4 credits-heading m-3 "> 
           Credits 
         </div>
@@ -68,12 +72,14 @@
 </template>
 <script>
 import CreditsScroll from '@/components/CreditsScroll.vue';
+import VideosScroll from '@/components/VideosScroll.vue';
 import { posterPath } from '@/api/tmdb-api';
 
 export default {
   name: 'MovieView',
   components: {
     CreditsScroll,
+    VideosScroll,
   },
   computed: {
     item() {
@@ -91,7 +97,10 @@ export default {
     releaseDate() {
       const releaseDate = new Date(Date.parse(this.item.release_date));
       return releaseDate.toLocaleString('en', { dateStyle: 'long' });
-    }
+    },
+    videos() {
+      return this.$store.getters['movie/getVideos'];
+    },
   },
    mounted() {
     this.$store.dispatch('movie/fetchMovieDetails',{ id:this.$route.params.id });
