@@ -38,69 +38,29 @@
       </li>
       <template v-if="totalPages <= 5">
         <pagination-item
-          :page="1"
-          :current-page="currentPage"
-          @onClick="switchCurrentPage"
-        />
-        <pagination-item
-          v-if="totalPages > 1"
-          :page="2"
-          :current-page="currentPage"
-          @onClick="switchCurrentPage"
-        />
-        <pagination-item
-          v-if="totalPages > 2"
-          :page="3"
-          :current-page="currentPage"
-          @onClick="switchCurrentPage"
-        />
-        <pagination-item
-          v-if="totalPages > 3"
-          :page="4"
-          :current-page="currentPage"
-          @onClick="switchCurrentPage"
-        />
-        <pagination-item
-          v-if="totalPages > 4"
-          :page="totalPages"
+          v-for="item in totalPages"
+          :key="item"
+          :page="item"
           :current-page="currentPage"
           @onClick="switchCurrentPage"
         />
       </template>
-      <template v-if="totalPages > 5">
+      <template v-else>
+        <pagination-item
+          :page="currentPage > 3 ? '...' : 1"
+          :current-page="currentPage"
+          @onClick="switchCurrentPage"
+        />
         <template v-if="currentPage > totalPages - 2">
           <pagination-item
-            :page="currentPage > 3 ? '...' : 1"
+            v-for="item in 4"
+            :key="item"
             :current-page="currentPage"
-            @onClick="switchCurrentPage"
-          />
-          <pagination-item
-            :page="totalPages - 3"
-            :current-page="currentPage"
-            @onClick="switchCurrentPage"
-          />
-          <pagination-item
-            :page="totalPages - 2"
-            :current-page="currentPage"
-            @onClick="switchCurrentPage"
-          />
-          <pagination-item
-            :page="totalPages - 1"
-            :current-page="currentPage"
-            @onClick="switchCurrentPage"
-          />
-          <pagination-item
-            :page="totalPages"
-            :current-page="currentPage"
+            :page="totalPages - (4 - item)"
             @onClick="switchCurrentPage"
           />
         </template>
         <template v-else>
-          <pagination-item
-            :page="currentPage > 3 ? '...' : 1"
-            :current-page="currentPage"
-            @onClick="switchCurrentPage"
-          />
           <pagination-item
             :page="currentPage > 3 ? currentPage - 1 : 2"
             :current-page="currentPage"
@@ -273,7 +233,6 @@ export default {
         if (this.$route.path === '/search') {
           this.changeParams()
           if (this.$route.query.query !== this.currentQuery || this.booleanQueryAdultIncluded !== this.currentAdultIncludet) {
-            console.log(this.$route.query.query, this.currentQuery, this.booleanQueryAdultIncluded, typeof this.currentAdultIncludet)
             this.currentQuery = this.$route.query.query
             this.currentRoute = this.$route.path
             this.currentAdultIncludet = this.booleanQueryAdultIncluded
@@ -292,7 +251,6 @@ export default {
       this.currentPage = page
     },
     changeCurrentPage(event) {
-
       if (event.currentTarget.id === 'next') {
         this.currentPage+=1
       } else if (event.currentTarget.id === 'prev') {
