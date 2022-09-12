@@ -1,9 +1,12 @@
 <template>
-  <div class="credits-scroll my-3">
+  <div class="credits-scroll my-3 p-2">
     <div
       v-for="actor in credits"
       :key="actor.id"
       class="card actor-card d-flex"
+      tabindex="0"
+      @click="goToPersonPage(actor.id)"
+      @keydown.enter.space="goToPersonPage(actor.id)"
     >
       <img
         :src="imageUrl(actor.profile_path)"
@@ -34,6 +37,9 @@ export default {
     imageUrl(profile_path) {
       return `${posterPath}${profile_path}`;
     },
+    goToPersonPage(id) {
+      this.$router.push({ name: 'person-page', params: { id: id } });
+    }
   }
 }
 </script>
@@ -42,30 +48,37 @@ export default {
 ::-webkit-scrollbar{
   height: 10px;
 }
-::-webkit-scrollbar-track {
+::-webkit-scrollbar-track{
   background: none;
 }
-::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb{
   margin: 2px;
   background: #020418;
   border-radius: 10px;
 }
-::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover{
   background: #050824;
 }
 .credits-scroll{
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: 12%;
   gap: 10px;
   overflow-x: auto;
 }
-
 .actor-card{
+  width:150px;
+  cursor: pointer;
   padding: 5px;
-  background-color: #1f2466;
+  background-color: #090b24;
+  transition-duration: 0.2s;
   img{
     inline-size: 100%;
+    object-fit: cover;
+  }
+  &:hover{
+    color: #1f2466;
+    background-color: #fff;
+    font-weight: bold;
   }
 }
 </style>

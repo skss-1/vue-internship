@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="items-list container p-0"
-    tabindex="0"
-  >
+  <div class="items-list container p-0">
     <div class="row justify-content-evenly">
       <item-card
         v-for="item in items"
