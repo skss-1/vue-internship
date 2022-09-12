@@ -23,7 +23,7 @@ export default {
   },
   data() {
     return {
-      selectValue: 'popular'
+      selectValue: 'popular',
     }
   },
   computed: {
