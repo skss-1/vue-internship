@@ -1,7 +1,7 @@
 <template>
   <div class="videos-scroll my-5">
     <div class="fs-3 video-heading m-3 text-center"> 
-      Rlated Videos 
+      Related Videos 
     </div>
     <div class="video container text-center p-0">
       <iframe
