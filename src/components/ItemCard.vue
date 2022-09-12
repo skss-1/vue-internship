@@ -54,12 +54,12 @@ export default {
     itemInfo() {
       switch(this.item.media_type) {
         case 'tv':
-          return { title: this.item.name, type: 'TV',url: `${posterPath}${this.item.poster_path}` }
+          return { title: this.item.name, type: 'TV',url: `${posterPath}${this.item.poster_path}` };
         case 'person':
-          return { title: this.item.name, type: 'Person',url: `${posterPath}${this.item.profile_path}` }
+          return { title: this.item.name, type: 'Person',url: `${posterPath}${this.item.profile_path}` };
         case 'movie':
         default:
-          return { title: this.item.title, type: 'Movie',url: `${posterPath}${this.item.poster_path}` }
+          return { title: this.item.title, type: 'Movie',url: `${posterPath}${this.item.poster_path}` };
       }
     },
     date() {
@@ -73,9 +73,6 @@ export default {
   methods: {
     goToItemPage() {
       switch(this.item.media_type) {
-        case 'movie':
-          this.$router.push({ name: 'movie-page', params: { id: this.item.id } });
-          break;
         case 'tv':
           // this.$router.push({ name: 'tv-page', params: { id: this.item.id } });
           break;
@@ -83,8 +80,9 @@ export default {
             // this.$router.push({ name: 'person-page', params: { id: this.item.id } });
           break;
         default:
-          return 'unknown';
-          // incert 404 page here
+        case 'movie':
+          this.$router.push({ name: 'movie-page', params: { id: this.item.id } });
+          break;
       }
       
     }

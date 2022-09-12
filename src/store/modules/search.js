@@ -21,16 +21,31 @@ export const search = {
     },
   },
   actions: {
-    async search({ commit }, { searchValue, adultIncluded, region, language, year }) {
-      console.log(language)
+    async search({ commit }, { query, include_adult, region, language, year, page }) {
       try {
-        const res = await axios.get(`${path}/search/multi?api_key=${process.env.VUE_APP_API_KEY}&include_adult=${adultIncluded}&query=${searchValue}&region=${region}&language=${language}&year=${year}`)
-        if (!res.status) {
-          throw new Error('Response is not ok')
+        let searchRequest = '';
+        if(include_adult) {
+          searchRequest+=`&include_adult=${include_adult}`;
         }
-        commit('setItems', res.data.results)
+        if(region) {
+          searchRequest+=`&region=${region}`;
+        }
+        if(language) {
+          searchRequest+=`&language=${language}`;
+        }
+        if(year) {
+          searchRequest+=`&year=${year}`;
+        }
+        if(page) {
+          searchRequest+=`&page=${page}`;
+        }
+        const res = await axios.get(`${path}/search/multi?api_key=${process.env.VUE_APP_API_KEY}&query=${query}${searchRequest}`)
+        if (!res.status) {
+          throw new Error('Response is not ok');
+        }
+        commit('setItems', res.data.results);
       } catch (error) {
-        console.warn(error)
+        console.warn(error);
       }
     },
     async fetchPopularMovies({ commit }) {

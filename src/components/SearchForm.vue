@@ -47,7 +47,7 @@
             Any Year
           </option>
           <option
-            v-for="y in years"
+            v-for="y in yearsForForm"
             :key="y"
             :value="y"
           >
@@ -106,25 +106,17 @@ export default {
       adultIncluded: false,
       region: '',
       language: '',
-      year:'',
+      year: '',
+      page: 1,
     };
   },
   computed: {
-    isNewSearchValue() {
-      return this.searchValue !== this.$route.query.query
-    },
-    isNewAdultIncluded() {
-      return this.adultIncluded !== this.booleanQueryAdultIncluded
-    },
     isNewSearch() {
       if(JSON.stringify(this.query) === JSON.stringify(this.$route.query)) {
-        return false
+        return false;
       } else {
-        return true
+        return true;
       }
-    },
-    booleanQueryAdultIncluded() {
-      return this.$route.query.include_adult === 'true'? true : false
     },
     regions() {
       return this.$store.getters['search/getRegions'];
@@ -133,40 +125,39 @@ export default {
       return this.$store.getters['search/getLanguages'];
     },
     query() {
-      const query = { query: this.searchValue } 
-      if(this.adultIncluded){
+      const query = { query: this.searchValue } ;
+      if(this.adultIncluded) {
         query.include_adult = this.adultIncluded;
       }
-      if(this.region){
+      if(this.region) {
         query.region = this.region;
       }
-      if(this.language){
+      if(this.language) {
         query.language = this.language;
       }
-      if(this.year){
+      if(this.year) {
         query.year = this.year;
       }
-      return query
+      if(this.page) {
+        query.page = this.page;
+      }
+      return query;
     },
-    years() {
+    yearsForForm() {
       const currentYear = new Date().getFullYear();
       const years =[];
       for(let i = currentYear;i>=1900;i--){
-        years.push(i)
+        years.push(i);
       }
-      return years
+      return years;
     },
   },
   watch: { 
       '$route.query': {
           handler: function() {
-            if (!!this.$route.query.query && this.isNewSearchValue) {
-              this.searchValue = this.$route.query.query
-              this.adultIncluded = this.booleanQueryAdultIncluded
-              this.fetchData()
-            } else if (this.$route.query.query === undefined) {
-              this.searchValue = ''
-              this.adultIncluded = false
+            if (!!this.$route.query.query && this.isNewSearch) {
+              this.getDataFromRoute();
+              this.fetchData();
             }
           },
           deep: true,
@@ -174,10 +165,9 @@ export default {
         }
   },
   created() {
-    this.searchValue = this.$route.query.query
-    this.adultIncluded = this.booleanQueryAdultIncluded
     this.$store.dispatch('search/fetchRegions');
     this.$store.dispatch('search/fetchLanguages');
+    this.getDataFromRoute();
   },
   methods: {
     onSubmit() {
@@ -192,14 +182,45 @@ export default {
       }
     },
     fetchData() {
-      return this.$store.dispatch('search/search', {
-        searchValue: this.searchValue,
-        adultIncluded: this.adultIncluded,
-        region: this.region,
-        language: this.language,
-        year: this.year,
-      })
-    }
+      return this.$store.dispatch('search/search', { ...this.query });
+    },
+    getDataFromRoute() {
+      if(this.$route.query.query) {
+        this.searchValue = this.$route.query.query;
+      }else{
+        this.searchValue = '';
+      }
+
+      if(this.$route.query.include_adult === 'true') {
+        this.adultIncluded = true;
+      }else{
+        this.adultIncluded = false;
+      }
+
+      if(this.$route.query.region) {
+        this.region =this.$route.query.region;
+      }else{
+        this.region = '';
+      }
+
+      if(this.$route.query.language){
+        this.language = this.$route.query.language;
+      }else{
+        this.language = '';
+      }
+
+      if(this.$route.query.year) {
+        this.year = this.$route.query.year;
+      }else{
+        this.year = '';
+      }
+      
+      if(this.$route.query.page) {
+        this.page = this.$route.query.page;
+      }else{
+        this.page = 1;
+      }
+    },
   }
 };
 </script>
