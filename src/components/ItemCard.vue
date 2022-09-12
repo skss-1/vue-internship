@@ -19,7 +19,10 @@
           {{ item.vote_average }}
         </p>
       </div>
-      <div class="card-body flex-grow-0">
+      <div
+        class="card-body flex-grow-0" 
+        :title="itemInfo.title"
+      >
         <div class="card-title h5 overflow-hidden">
           {{ itemInfo.title }}
         </div>
@@ -54,12 +57,12 @@ export default {
     itemInfo() {
       switch(this.item.media_type) {
         case 'tv':
-          return { title: this.item.name, type: 'TV', url: `${posterPath}${this.item.poster_path}` };
+          return { title: this.item.name, type: 'TV', url: this.item.poster_path? `${posterPath}${this.item.poster_path}`: require('../assets/no-image.png') };
         case 'person':
-          return { title: this.item.name, type: 'Person', url: `${posterPath}${this.item.profile_path}` };
+          return { title: this.item.name, type: 'Person', url: this.item.profile_path? `${posterPath}${this.item.profile_path}`: require('../assets/no-profile-image.png') };
         case 'movie':
         default:
-          return { title: this.item.title, type: 'Movie', url: `${posterPath}${this.item.poster_path}` };
+          return { title: this.item.title, type: 'Movie', url: this.item.poster_path? `${posterPath}${this.item.poster_path}`: require('../assets/no-image.png') };
       }
     },
     date() {

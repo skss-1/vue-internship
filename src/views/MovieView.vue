@@ -83,7 +83,7 @@ export default {
       return this.$store.getters['movie/getActors'];
     },
     posterUrl() {
-      return `${posterPath}${this.item.poster_path}`;
+      return this.item.poster_path? `${posterPath}${this.item.poster_path}`: require('../assets/no-image.png');
     },
     backgroundUrl() {
       return `backgroundImage: linear-gradient(0deg, rgba(19, 21, 46, 0.7), rgba(19, 21, 46, 0.7)), url(${posterPath}${this.item.backdrop_path})`;

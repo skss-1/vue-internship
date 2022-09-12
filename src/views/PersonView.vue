@@ -85,7 +85,7 @@ export default {
       return this.$store.getters['person/getCredits'];
     },
     imageUrl() {
-      return `${posterPath}${this.person.profile_path}`;
+      return this.person.profile_path? `${posterPath}${this.person.profile_path}`: require('../assets/no-profile-image.png')
     },
     birthdayDate() {
       const releaseDate = new Date(Date.parse(this.person.birthday));
@@ -101,7 +101,7 @@ export default {
   },
   methods: {
     roleImageUrl(url) {
-      return `${posterPath}${url}`;
+      return url?`${posterPath}${url}`: require('../assets/no-image.png');
     },
     goToMoviePage(id) {
       this.$router.push({ name: 'movie-page', params: { id: id } });
