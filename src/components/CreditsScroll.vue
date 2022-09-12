@@ -65,14 +65,14 @@ export default {
 .credits-scroll{
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: 12%;
   gap: 10px;
   overflow-x: auto;
 }
 .actor-card{
+  width:150px;
   cursor: pointer;
   padding: 5px;
-  background-color: #1f2466;
+  background-color: #090b24;
   transition-duration: 0.2s;
   img{
     inline-size: 100%;
