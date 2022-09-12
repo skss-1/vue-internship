@@ -6,7 +6,7 @@
       @click="goToItemPage"
       @keydown.enter.space="goToItemPage"
     >
-      <div class="card-image flex-grow-1">
+      <div class="card-image flex-grow-1 d-flex">
         <img
           class="card-img-top"
           :src="itemInfo.url"
@@ -115,6 +115,10 @@ export default {
 }
 .card-image{
   position: relative;
+  min-height:200px;
+  img{
+    object-fit: cover;
+  }
 }
 .card-rating{
   padding: 3px 5px;
