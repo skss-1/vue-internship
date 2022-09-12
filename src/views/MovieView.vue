@@ -1,5 +1,5 @@
 <template>
-  <div class="movie-page">
+  <div class="movie-view">
     <div
       class="background-poster"
       :style="backgroundUrl"
@@ -71,7 +71,7 @@ import CreditsScroll from '@/components/CreditsScroll.vue';
 import { posterPath } from '@/api/tmdb-api';
 
 export default {
-  name: 'MoviePageView',
+  name: 'MovieView',
   components: {
     CreditsScroll,
   },

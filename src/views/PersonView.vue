@@ -1,5 +1,5 @@
 <template>
-  <div class="person-page py-5">
+  <div class="person-view py-5">
     <div class="person-info container">
       <div class="row">
         <div class="col-4">
@@ -79,7 +79,7 @@
 import { posterPath } from '@/api/tmdb-api'
 
 export default {
-  name: 'PersonPageView',
+  name: 'PersonView',
   computed: {
     person() {
       return this.$store.getters['person/getPerson'];

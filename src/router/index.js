@@ -33,12 +33,12 @@ const routes = [
   {
     path: '/movie/:id',
     name: 'movie-page',
-    component: () => import('@/views/MoviePageView'),
+    component: () => import('@/views/MovieView'),
   },
   {
     path: '/person/:id',
     name: 'person-page',
-    component: () => import('@/views/PersonPageView'),
+    component: () => import('@/views/PersonView'),
   },
 ]
 
