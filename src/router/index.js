@@ -34,6 +34,11 @@ const routes = [
     path: '/movie/:id',
     name: 'movie-page',
     component: () => import('@/views/MoviePageView')
+  },
+  {
+    path: '/tv/:id',
+    name: 'tv-page',
+    component: () => import('@/views/TvView')
   }
 ]
 
