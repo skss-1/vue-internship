@@ -5,7 +5,7 @@ export const movie = {
   namespaced: true,
   state: () => ({
     item: {},
-    actors:[],
+    actors: [],
     videos: [],
   }),
   mutations: {
@@ -22,6 +22,10 @@ export const movie = {
   actions: {
     async fetchMovieDetails({ commit },{ id }) {
       try {
+        commit('setItem', {});
+        commit('setActors', []);
+        commit('setVideos', []);
+
         const res = await axios.get(`${path}/movie/${id}?api_key=${process.env.VUE_APP_API_KEY}`);
         if (!res.status) {
           throw new Error('Response is not ok')
