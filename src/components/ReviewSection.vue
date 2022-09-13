@@ -52,7 +52,7 @@ export default {
   },
   data() {
     return {
-      windowOpen:false,
+        windowOpen:false,
     }
   },
   computed:{
@@ -66,7 +66,7 @@ export default {
       console.log(this.reviews)
     },
     imageUrl(index) {
-      return this.reviews[index].author_details.avatar_path? this.reviews[index].author_details.avatar_path.slice(1): require('../assets/no-profile-image.png')
+      return this.reviews[index].author_details.avatar_path && /^https?:\/\//.test(this.reviews[index].author_details.avatar_path.slice(1)) ? this.reviews[index].author_details.avatar_path.slice(1) : require('../assets/no-profile-image.png')
     },
   }
 }
