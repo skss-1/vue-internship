@@ -62,6 +62,7 @@
             {{ company.name }}
           </div> 
         </div>
+        <review-section :reviews="reviews" />
       </div> 
     </div> 
   </div>
@@ -69,11 +70,13 @@
 <script>
 import CreditsScroll from '@/components/CreditsScroll.vue';
 import { posterPath } from '@/api/tmdb-api';
+import ReviewSection from '../components/ReviewSection.vue';
 
 export default {
   name: 'MovieView',
   components: {
     CreditsScroll,
+    ReviewSection,
   },
   computed: {
     item() {
@@ -81,6 +84,9 @@ export default {
     },
     credits() {
       return this.$store.getters['movie/getActors'];
+    },
+    reviews() {
+      return this.$store.getters['movie/getReviews'];
     },
     posterUrl() {
       return `${posterPath}${this.item.poster_path}`;
