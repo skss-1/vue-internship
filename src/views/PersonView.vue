@@ -1,5 +1,19 @@
 <template>
-  <div class="person-view py-5">
+  <div
+    v-if="isLoading"
+    class="loader text-center p-5"
+  >
+    <div
+      class="spinner-border text-light"
+      role="status"
+    >
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  <div
+    v-else
+    class="person-view py-5"
+  >
     <div class="person-info container">
       <div class="row">
         <div class="col-4">
@@ -78,6 +92,9 @@ import { posterPath } from '@/api/tmdb-api'
 export default {
   name: 'PersonView',
   computed: {
+    isLoading() {
+      return this.$store.getters['person/getIsLoading'];
+    },
     person() {
       return this.$store.getters['person/getPerson'];
     },  
@@ -85,7 +102,7 @@ export default {
       return this.$store.getters['person/getCredits'];
     },
     imageUrl() {
-      return `${posterPath}${this.person.profile_path}`;
+      return this.person.profile_path? `${posterPath}${this.person.profile_path}`: require('../assets/no-profile-image.png')
     },
     birthdayDate() {
       const releaseDate = new Date(Date.parse(this.person.birthday));
@@ -101,7 +118,7 @@ export default {
   },
   methods: {
     roleImageUrl(url) {
-      return `${posterPath}${url}`;
+      return url?`${posterPath}${url}`: require('../assets/no-image.png');
     },
     goToMoviePage(id) {
       this.$router.push({ name: 'movie-page', params: { id: id } });
@@ -111,6 +128,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.loader{
+  background-color: #13152E;
+  color: #fff;
+  height: 30vh;
+}
 .person-view{
   background-color: #13152E;
   color: #fff;
