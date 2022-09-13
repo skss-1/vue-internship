@@ -52,7 +52,7 @@ export default {
   },
   data() {
     return {
-        windowOpen:false,
+      windowOpen:false,
     }
   },
   computed:{
@@ -62,23 +62,26 @@ export default {
   },
   methods: {
     toggleWindow() {
-        this.windowOpen = !this.windowOpen;
-        console.log(this.reviews)
+      this.windowOpen = !this.windowOpen;
+      console.log(this.reviews)
     },
     imageUrl(index) {
-      return this.reviews[index].author_details.avatar_path? this.reviews[index].author_details.avatar_path.slice(1): 'image is missing' // would change to require('../assets/no-profile-image.png')
+      return this.reviews[index].author_details.avatar_path? this.reviews[index].author_details.avatar_path.slice(1): require('../assets/no-profile-image.png')
     },
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.author-image{
+.author-info{
+  flex: 0 0 10%;
+  .author-image{
     border-radius: 50px;
+  }
 }
 .review{
-    &:focus{
-        box-shadow: 0 0px 1rem 0px rgba(255, 255, 255, 0.4);
-    }
+  &:focus{
+    box-shadow: 0 0px 1rem 0px rgba(255, 255, 255, 0.4);
+  }
 }
 </style>
