@@ -1,5 +1,8 @@
 <template>
-  <div class="review-section py-4 text-center">
+  <div
+    v-if="reviews.length"
+    class="review-section py-4 text-center"
+  >
     <button
       class="toggle-window btn btn-lg btn-light"
       @click="toggleWindow"

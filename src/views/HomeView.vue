@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import ItemsList from '../components/ItemsList.vue';
+import ItemsList from '@/components/ItemsList.vue';
 // @ is an alias to /src
 export default {
   name: 'HomeView',

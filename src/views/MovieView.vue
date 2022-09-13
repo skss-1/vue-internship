@@ -88,8 +88,8 @@
 <script>
 import CreditsScroll from '@/components/CreditsScroll.vue';
 import VideosScroll from '@/components/VideosScroll.vue';
+import ReviewSection from '@/components/ReviewSection.vue';
 import { posterPath } from '@/api/tmdb-api';
-import ReviewSection from '../components/ReviewSection.vue';
 
 export default {
   name: 'MovieView',
@@ -108,6 +108,9 @@ export default {
     credits() {
       return this.$store.getters['movie/getActors'];
     },
+    videos() {
+      return this.$store.getters['movie/getVideos'];
+    },
     reviews() {
       return this.$store.getters['movie/getReviews'];
     },
@@ -120,9 +123,6 @@ export default {
     releaseDate() {
       const releaseDate = new Date(Date.parse(this.item.release_date));
       return releaseDate.toLocaleString('en', { dateStyle: 'long' });
-    },
-    videos() {
-      return this.$store.getters['movie/getVideos'];
     },
   },
    mounted() {

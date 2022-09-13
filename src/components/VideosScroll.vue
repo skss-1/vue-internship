@@ -1,5 +1,8 @@
 <template>
-  <div class="videos-scroll my-5">
+  <div
+    v-if="videos"
+    class="videos-scroll my-5"
+  >
     <div class="fs-3 video-heading m-3 text-center"> 
       Related Videos 
     </div>

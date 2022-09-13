@@ -62,8 +62,8 @@ export const movie = {
         if (!res.status) {
           throw new Error('Response is not ok')
         }
+        this.dispatch('movie/fetchMovieReviews', { id: id });
         commit('setVideos', res.data.results);
-        commit('setIsLoading', false);
       } catch (error) {
         console.warn(error);
       }
@@ -75,6 +75,7 @@ export const movie = {
           throw new Error('Response is not ok')
         }
         commit('setReviews', res.data.results);
+        commit('setIsLoading', false);
       } catch (error) {
         console.warn(error);
       }
