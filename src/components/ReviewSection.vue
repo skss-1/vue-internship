@@ -18,15 +18,16 @@
         v-for="(review,index) in reviews"
         :key="review.id"
         tabindex="0"
-        class="review m-2 border border-light d-flex gap-4 p-3 rounded"
+        class="review mx-2 my-4 border border-light d-flex gap-4 p-3 rounded"
       >
         <div
           v-if="review.author_details"
           class="author-info"
+          :title="review.author_details.username"
         >
           <img
             :src="imageUrl(index)"
-            :alt="`${review.author_details.name}-image`"
+            :alt="`${review.author_details.username}-image`"
             class="author-image"
           >
           <div class="author-name py-2">
@@ -75,11 +76,19 @@ export default {
 <style lang="scss" scoped>
 .author-info{
   flex: 0 0 10%;
+  max-width: 10%;
+  min-width: 75px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   .author-image{
-    border-radius: 50px;
+    width: 100%;
+    border-radius: 50%;
   }
 }
 .review{
+  .review-content{
+    overflow: hidden;
+  }
   &:focus{
     box-shadow: 0 0px 1rem 0px rgba(255, 255, 255, 0.4);
   }
