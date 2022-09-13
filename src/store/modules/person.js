@@ -6,6 +6,7 @@ export const person = {
   state: () => ({
     person: {},
     credits: [],
+    isLoading:true,
   }),
   mutations: {
     setPerson(state, payload) {
@@ -14,12 +15,16 @@ export const person = {
     setCredits(state, payload) {
       state.credits = [...payload];
     },
+    setIsLoading(state, payload) {
+      state.isLoading = payload;
+    },
   },
   actions: {
     async fetchPerson({ commit },{ id }) {
       commit('setPerson', {});
       commit('setCredits', []);
       try {
+        commit('setIsLoading', true);
         const res = await axios.get(`${path}/person/${id}?api_key=${process.env.VUE_APP_API_KEY}`);
         if (!res.status) {
           throw new Error('Response is not ok');
@@ -37,6 +42,7 @@ export const person = {
           throw new Error('Response is not ok');
         }
         commit('setCredits',  res.data.cast);
+        commit('setIsLoading', false);
       } catch (error) {
         console.warn(error);
       }
@@ -45,5 +51,6 @@ export const person = {
   getters: {
     getPerson:(state) => state.person,
     getCredits:(state) => state.credits,
+    getIsLoading:(state) => state.isLoading,
   }
 };

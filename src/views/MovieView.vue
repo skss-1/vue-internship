@@ -1,5 +1,19 @@
 <template>
-  <div class="movie-view">
+  <div
+    v-if="isLoading"
+    class="loader text-center p-5"
+  >
+    <div
+      class="spinner-border text-light"
+      role="status"
+    >
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  <div
+    v-else
+    class="movie-view"
+  >
     <div
       class="background-poster"
       :style="backgroundUrl"
@@ -34,7 +48,7 @@
             <div 
               v-for="genre in item.genres" 
               :key="genre.id" 
-              class="fs-6 fw-lighter rounded-pill border border-light rounded py-2 px-3" 
+              class="fs-6 fw-lighter rounded-pill border border-light rounded py-1 px-4" 
             >
               {{ genre.name }}
             </div> 
@@ -61,7 +75,7 @@
           <div 
             v-for="company in item.production_companies" 
             :key="company.id"  
-            class="fs-6 fw-lighter rounded-pill border border-light rounded py-2 px-3" 
+            class="fs-6 fw-lighter rounded-pill border border-light rounded py-1 px-4" 
           >
             {{ company.name }}
           </div> 
@@ -82,6 +96,9 @@ export default {
     VideosScroll,
   },
   computed: {
+    isLoading() {
+      return this.$store.getters['movie/getIsLoading'];
+    },
     item() {
       return this.$store.getters['movie/getItem'];
     },
@@ -89,7 +106,7 @@ export default {
       return this.$store.getters['movie/getActors'];
     },
     posterUrl() {
-      return `${posterPath}${this.item.poster_path}`;
+      return this.item.poster_path? `${posterPath}${this.item.poster_path}`: require('../assets/no-image.png');
     },
     backgroundUrl() {
       return `backgroundImage: linear-gradient(0deg, rgba(19, 21, 46, 0.7), rgba(19, 21, 46, 0.7)), url(${posterPath}${this.item.backdrop_path})`;
@@ -109,6 +126,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.loader{
+  background-color: #13152E;
+  color: #fff;
+  height: 30vh;
+}
+
 .movie-view{
   --image-height-for-movie-page: 500px;
   --title-height-for-movie-page: 150px;
