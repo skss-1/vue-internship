@@ -128,11 +128,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.loader{
-  background-color: #13152E;
-  color: #fff;
-  height: 30vh;
-}
 .person-view{
   background-color: #13152E;
   color: #fff;
