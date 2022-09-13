@@ -41,6 +41,7 @@ export const movie = {
         this.dispatch('movie/fetchMovieCredits', { id: id });
         commit('setItem', res.data);
       } catch (error) {
+        commit('setIsLoading', false);
         console.warn(error);
       }
     },
@@ -53,6 +54,7 @@ export const movie = {
         this.dispatch('movie/fetchMovieVideos', { id: id });
         commit('setActors', res.data.cast.slice(0,20));
       } catch (error) {
+        commit('setIsLoading', false);
         console.warn(error);
       }
     },
@@ -65,6 +67,7 @@ export const movie = {
         this.dispatch('movie/fetchMovieReviews', { id: id });
         commit('setVideos', res.data.results);
       } catch (error) {
+        commit('setIsLoading', false);
         console.warn(error);
       }
     },
@@ -77,6 +80,7 @@ export const movie = {
         commit('setReviews', res.data.results);
         commit('setIsLoading', false);
       } catch (error) {
+        commit('setIsLoading', false);
         console.warn(error);
       }
     }

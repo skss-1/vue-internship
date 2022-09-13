@@ -11,6 +11,12 @@
     </div>
   </div>
   <div
+    v-else-if="!isLoading && isEmpty"
+    class="container p-5 h3 text-light"
+  >
+    Movie not found 
+  </div>
+  <div
     v-else
     class="movie-view"
   >
@@ -102,6 +108,9 @@ export default {
     isLoading() {
       return this.$store.getters['movie/getIsLoading'];
     },
+    isEmpty() {
+      return Boolean(!Object.keys(this.item).length);
+    },
     item() {
       return this.$store.getters['movie/getItem'];
     },
@@ -125,7 +134,7 @@ export default {
       return releaseDate.toLocaleString('en', { dateStyle: 'long' });
     },
   },
-   mounted() {
+  mounted() {
     this.$store.dispatch('movie/fetchMovieDetails',{ id:this.$route.params.id });
   }
 }
