@@ -1,9 +1,12 @@
 <template>
-  <div class="credits-scroll my-3">
+  <div class="credits-scroll my-3 p-2">
     <div
       v-for="actor in credits"
       :key="actor.id"
       class="card actor-card d-flex"
+      tabindex="0"
+      @click="goToPersonPage(actor.id)"
+      @keydown.enter.space="goToPersonPage(actor.id)"
     >
       <img
         :src="imageUrl(actor.profile_path)"
@@ -34,6 +37,9 @@ export default {
     imageUrl(profile_path) {
       return `${posterPath}${profile_path}`;
     },
+    goToPersonPage(id) {
+      this.$router.push({ name: 'person-page', params: { id: id } });
+    }
   }
 }
 </script>
