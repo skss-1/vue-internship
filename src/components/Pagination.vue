@@ -204,18 +204,15 @@ export default {
         return +this.$route.query.page
       }
     },
-    screenWidth() {
-      return document.querySelector('header').offsetWidth
-    },
     paginationClass() {
-      if (this.screenWidth > 576 && this.screenWidth < 1024) {
-        return 'pagination'
-      } else if (this.screenWidth > 1024) {
+      if (window.matchMedia('(min-width: 1024px)').matches) {
         return 'pagination-lg'
+      } else if (window.matchMedia('(min-width: 576px)').matches) {
+        return 'pagination'
       } else {
         return 'pagination-sm'
       }
-    }
+    },
   },
   watch: {
     'currentPage': {

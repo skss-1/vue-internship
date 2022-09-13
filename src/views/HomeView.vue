@@ -62,11 +62,11 @@ export default {
     },
     queryData() {
       return {
-        query:this.$route.query.query,
-        include_adult:this.$route.query.include_adult,
-        year: this.$route.query.year,
-        language: this.$route.query.language,
-        region: this.$route.region,
+        query:this.$route.query.query? this.$route.query.query: undefined,
+        include_adult:this.$route.query.include_adult === 'true'? true: undefined,
+        year: this.$route.query.year? this.$route.query.year: undefined,
+        language: this.$route.query.language? this.$route.query.language: undefined,
+        region: this.$route.query.region? this.$route.query.region: undefined,
         page: this.page,
       }
     }
