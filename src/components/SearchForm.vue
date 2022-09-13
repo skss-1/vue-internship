@@ -12,16 +12,19 @@
         search
       </span>
       <button 
-        class="btn btn-light ms-sm-3 ms-md-4 ms-xl-3 ms-xxl-4" 
+        class="btn btn-light ms-2 ms-sm-3 ms-md-4 ms-xl-3 ms-xxl-4 d-md-inline-block px-3 px-md-4 d-flex justify-content-center align-items-center" 
         type="submit"
         @click.prevent="onSubmit"
       >
-        Search
+        <span class="material-symbols-outlined d-md-none">
+          subdirectory_arrow_left
+        </span>
+        <span class="d-none d-md-inline-block px-lg-2">Search</span>
       </button>
     </form>
-    <div class="col search-filter d-flex flex-wrap align-items-center justify-content-center">
-      <div class="row w-100 g-sm-3 g-md-0 justify-content-start">
-        <div class="col ps-sm-0 col-md-6 w-auto align-self-center order-last order-md-first form-checks">
+    <div class="search-filter">
+      <div class="row flex-wrap justify-content-evenly justify-content-sm-start w-100 g-3">
+        <div class="form-checks d-flex align-items-center order-4">
           <input
             id="flexCheckDefault"
             v-model="adultIncluded"
@@ -37,7 +40,7 @@
         </div>
         <select
           v-model="year"
-          class="col col-sm-6 col-md-6 form-select"
+          class="form-select"
           aria-label="Select year"
         >
           <option
@@ -56,7 +59,7 @@
         </select>
         <select
           v-model="region"
-          class="col col-sm-6 col-md-6 form-select"
+          class="form-select"
           aria-label="Select region"
         >
           <option
@@ -75,7 +78,7 @@
         </select>
         <select
           v-model="language"
-          class="col col-sm-6 col-md-6 form-select"
+          class="form-select"
           aria-label="Select language"
         >
           <option
@@ -127,7 +130,7 @@ export default {
     query() {
       let query = {
         ...(this.searchValue) && { query: this.searchValue || '' },
-        ...(this.include_adult) && { include_adult: this.adultIncluded || false },
+        ...(this.adultIncluded) && { include_adult: this.adultIncluded || false },
         ...(this.region) && { region: this.region || '' },
         ...(this.language) && { language: this.language || '' },
         ...(this.year) && { year: this.year || '' },
@@ -145,16 +148,20 @@ export default {
     },
   },
   watch: { 
-      '$route.query': {
-          handler: function() {
+    '$route.query': {
+        handler: function() {
+          if (this.$route.path === '/search') {
             if (!!this.$route.query.query && this.isNewSearch) {
               this.getDataFromRoute();
               this.fetchData();
             }
-          },
-          deep: true,
-          immediate: true
-        }
+          } else {
+            this.getDataFromRoute()
+          }
+        },
+        deep: true,
+        immediate: true
+    }
   },
   created() {
     this.$store.dispatch('search/fetchRegions');
@@ -164,13 +171,11 @@ export default {
   methods: {
     onSubmit() {
       if (this.isNewSearch && this.searchValue) {
-        this.fetchData()
-          .then(() => {
-            this.$router.push({
-              path: '/search',
-              query: this.query,
-            })
-          })
+        this.page = 1
+        this.$router.push({
+          path: '/search',
+          query: this.query,
+        })
       }
     },
     fetchData() {
@@ -206,7 +211,9 @@ form {
     }
   }
 }
-
+.form-checks {
+  width: 200px;
+}
 .form-check-input {
   background-color: inherit;
   border: 2px solid $white;
@@ -217,14 +224,13 @@ form {
   font-size: 32px;
   color: currentColor;
 }
-
 .btn {
   padding: 0px 40px;
 }
-
 select {
-  padding: 7px 75px 7px 20px;
-  width: auto;
+  padding: 7px 55px 7px 20px;
+  margin-right:5px;
+  width: 200px;
   height: 32px;
   border: none;
   color: #fff;

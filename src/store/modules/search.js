@@ -45,7 +45,7 @@ export const search = {
     },
     async fetchPopularMovies({ commit }, { page }) {
       try {
-        const res = await axios.get(`${path}/movie/popular`, { params: { api_key: process.env.VUE_APP_API_KEY } });
+        const res = await axios.get(`${path}/movie/popular`, { params: { api_key: process.env.VUE_APP_API_KEY, page } });
         if (!res.status) {
           throw new Error('Response is not ok');
         }
@@ -58,7 +58,7 @@ export const search = {
     },
     async fetchTopRatedMovies({ commit }, { page }) {
       try {
-        const res = await axios.get(`${path}/movie/top_rated`, { params: { api_key: process.env.VUE_APP_API_KEY } });
+        const res = await axios.get(`${path}/movie/top_rated`, { params: { api_key: process.env.VUE_APP_API_KEY, page } });
         if (!res.status) {
           throw new Error('Response is not ok');
         }
@@ -71,7 +71,7 @@ export const search = {
     },
     async fetchUpcomingMovies({ commit }, { page }) {
       try {
-        const res = await axios.get(`${path}/movie/upcoming`, { params: { api_key: process.env.VUE_APP_API_KEY } });
+        const res = await axios.get(`${path}/movie/upcoming`, { params: { api_key: process.env.VUE_APP_API_KEY, page } });
         if (!res.status) {
           throw new Error('Response is not ok');
         }

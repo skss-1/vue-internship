@@ -11,12 +11,15 @@
       :items="items"
     />
     <pagination 
-      v-if="items.length"
+      v-if="totalPages > 1"
       :total-pages="totalPages"
       :page="page"
       :route="route"
       :query="query"
       :adult="adultIncluded"
+      :year="year"
+      :language="language"
+      :region="region"
       @onChange="changePage"
       @change-params="changeParams"
     />
@@ -38,7 +41,10 @@ export default {
       page: +this.$route.query.page || 1,
       route: this.$route.path,
       query: this.$route.query.query,
-      adultIncluded: this.booleanQueryAdultIncluded
+      adultIncluded: this.booleanQueryAdultIncluded,
+      year: this.$route.query.year,
+      language: this.$route.query.language,
+      region: this.$route.query.region
     }
   },
   computed: {
@@ -53,20 +59,24 @@ export default {
     },
     booleanQueryAdultIncluded() {
       return this.$route.query.include_adult === 'true'? true : false
+    },
+    queryData() {
+      return {
+        query:this.$route.query.query,
+        include_adult:this.$route.query.include_adult,
+        year: this.$route.query.year,
+        language: this.$route.query.language,
+        region: this.$route.region,
+        page: this.page,
+      }
     }
   },
   beforeRouteEnter(to, from, next) {
       next(vm => {
         if (vm.$route.path !== '/' && vm.$route.path !== '/search') {
-          console.log('BeforeRouteEnter')
           vm.fetchMovies(vm.$route.path, vm.page).then(() => {
-            vm.route = vm.$route.path
-            vm.query = vm.$route.query.query
-            vm.adultIncluded = vm.booleanQueryAdultIncluded
             vm.$router.push({
               query: {
-                // query:vm.$route.query.query,
-                // include_adult:vm.$route.query.include_adult,
                 page: vm.page
               }
             })
@@ -88,10 +98,8 @@ export default {
         case '/popular':
           return this.$store.dispatch('search/fetchPopularMovies', { page });
         case '/search':
-          return this.$store.dispatch('search/searchMovie', {
-            searchValue:this.$route.query.query,
-            adultIncluded:this.$route.query.include_adult,
-            page: this.page,
+          return this.$store.dispatch('search/search', {
+            ...(this.queryData)
           });
         default:
           console.info('Un-handled path: ', path)
@@ -100,21 +108,30 @@ export default {
     },
     changePage(newPage) {
       this.page = newPage
-      this.fetchMovies(this.$route.path, this.page).then(() => {
+      if (this.$route.path === '/search') {
         this.$router.push({
           query: {
-            include_adult:this.$route.query.include_adult,
-            query:this.$route.query.query,
-            page: this.page
+            ...(this.queryData)
           }
         })
-      })
+      } else {
+        this.fetchMovies(this.$route.path, this.page).then(() => {
+          this.$router.push({
+            query: {
+              ...(this.queryData)
+            }
+          })
+        })
+      }
     },
-    changeParams(page, query, route, adultIncluded) {
+    changeParams(page, query, route, adultIncluded, year, language, region) {
       this.page = page,
       this.query = query,
       this.route = route,
       this.adultIncluded = adultIncluded
+      this.year = year
+      this.language = language
+      this.region = region
     }
   }
 };

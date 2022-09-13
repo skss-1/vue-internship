@@ -144,6 +144,21 @@ export default {
       type: Boolean,
       default: false,
       required: false
+    },
+    region: {
+      type: String,
+      default: '',
+      required: false
+    },
+    year: {
+      type: String,
+      default: '',
+      required: false
+    },
+    language: {
+      type: String,
+      default: '',
+      required: false
     }
 
   },
@@ -152,7 +167,10 @@ export default {
       currentPage: this.page,
       currentQuery: this.query,
       currentAdultIncludet: this.adultIncluded,
-      currentRoute: this.route
+      currentRoute: this.route,
+      currentYear: this.year,
+      currentRegion: this.region,
+      currentLanguage: this.language
     }
   },
   computed: {
@@ -221,6 +239,7 @@ export default {
     '$route': {
       handler: function() {
         if (this.$route.path !== '/search') {
+          this.currentQuery = ''
           if (this.$route.path !== this.currentRoute) {
             this.currentRoute = this.$route.path
             this.pageReset()
@@ -231,11 +250,13 @@ export default {
           }
         }
         if (this.$route.path === '/search') {
-          this.changeParams()
           if (this.$route.query.query !== this.currentQuery || this.booleanQueryAdultIncluded !== this.currentAdultIncludet) {
             this.currentQuery = this.$route.query.query
             this.currentRoute = this.$route.path
             this.currentAdultIncludet = this.booleanQueryAdultIncluded
+            this.currentRegion = this.$route.query.region
+            this.currentYear = this.$route.query.year
+            this.currentLanguage = this.$route.query.language
             this.pageReset()
             this.changeParams()
           }
@@ -258,7 +279,7 @@ export default {
       }
     },
     changeParams() {
-      this.$emit('change-params', this.currentPage, this.currentQuery, this.currentRoute, this.currentAdultIncludet)
+      this.$emit('change-params', this.currentPage, this.currentQuery, this.currentRoute, this.currentAdultIncludet, this.currentYear, this.currentLanguage, this.currentRegion)
     },
     pageReset() {
       this.currentPage = 1
