@@ -9,7 +9,7 @@
         :src="`https://www.youtube.com/embed/${videos[currentVideo].key}`"
         title="YouTube video player"
         frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
       />
     </div>
@@ -45,36 +45,33 @@ export default {
   },
   data() {
     return {
-        currentVideo: 0,
+      currentVideo: 0,
     }
   },
   methods: {
     next() {
-      console.log('next' + this.currentVideo)
-      console.log('next' + this.currentVideo)
       this.currentVideo < this.videos.length && this.currentVideo++;
     },
     prev() {
-      console.log('prev' + this.currentVideo)
       this.currentVideo > 0 && this.currentVideo--;
     },
   }
-
 }
 </script>
 
 <style scoped lang="scss">
-.trailer{
-  width: 70vw;
-  height: calc(70vw / 1.73);
-  max-width: 100%;
-}
 .videos-scroll{
-  border-right: 15px double #fff;
-  border-left: 15px double #fff;
+  --basic-youtube-aspect-ratio: 1.73;
+  border-right: 20px solid #fff;
+  border-left: 20px solid #fff;
   button{
     color: #020916;
     border-color: #020916;
   }
+}
+.trailer{
+  width: 70vw;
+  height: calc( 70vw / var(--basic-youtube-aspect-ratio) );
+  max-width: 100%;
 }
 </style>

@@ -21,10 +21,10 @@ export const person = {
   },
   actions: {
     async fetchPerson({ commit },{ id }) {
-      commit('setPerson', {});
-      commit('setCredits', []);
       try {
         commit('setIsLoading', true);
+        commit('setPerson', {});
+        commit('setCredits', []);
         const res = await axios.get(`${path}/person/${id}?api_key=${process.env.VUE_APP_API_KEY}`);
         if (!res.status) {
           throw new Error('Response is not ok');

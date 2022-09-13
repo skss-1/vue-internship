@@ -35,7 +35,6 @@ export const movie = {
           throw new Error('Response is not ok')
         }
         this.dispatch('movie/fetchMovieCredits', { id: id });
-        this.dispatch('movie/fetchMovieVideos', { id: id });
         commit('setItem', res.data);
       } catch (error) {
         console.warn(error);
@@ -47,8 +46,8 @@ export const movie = {
         if (!res.status) {
           throw new Error('Response is not ok')
         }
+        this.dispatch('movie/fetchMovieVideos', { id: id });
         commit('setActors', res.data.cast.slice(0,20));
-        commit('setIsLoading', false);
       } catch (error) {
         console.warn(error);
       }
@@ -60,6 +59,7 @@ export const movie = {
           throw new Error('Response is not ok')
         }
         commit('setVideos', res.data.results);
+        commit('setIsLoading', false);
       } catch (error) {
         console.warn(error);
       }
