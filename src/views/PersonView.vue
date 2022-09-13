@@ -1,10 +1,10 @@
 <template>
   <div
-    v-if="loading"
+    v-if="isLoading"
     class="loader text-center p-5"
   >
     <div
-      class="spinner-border"
+      class="spinner-border text-light"
       role="status"
     >
       <span class="visually-hidden">Loading...</span>
@@ -92,8 +92,8 @@ import { posterPath } from '@/api/tmdb-api'
 export default {
   name: 'PersonView',
   computed: {
-    loading() {
-      return this.$store.getters['person/getLoading'];
+    isLoading() {
+      return this.$store.getters['person/getIsLoading'];
     },
     person() {
       return this.$store.getters['person/getPerson'];

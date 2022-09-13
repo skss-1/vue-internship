@@ -1,10 +1,10 @@
 <template>
   <div
-    v-if="loading"
+    v-if="isLoading"
     class="loader text-center p-5"
   >
     <div
-      class="spinner-border"
+      class="spinner-border text-light"
       role="status"
     >
       <span class="visually-hidden">Loading...</span>
@@ -48,7 +48,7 @@
             <div 
               v-for="genre in item.genres" 
               :key="genre.id" 
-              class="fs-6 fw-lighter rounded-pill border border-light rounded py-2 px-3" 
+              class="fs-6 fw-lighter rounded-pill border border-light rounded py-1 px-4" 
             >
               {{ genre.name }}
             </div> 
@@ -71,7 +71,7 @@
           <div 
             v-for="company in item.production_companies" 
             :key="company.id"  
-            class="fs-6 fw-lighter rounded-pill border border-light rounded py-2 px-3" 
+            class="fs-6 fw-lighter rounded-pill border border-light rounded py-1 px-4" 
           >
             {{ company.name }}
           </div> 
@@ -90,9 +90,8 @@ export default {
     CreditsScroll,
   },
   computed: {
-    loading() {
-      console.log(this.$store.getters['movie/getLoading'])
-      return this.$store.getters['movie/getLoading'];
+    isLoading() {
+      return this.$store.getters['movie/getIsLoading'];
     },
     item() {
       return this.$store.getters['movie/getItem'];

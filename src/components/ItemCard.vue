@@ -112,6 +112,7 @@ export default {
 }
 .card-title{
   white-space: nowrap;  
+  text-overflow: ellipsis;
 }
 .card-image{
   position: relative;
