@@ -1,13 +1,24 @@
 <template>
   <div class="home-page py-3">
     <div
-      v-show="!items.length"
-      class="container p-5 h3"
+      v-if="isLoading"
+      class="loader text-center p-5"
+    >
+      <div
+        class="spinner-border text-light"
+        role="status"
+      >
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <div
+      v-else-if="!isLoading && !items.length"
+      class="container p-5 h3 text-light"
     >
       No movies found 
     </div>
     <items-list
-      v-if="!!items"
+      v-else
       :items="items"
     />
     <pagination 
@@ -21,6 +32,7 @@
 import ItemsList from '@/components/ItemsList.vue';
 import Pagination from '@/components/Pagination.vue';
 
+// @ is an alias to /src
 export default {
   name: 'HomeView',
   components: { 
@@ -34,6 +46,9 @@ export default {
     }
   },
   computed: {
+    isLoading() {
+      return this.$store.getters['search/getIsLoading'];
+    },
     items() {
       return this.$store.getters['search/getItems'];
     },

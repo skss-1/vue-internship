@@ -121,7 +121,11 @@ export const search = {
     getCurrentPage: (state) => state.currentPage,
     getItems: (state) => state.itemsList,
     getRegions:(state) => state.regions,
+<<<<<<< HEAD
     getLanguages: (state) => state.languages,
+=======
+    getLanguages:(state) => state.languages,
+>>>>>>> a7e4da1f5c1ae10dcfcfa56fa2e76fa9486d544b
     getIsLoading:(state) => state.isLoading,
   }
 }

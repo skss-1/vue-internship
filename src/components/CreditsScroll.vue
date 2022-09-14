@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     imageUrl(profile_path) {
-      return `${posterPath}${profile_path}`;
+      return profile_path ? `${posterPath}${profile_path}`: require('../assets/no-profile-image.png')
     },
     goToPersonPage(id) {
       this.$router.push({ name: 'person-page', params: { id: id } });
@@ -66,7 +66,7 @@ export default {
   overflow-x: auto;
 }
 .actor-card{
-  width:150px;
+  width: 150px;
   cursor: pointer;
   padding: 5px;
   background-color: #090b24;

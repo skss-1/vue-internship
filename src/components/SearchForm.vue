@@ -35,7 +35,7 @@
             class="form-check-label"
             for="flexCheckDefault"
           >
-            Include adult
+            Adult content
           </label>
         </div>
         <select
@@ -180,12 +180,12 @@ export default {
       return this.$store.dispatch('search/search', { ...this.query });
     },
     getDataFromRoute() {
-      this.searchValue = this.$route.query.query? this.$route.query.query: '';
-      this.adultIncluded = this.$route.query.include_adult === 'true'? true: false;
-      this.region = this.$route.query.region? this.$route.query.region: '';
-      this.language = this.$route.query.language? this.$route.query.language: '';
-      this.year = this.$route.query.year? this.$route.query.year: '';
-      this.page = this.$route.query.page? this.$route.query.page: 1;
+      this.searchValue = this.$route.query.query ? this.$route.query.query : '';
+      this.adultIncluded = this.$route.query.include_adult === 'true' ? true : false;
+      this.region = this.$route.query.region ? this.$route.query.region : '';
+      this.language = this.$route.query.language ? this.$route.query.language : '';
+      this.year = this.$route.query.year ? this.$route.query.year : '';
+      this.page = this.$route.query.page ? this.$route.query.page : 1;
     },
   }
 };
