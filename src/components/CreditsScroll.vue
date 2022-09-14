@@ -66,7 +66,7 @@ export default {
   overflow-x: auto;
 }
 .actor-card{
-  width:150px;
+  width: 150px;
   cursor: pointer;
   padding: 5px;
   background-color: #090b24;

@@ -1,19 +1,5 @@
 <template>
-  <div
-    v-if="isLoading"
-    class="loader text-center p-5"
-  >
-    <div
-      class="spinner-border text-light"
-      role="status"
-    >
-      <span class="visually-hidden">Loading...</span>
-    </div>
-  </div>
-  <div
-    v-else
-    class="movie-view"
-  >
+  <div class="tv-view">
     <div
       class="background-poster"
       :style="backgroundUrl"
@@ -22,52 +8,60 @@
       <div class="poster"> 
         <img 
           :src="posterUrl" 
-          :alt="item.title + ' poster img'" 
+          :alt="item.name + ' poster img'" 
           class="poster-img"
         >
       </div> 
-      <div class="item-title h1 m-0 w-50 py-4"> 
-        {{ item.title }} 
+      <div class="item-title h1 m-0 w-50 py-4 w-100 text-center"> 
+        {{ item.name }} 
       </div> 
     </div> 
     <div class="bottom-container"> 
       <div class="container"> 
-        <div class="top-row d-flex justify-content-center">
-          <p class="fs-5 px-3 fw-light">
+        <div class="top-row d-flex justify-content-evenly flex-wrap flex-md-nowrap mb-5">
+          <p class="fs-5 px-3 fw-light d-flex flex-column align-items-center">
             Avarage score: <span class="fs-6 fw-normal">{{ item.vote_average }}</span>
           </p> 
-          <p class="fs-5 px-2 fw-light"> 
+          <p class="fs-5 px-2 fw-light d-flex flex-column align-items-center"> 
             Release Date: <span class="fs-6 fw-normal">{{ releaseDate }} </span>
           </p>
+          <p class="fs-5 px-2 fw-light d-flex flex-column align-items-center"> 
+            Status: <span class="fs-6 fw-normal">{{ item.status }} </span>
+          </p>
+          <p class="fs-5 px-2 fw-light d-flex flex-column align-items-center"> 
+            Seasons: <span class="fs-6 fw-normal">{{ item.number_of_seasons }} </span>
+          </p>
+          <p class="fs-5 px-2 fw-light d-flex flex-column align-items-center"> 
+            Episodes: <span class="fs-6 fw-normal">{{ item.number_of_episodes }} </span>
+          </p>
         </div>
-        <div class="fs-4 genres-heading d-flex gap-3 m-3 py-4"> 
+        <div class="fs-4 genres-heading d-flex gap-3 mx-3 mb-5"> 
           <p class="m-0">
             Genres
           </p>
-          <div class="genres d-flex gap-3">
+          <div class="genres d-flex gap-3 flex-wrap">
             <div 
               v-for="genre in item.genres" 
               :key="genre.id" 
-              class="fs-6 fw-lighter rounded-pill border border-light rounded py-1 px-4" 
+              class="fs-6 fw-lighter border border-light rounded-pill py-1 px-4" 
             >
               {{ genre.name }}
             </div> 
           </div>
         </div> 
-        <div class="fs-2 overview-heading"> 
+        <div class="fs-2 overview-heading mb-2"> 
           Overview 
         </div> 
-        <p class="fs-5 fw-lighter overview m-0"> 
+        <p class="fs-5 fw-lighter overview m-0 mb-5"> 
           {{ item.overview }} 
-        </p>
-        <videos-scroll
-          v-if="videos"
-          :videos="videos"
-        />
-        <div class="fs-4 credits-heading m-3 "> 
+        </p> 
+        <div class="fs-4 credits-heading mx-3"> 
           Credits 
         </div>
-        <credits-scroll :credits="credits" />
+        <credits-scroll
+          :credits="credits"
+          class="mb-5"
+        />
         <p class="fs-4 companies-heading d-flex gap-3 m-0 px-2">
           Companies
         </p>
@@ -75,7 +69,7 @@
           <div 
             v-for="company in item.production_companies" 
             :key="company.id"  
-            class="fs-6 fw-lighter rounded-pill border border-light rounded py-1 px-4" 
+            class="fs-6 fw-lighter border border-light rounded-pill py-1 px-4 py-2 px-3" 
           >
             {{ company.name }}
           </div> 
@@ -86,47 +80,39 @@
 </template>
 <script>
 import CreditsScroll from '@/components/CreditsScroll.vue';
-import VideosScroll from '@/components/VideosScroll.vue';
 import { posterPath } from '@/api/tmdb-api';
 
 export default {
-  name: 'MovieView',
+  name: 'MoviePageView',
   components: {
     CreditsScroll,
-    VideosScroll,
   },
   computed: {
-    isLoading() {
-      return this.$store.getters['movie/getIsLoading'];
-    },
     item() {
-      return this.$store.getters['movie/getItem'];
+      return this.$store.getters['tv/getItem'];
     },
     credits() {
-      return this.$store.getters['movie/getActors'];
+      return this.$store.getters['tv/getActors'];
     },
     posterUrl() {
-      return this.item.poster_path? `${posterPath}${this.item.poster_path}`: require('../assets/no-image.png');
+      return `${posterPath}${this.item.poster_path}`;
     },
     backgroundUrl() {
       return `backgroundImage: linear-gradient(0deg, rgba(19, 21, 46, 0.7), rgba(19, 21, 46, 0.7)), url(${posterPath}${this.item.backdrop_path})`;
     },
     releaseDate() {
-      const releaseDate = new Date(Date.parse(this.item.release_date));
+      const releaseDate = new Date(Date.parse(this.item.first_air_date));
       return releaseDate.toLocaleString('en', { dateStyle: 'long' });
     },
-    videos() {
-      return this.$store.getters['movie/getVideos'];
-    },
   },
-   mounted() {
-    this.$store.dispatch('movie/fetchMovieDetails',{ id:this.$route.params.id });
+  mounted() {
+    this.$store.dispatch('tv/fetchTvDetails',{ id:this.$route.params.id });
   }
 }
 </script>
 
 <style scoped lang="scss">
-.movie-view{
+.tv-view{
   --image-height-for-movie-page: 500px;
   --title-height-for-movie-page: 150px;
   padding-top: var(--title-height-for-movie-page);
@@ -134,13 +120,13 @@ export default {
   background-color: #13152E;
   color: #fff;
   .background-poster{ 
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: var(--image-height-for-movie-page);
-  width: 100%;
-  background-size: cover;
-  background-position: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: var(--image-height-for-movie-page);
+    width: 100%;
+    background-size: cover;
+    background-position: center;
   }
 }
 .top-container{
