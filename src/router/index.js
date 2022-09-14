@@ -13,32 +13,32 @@ const routes = [
   {
     path: '/popular',
     name: 'popular',
-    component: () => import('@/views/HomeView.vue')
+    component: () => import('@/views/HomeView.vue'),
   },
   {
     path: '/top-rated',
     name: 'top-rated',
-    component: () => import('@/views/HomeView.vue')
+    component: () => import('@/views/HomeView.vue'),
   },
   {
     path: '/upcoming',
     name: 'upcoming',
-    component: () => import('@/views/HomeView.vue')
+    component: () => import('@/views/HomeView.vue'),
   },
   {
     path: '/search',
     name: 'search',
-    component: () => import('@/views/HomeView.vue')
+    component: () => import('@/views/HomeView.vue'),
   },
   {
     path: '/movie/:id',
     name: 'movie-page',
-    component: () => import('@/views/MovieView')
+    component: () => import('@/views/MovieView'),
   },
   {
     path: '/tv/:id',
     name: 'tv-page',
-    component: () => import('@/views/TvView')
+    component: () => import('@/views/TvView'),
   },
   {
     path: '/person/:id',
