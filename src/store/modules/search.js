@@ -48,10 +48,10 @@ export const search = {
         console.warn(error);
       }
     },
-    async fetchPopularMovies({ commit }) {
+    async fetchPopularMovies({ commit }, { page }) {
       try {
         commit('setIsLoading', true);
-        const res = await axios.get(`${path}/movie/popular`, { params: { api_key: process.env.VUE_APP_API_KEY } });
+        const res = await axios.get(`${path}/movie/popular`, { params: { api_key: process.env.VUE_APP_API_KEY, page } });      
         if (!res.status) {
           throw new Error('Response is not ok');
         }
@@ -63,10 +63,10 @@ export const search = {
         console.warn(error);
       }
     },
-    async fetchTopRatedMovies({ commit }) {
+    async fetchTopRatedMovies({ commit }, { page }) {
       try {
         commit('setIsLoading', true);
-        const res = await axios.get(`${path}/movie/top_rated`, { params: { api_key: process.env.VUE_APP_API_KEY } });
+        const res = await axios.get(`${path}/movie/top_rated`, { params: { api_key: process.env.VUE_APP_API_KEY, page } });
         if (!res.status) {
           throw new Error('Response is not ok');
         }
@@ -78,10 +78,10 @@ export const search = {
         console.warn(error);
       }
     },
-    async fetchUpcomingMovies({ commit }) {
+    async fetchUpcomingMovies({ commit }, { page }) {
       try {
         commit('setIsLoading', true);
-        const res = await axios.get(`${path}/movie/upcoming`, { params: { api_key: process.env.VUE_APP_API_KEY } });
+        const res = await axios.get(`${path}/movie/upcoming`, { params: { api_key: process.env.VUE_APP_API_KEY, page } });
         if (!res.status) {
           throw new Error('Response is not ok');
         }
@@ -121,11 +121,7 @@ export const search = {
     getCurrentPage: (state) => state.currentPage,
     getItems: (state) => state.itemsList,
     getRegions:(state) => state.regions,
-<<<<<<< HEAD
-    getLanguages: (state) => state.languages,
-=======
     getLanguages:(state) => state.languages,
->>>>>>> a7e4da1f5c1ae10dcfcfa56fa2e76fa9486d544b
     getIsLoading:(state) => state.isLoading,
   }
 }
