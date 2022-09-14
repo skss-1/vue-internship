@@ -3,10 +3,7 @@
     class="d-flex justify-content-center mt-5"
     aria-label="Page navigation example"
   >
-    <ul
-      class="pagination"
-      :class="paginationClass"
-    >
+    <ul class="pagination">
       <li class="page-item me-md-1">
         <a
           class="page-link pe-2 ps-1 py-sm-2 px-sm-3 px-lg-4 d-flex h-100 juctify-content-center align-items-center"

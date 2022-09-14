@@ -10,6 +10,7 @@ export const search = {
     currentPage: 1,
     regions: [],
     languages: [],
+    isLoading: true,
   }),
   mutations: {
     setItems(state, payload) {
@@ -27,57 +28,67 @@ export const search = {
     setLanguages(state, payload) {
       state.languages = [...payload];
     },
+    setIsLoading(state, payload) {
+      state.isLoading = payload;
+    },
   },
   actions: {
     async search({ commit }, { query, include_adult, region, language, year, page }) {
       try {
+        commit('setIsLoading', true);
         const res = await axios.get(`${path}/search/multi`, { params: { api_key: process.env.VUE_APP_API_KEY, query, include_adult, region, language, year, page } })
         if (!res.status) {
           throw new Error('Response is not ok');
         }
         commit('setCurrentPage', res.data.page)
         commit('setTotalPages', res.data.total_pages)
-        commit('setItems', res.data.results)
         commit('setItems', res.data.results);
+        commit('setIsLoading', false);
       } catch (error) {
         console.warn(error);
       }
     },
-    async fetchPopularMovies({ commit }, { page }) {
+    async fetchPopularMovies({ commit }) {
       try {
-        const res = await axios.get(`${path}/movie/popular`, { params: { api_key: process.env.VUE_APP_API_KEY, page } });
+        commit('setIsLoading', true);
+        const res = await axios.get(`${path}/movie/popular`, { params: { api_key: process.env.VUE_APP_API_KEY } });
         if (!res.status) {
           throw new Error('Response is not ok');
         }
-        commit('setCurrentPage', res.data.page)
-        commit('setTotalPages', res.data.total_pages)
+        commit('setCurrentPage', res.data.page);
+        commit('setTotalPages', res.data.total_pages);
         commit('setItems', res.data.results);
+        commit('setIsLoading', false);
       } catch (error) {
         console.warn(error);
       }
     },
-    async fetchTopRatedMovies({ commit }, { page }) {
+    async fetchTopRatedMovies({ commit }) {
       try {
-        const res = await axios.get(`${path}/movie/top_rated`, { params: { api_key: process.env.VUE_APP_API_KEY, page } });
+        commit('setIsLoading', true);
+        const res = await axios.get(`${path}/movie/top_rated`, { params: { api_key: process.env.VUE_APP_API_KEY } });
         if (!res.status) {
           throw new Error('Response is not ok');
         }
-        commit('setCurrentPage', res.data.page)
-        commit('setTotalPages', res.data.total_pages)
+        commit('setCurrentPage', res.data.page);
+        commit('setTotalPages', res.data.total_pages);
         commit('setItems', res.data.results);
+        commit('setIsLoading', false);
       } catch (error) {
         console.warn(error);
       }
     },
-    async fetchUpcomingMovies({ commit }, { page }) {
+    async fetchUpcomingMovies({ commit }) {
       try {
-        const res = await axios.get(`${path}/movie/upcoming`, { params: { api_key: process.env.VUE_APP_API_KEY, page } });
+        commit('setIsLoading', true);
+        const res = await axios.get(`${path}/movie/upcoming`, { params: { api_key: process.env.VUE_APP_API_KEY } });
         if (!res.status) {
           throw new Error('Response is not ok');
         }
-        commit('setCurrentPage', res.data.page)
-        commit('setTotalPages', res.data.total_pages)
+        commit('setCurrentPage', res.data.page);
+        commit('setTotalPages', res.data.total_pages);
         commit('setItems', res.data.results);
+        commit('setIsLoading', false);
       } catch (error) {
         console.warn(error);
       }
@@ -106,10 +117,11 @@ export const search = {
     }
   },
   getters: {
-    getItems: (state) => state.itemsList,
     getTotalPages: (state) => state.totalPages,
     getCurrentPage: (state) => state.currentPage,
+    getItems: (state) => state.itemsList,
     getRegions:(state) => state.regions,
-    getLanguages:(state) => state.languages,
+    getLanguages: (state) => state.languages,
+    getIsLoading:(state) => state.isLoading,
   }
 }
