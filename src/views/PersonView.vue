@@ -11,6 +11,12 @@
     </div>
   </div>
   <div
+    v-else-if="!isLoading && isEmpty"
+    class="container p-5 h3 text-light"
+  >
+    Person not found 
+  </div>
+  <div
     v-else
     class="person-view py-5"
   >
@@ -94,6 +100,9 @@ export default {
   computed: {
     isLoading() {
       return this.$store.getters['person/getIsLoading'];
+    },
+    isEmpty() {
+      return Boolean(!Object.keys(this.person).length);
     },
     person() {
       return this.$store.getters['person/getPerson'];

@@ -27,11 +27,13 @@ export const person = {
         commit('setCredits', []);
         const res = await axios.get(`${path}/person/${id}?api_key=${process.env.VUE_APP_API_KEY}`);
         if (!res.status) {
+          commit('setIsLoading', false);
           throw new Error('Response is not ok');
         }
         this.dispatch('person/fetchCredits', { id: id });
         commit('setPerson', res.data);
       } catch (error) {
+        commit('setIsLoading', false);
         console.warn(error);
       }
     },
@@ -39,11 +41,13 @@ export const person = {
       try {
         const res = await axios.get(`${path}/person/${id}/combined_credits?api_key=${process.env.VUE_APP_API_KEY}`);
         if (!res.status) {
+          commit('setIsLoading', false);
           throw new Error('Response is not ok');
         }
         commit('setCredits',  res.data.cast);
         commit('setIsLoading', false);
       } catch (error) {
+        commit('setIsLoading', false);
         console.warn(error);
       }
     },

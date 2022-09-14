@@ -11,6 +11,12 @@
     </div>
   </div>
   <div
+    v-else-if="!isLoading && isEmpty"
+    class="container p-5 h3 text-light"
+  >
+    Movie not found 
+  </div>
+  <div
     v-else
     class="movie-view"
   >
@@ -80,6 +86,7 @@
             {{ company.name }}
           </div> 
         </div>
+        <review-section :reviews="reviews" />
       </div> 
     </div> 
   </div>
@@ -87,6 +94,7 @@
 <script>
 import CreditsScroll from '@/components/CreditsScroll.vue';
 import VideosScroll from '@/components/VideosScroll.vue';
+import ReviewSection from '@/components/ReviewSection.vue';
 import { posterPath } from '@/api/tmdb-api';
 
 export default {
@@ -94,16 +102,26 @@ export default {
   components: {
     CreditsScroll,
     VideosScroll,
+    ReviewSection,
   },
   computed: {
     isLoading() {
       return this.$store.getters['movie/getIsLoading'];
+    },
+    isEmpty() {
+      return Boolean(!Object.keys(this.item).length);
     },
     item() {
       return this.$store.getters['movie/getItem'];
     },
     credits() {
       return this.$store.getters['movie/getActors'];
+    },
+    videos() {
+      return this.$store.getters['movie/getVideos'];
+    },
+    reviews() {
+      return this.$store.getters['movie/getReviews'];
     },
     posterUrl() {
       return this.item.poster_path? `${posterPath}${this.item.poster_path}`: require('../assets/no-image.png');
@@ -115,11 +133,8 @@ export default {
       const releaseDate = new Date(Date.parse(this.item.release_date));
       return releaseDate.toLocaleString('en', { dateStyle: 'long' });
     },
-    videos() {
-      return this.$store.getters['movie/getVideos'];
-    },
   },
-   mounted() {
+  mounted() {
     this.$store.dispatch('movie/fetchMovieDetails',{ id:this.$route.params.id });
   }
 }
