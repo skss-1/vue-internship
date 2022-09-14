@@ -150,11 +150,9 @@ export default {
   watch: { 
     '$route.query': {
         handler: function() {
-          if (this.$route.path === '/search') {
             if (!!this.$route.query.query && this.isNewSearch) {
               this.getDataFromRoute();
               this.fetchData();
-            }
           } else {
             this.getDataFromRoute()
           }

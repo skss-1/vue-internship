@@ -122,55 +122,11 @@ import PaginationItem from '@/components/PaginationItem.vue';
 export default {
   name: 'Pagination',
   components: { PaginationItem },
-  props: {
-    totalPages: {
-      type: Number,
-      required: true
-    },
-    page: {
-      type: Number,
-      required: true
-    },
-    route: {
-      type: String,
-      required: true
-    },
-    query: {
-      type: String,
-      default: '',
-      required: false
-    },
-    adultIncluded: {
-      type: Boolean,
-      default: false,
-      required: false
-    },
-    region: {
-      type: String,
-      default: '',
-      required: false
-    },
-    year: {
-      type: String,
-      default: '',
-      required: false
-    },
-    language: {
-      type: String,
-      default: '',
-      required: false
-    }
-
-  },
   data() {
     return{
       currentPage: this.page,
-      currentQuery: this.query,
-      currentAdultIncludet: this.adultIncluded,
-      currentRoute: this.route,
-      currentYear: this.year,
-      currentRegion: this.region,
-      currentLanguage: this.language
+      currentPath: this.$route.path,
+      paginationClass: ''
     }
   },
   computed: {
@@ -194,9 +150,6 @@ export default {
         return 0
       }
     },
-    booleanQueryAdultIncluded() {
-      return this.$route.query.include_adult === 'true'? true : false
-    },
     routePage() {
       if (this.$route.query.page === undefined) {
         return 1
@@ -204,65 +157,80 @@ export default {
         return +this.$route.query.page
       }
     },
-    paginationClass() {
-      if (window.matchMedia('(min-width: 1024px)').matches) {
-        return 'pagination-lg'
-      } else if (window.matchMedia('(min-width: 576px)').matches) {
-        return 'pagination'
-      } else {
-        return 'pagination-sm'
-      }
+    page() {
+      return this.$store.getters['search/getCurrentPage']
+    },
+    totalPages() {
+      return this.$store.getters['search/getTotalPages']
     },
   },
   watch: {
     'currentPage': {
       handler: function() {
-        if (this.currentRoute !== '/search') {
-          if (this.currentPage !== this.routePage && this.currentRoute === this.$route.path) {
-            this.changePage()
-            this.scrollUp()
-          }
-        }
-        if (this.currentRoute === '/search') {
+        if (this.$route.path === '/search') {
           if (this.currentPage !== this.page) {
-            this.changeParams()
+            this.currentPage === this.page
             this.changePage()
             this.scrollUp()
-          }
           return
+          }
+        } else {
+          if (this.currentPage !== this.page && this.currentPath === this.$route.path) {
+            this.changePage()
+            this.scrollUp()
+            return
+          }
+          if (this.currentPath !== this.$route.path) {
+            this.currentPath = this.$route.path
+          }
+          if (this.routePage !== this.currentPage) {
+            this.pageReset()
+          }
         }
       }
     },
-    '$route': {
+    '$route.query': {
       handler: function() {
         if (this.$route.path !== '/search') {
-          this.currentQuery = ''
-          if (this.$route.path !== this.currentRoute) {
-            this.currentRoute = this.$route.path
+          this.currentPage = this.page
+          if (this.routePage !== this.currentPage) {
             this.pageReset()
-          }
-          if (this.$route.path === this.currentRoute && Object.keys(this.$route.query).length === 0) {
-            this.pageReset()
-            this.changeParams()
           }
         }
         if (this.$route.path === '/search') {
-          if (this.$route.query.query !== this.currentQuery || this.booleanQueryAdultIncluded !== this.currentAdultIncludet) {
-            this.currentQuery = this.$route.query.query
-            this.currentRoute = this.$route.path
-            this.currentAdultIncludet = this.booleanQueryAdultIncluded
-            this.currentRegion = this.$route.query.region
-            this.currentYear = this.$route.query.year
-            this.currentLanguage = this.$route.query.language
+          console.log('watcher')
+          if (this.currentPath !== this.$route.path) {
+            this.currentPath = this.$route.path
+          }
+          if (this.routePage !== this.currentPage) {
             this.pageReset()
-            this.changeParams()
           }
         }
       }
     }
   },
+  mounted() {
+    const mediaLg = window.matchMedia('(min-width: 1200px)')
+    const mediaMd = window.matchMedia('(min-width: 576px)')
+    const mediaSm = window.matchMedia('(max-width: 575px)')
+    mediaLg.addEventListener('change', ({ matches }) => {
+      if (matches) {
+        this.paginationClass = 'pagination-lg'
+      }
+    })
+    mediaMd.addEventListener('change', ({ matches }) => {
+      if (matches) {
+        this.paginationClass = 'pagination'
+      }
+    })
+    mediaSm.addEventListener('change', ({ matches }) => {
+      if (matches) {
+        this.paginationClass = 'pagination-sm'
+      }
+    })
+  },
   created() {
-    this.currentPage = +this.$route.query.page || 1
+    this.currentPage = Number(this.$route.query.page) || 1
   },
   methods: {
     switchCurrentPage(page) {
@@ -274,9 +242,6 @@ export default {
       } else if (event.currentTarget.id === 'prev') {
         this.currentPage-=1
       }
-    },
-    changeParams() {
-      this.$emit('change-params', this.currentPage, this.currentQuery, this.currentRoute, this.currentAdultIncludet, this.currentYear, this.currentLanguage, this.currentRegion)
     },
     pageReset() {
       this.currentPage = 1

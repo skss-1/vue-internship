@@ -12,16 +12,7 @@
     />
     <pagination 
       v-if="totalPages > 1"
-      :total-pages="totalPages"
-      :page="page"
-      :route="route"
-      :query="query"
-      :adult="adultIncluded"
-      :year="year"
-      :language="language"
-      :region="region"
       @onChange="changePage"
-      @change-params="changeParams"
     />
   </div>
 </template>
@@ -29,7 +20,7 @@
 <script>
 import ItemsList from '@/components/ItemsList.vue';
 import Pagination from '@/components/Pagination.vue';
-// @ is an alias to /src
+
 export default {
   name: 'HomeView',
   components: { 
@@ -38,13 +29,8 @@ export default {
   },
   data() {
     return {
-      page: +this.$route.query.page || 1,
-      route: this.$route.path,
-      query: this.$route.query.query,
-      adultIncluded: this.booleanQueryAdultIncluded,
-      year: this.$route.query.year,
-      language: this.$route.query.language,
-      region: this.$route.query.region
+      page: Number(this.$route.query.page) || 1,
+      currentPath: this.$route.path
     }
   },
   computed: {
@@ -53,12 +39,6 @@ export default {
     },
     totalPages() {
       return this.$store.getters['search/getTotalPages'];
-    },
-    currentPage() {
-      return this.$store.getters['search/getCurrentPage'];
-    },
-    booleanQueryAdultIncluded() {
-      return this.$route.query.include_adult === 'true'? true : false
     },
     queryData() {
       return {
@@ -74,10 +54,10 @@ export default {
   beforeRouteEnter(to, from, next) {
       next(vm => {
         if (vm.$route.path !== '/' && vm.$route.path !== '/search') {
-          vm.fetchMovies(vm.$route.path, vm.page).then(() => {
+          vm.fetchMovies(vm.$route.path, 1).then(() => {
             vm.$router.push({
               query: {
-                page: vm.page
+                page: 1
               }
             })
           })
@@ -86,10 +66,6 @@ export default {
   },
   methods: {
     fetchMovies(path, page) {
-      if(path !== this.currentRoute) {
-        page = this.$route.query.page
-        this.currentRoute = path
-      }
       switch(path) {
         case '/top-rated':
           return this.$store.dispatch('search/fetchTopRatedMovies', { page });
@@ -124,15 +100,6 @@ export default {
         })
       }
     },
-    changeParams(page, query, route, adultIncluded, year, language, region) {
-      this.page = page,
-      this.query = query,
-      this.route = route,
-      this.adultIncluded = adultIncluded
-      this.year = year
-      this.language = language
-      this.region = region
-    }
   }
 };
 </script>
