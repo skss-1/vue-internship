@@ -77,7 +77,7 @@ export default {
     goToItemPage() {
       switch(this.item.media_type) {
         case 'tv':
-          // this.$router.push({ name: 'tv-page', params: { id: this.item.id } });
+          this.$router.push({ name: 'tv-page', params: { id: this.item.id } });
           break;
         case 'person':
             this.$router.push({ name: 'person-page', params: { id: this.item.id } });
