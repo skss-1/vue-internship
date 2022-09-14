@@ -21,20 +21,28 @@
       v-else
       :items="items"
     />
+    <pagination 
+      v-if="totalPages > 1"
+      @onChange="changePage"
+    />
   </div>
 </template>
 
 <script>
 import ItemsList from '@/components/ItemsList.vue';
+import Pagination from '@/components/Pagination.vue';
+
 // @ is an alias to /src
 export default {
   name: 'HomeView',
   components: { 
-    ItemsList
+    ItemsList,
+    Pagination
   },
   data() {
     return {
-      selectValue: 'popular',
+      page: Number(this.$route.query.page) || 1,
+      currentPath: this.$route.path
     }
   },
   computed: {
@@ -44,31 +52,69 @@ export default {
     items() {
       return this.$store.getters['search/getItems'];
     },
+    totalPages() {
+      return this.$store.getters['search/getTotalPages'];
+    },
+    queryData() {
+      return {
+        query: this.$route.query.query ? this.$route.query.query : undefined,
+        include_adult: this.$route.query.include_adult === 'true'? true : undefined,
+        year: this.$route.query.year ? this.$route.query.year : undefined,
+        language: this.$route.query.language ? this.$route.query.language : undefined,
+        region: this.$route.query.region ? this.$route.query.region : undefined,
+        page: this.page,
+      }
+    }
   },
   beforeRouteEnter(to, from, next) {
       next(vm => {
-        if (vm.$route.path !== '/') {
-          vm.fetchMovies(vm.$route.path)
+        if (vm.$route.path !== '/' && vm.$route.path !== '/search') {
+          vm.fetchMovies(vm.$route.path, 1).then(() => {
+            vm.$router.push({
+              query: {
+                page: 1
+              }
+            })
+          })
         }
     })
   },
   methods: {
-    fetchMovies(path) {
+    fetchMovies(path, page) {
       switch(path) {
         case '/top-rated':
-          this.$store.dispatch('search/fetchTopRatedMovies');
-          break;
+          return this.$store.dispatch('search/fetchTopRatedMovies', { page });
         case '/upcoming':
-          this.$store.dispatch('search/fetchUpcomingMovies');
-          break;
+          return this.$store.dispatch('search/fetchUpcomingMovies', { page });
         case '/popular':
-          this.$store.dispatch('search/fetchPopularMovies');
-          break;
+          return this.$store.dispatch('search/fetchPopularMovies', { page });
+        case '/search':
+          return this.$store.dispatch('search/search', {
+            ...(this.queryData)
+          });
         default:
           console.info('Un-handled path: ', path)
           break;
       }
-    }
+    },
+    changePage(newPage) {
+      this.page = newPage
+      if (this.$route.path === '/search') {
+        this.$router.push({
+          query: {
+            ...(this.queryData)
+          }
+        })
+      } else {
+        this.fetchMovies(this.$route.path, this.page).then(() => {
+          this.$router.push({
+            query: {
+              ...(this.queryData)
+            }
+          })
+        })
+      }
+    },
   }
 };
 </script>
