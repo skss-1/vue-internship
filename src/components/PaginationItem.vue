@@ -1,7 +1,7 @@
 <template>
-  <li class="page-item">
+  <li class="page-item me-md-1">
     <a
-      class="page-link"
+      class="page-link py-sm-2 px-sm-3 px-lg-4"
       :class="[activeClass, disabledClass]"
       href="#"
       :tabindex="tabIndex"

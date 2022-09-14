@@ -7,9 +7,9 @@
       class="pagination"
       :class="paginationClass"
     >
-      <li class="page-item">
+      <li class="page-item me-md-1">
         <a
-          class="page-link py-0 d-flex h-100 juctify-content-center align-items-center"
+          class="page-link pe-2 ps-1 py-sm-2 px-sm-3 px-lg-4 d-flex h-100 juctify-content-center align-items-center"
           :class="prevDisabled"
           href="#"
           :tabindex="prevTabIndex"
@@ -21,17 +21,17 @@
           </span>
         </a>
       </li>
-      <li class="page-item">
+      <li class="page-item me-md-1">
         <a
           id="prev"
-          class="page-link py-0 d-flex h-100 juctify-content-center align-items-center"
+          class="page-link pe-2 ps-1 py-sm-2 px-sm-3 px-lg-4 d-flex h-100 juctify-content-center align-items-center"
           :class="prevDisabled"
           :tabindex="prevTabIndex"
           href="#"
           @click.prevent="changeCurrentPage"
         >          
           <span class="d-none d-sm-inline">Prev</span>
-          <span class="arrow-right material-symbols-outlined d-sm-none">
+          <span class="arrow-left material-symbols-outlined d-sm-none">
             chevron_left
           </span>
         </a>
@@ -83,24 +83,24 @@
           />
         </template>
       </template>
-      <li class="page-item">
+      <li class="page-item me-md-1">
         <a
           id="next"
-          class="page-link py-0 d-flex h-100 juctify-content-center align-items-center"
+          class="page-link ps-1 pe-2 py-sm-2 px-sm-3 px-lg-4 d-flex h-100 juctify-content-center align-items-center"
           :class="nextDisabled"
           href="#"
           :tabindex="nextTabIndex"
           @click.prevent="changeCurrentPage"
         >
           <span class="d-none d-sm-inline">Next</span>
-          <span class="arrow-right material-symbols-outlined d-sm-none">
+          <span class="arrow-right material-symbols-outlined d-sm-none ">
             chevron_right
           </span>
         </a>
       </li>
-      <li class="page-item">
+      <li class="page-item me-md-1">
         <a
-          class="page-link py-0 d-flex h-100 juctify-content-center align-items-center"
+          class="page-link ps-1 pe-2 py-sm-2 px-sm-3 px-lg-4 d-flex h-100 juctify-content-center align-items-center"
           href="#"
           :class="nextDisabled"
           :tabindex="nextTabIndex"
@@ -125,8 +125,7 @@ export default {
   data() {
     return{
       currentPage: this.page,
-      currentPath: this.$route.path,
-      paginationClass: ''
+      currentPath: this.$route.path
     }
   },
   computed: {
@@ -209,26 +208,6 @@ export default {
       }
     }
   },
-  mounted() {
-    const mediaLg = window.matchMedia('(min-width: 1200px)')
-    const mediaMd = window.matchMedia('(min-width: 576px)')
-    const mediaSm = window.matchMedia('(max-width: 575px)')
-    mediaLg.addEventListener('change', ({ matches }) => {
-      if (matches) {
-        this.paginationClass = 'pagination-lg'
-      }
-    })
-    mediaMd.addEventListener('change', ({ matches }) => {
-      if (matches) {
-        this.paginationClass = 'pagination'
-      }
-    })
-    mediaSm.addEventListener('change', ({ matches }) => {
-      if (matches) {
-        this.paginationClass = 'pagination-sm'
-      }
-    })
-  },
   created() {
     this.currentPage = Number(this.$route.query.page) || 1
   },
@@ -263,6 +242,12 @@ export default {
   }
   .disabled {
     color: gray;
+  }
+  .arrow-right {
+    width: 20px;
+  }
+  .arrow-left {
+    width: 20px;
   }
   .active {
     background-color: $white;
