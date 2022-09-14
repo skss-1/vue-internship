@@ -8,7 +8,7 @@ const routes = [
     path: '/',
     redirect: '/popular',
     name: 'home',
-    component: () => import('@/views/HomeView.vue')
+    component: () => import('@/views/HomeView.vue'),
   },
   {
     path: '/popular',
@@ -33,13 +33,18 @@ const routes = [
   {
     path: '/movie/:id',
     name: 'movie-page',
-    component: () => import('@/views/MoviePageView')
+    component: () => import('@/views/MovieView')
   },
   {
     path: '/tv/:id',
     name: 'tv-page',
     component: () => import('@/views/TvView')
-  }
+  },
+  {
+    path: '/person/:id',
+    name: 'person-page',
+    component: () => import('@/views/PersonView'),
+  },
 ]
 
 const router = new VueRouter({

@@ -1,5 +1,19 @@
 <template>
-  <div class="movie-page">
+  <div
+    v-if="isLoading"
+    class="loader text-center p-5"
+  >
+    <div
+      class="spinner-border text-light"
+      role="status"
+    >
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  <div
+    v-else
+    class="movie-view"
+  >
     <div
       class="background-poster"
       :style="backgroundUrl"
@@ -26,7 +40,7 @@
             Release Date: <span class="fs-6 fw-normal">{{ releaseDate }} </span>
           </p>
         </div>
-        <div class="fs-4 genres-heading d-flex gap-3 m-3"> 
+        <div class="fs-4 genres-heading d-flex gap-3 m-3 py-4"> 
           <p class="m-0">
             Genres
           </p>
@@ -34,7 +48,7 @@
             <div 
               v-for="genre in item.genres" 
               :key="genre.id" 
-              class="fs-6 fw-lighter border border-light rounded py-2 px-3" 
+              class="fs-6 fw-lighter rounded-pill border border-light rounded py-1 px-4" 
             >
               {{ genre.name }}
             </div> 
@@ -45,8 +59,12 @@
         </div> 
         <p class="fs-5 fw-lighter overview m-0"> 
           {{ item.overview }} 
-        </p> 
-        <div class="fs-4 credits-heading mx-3"> 
+        </p>
+        <videos-scroll
+          v-if="videos"
+          :videos="videos"
+        />
+        <div class="fs-4 credits-heading m-3 "> 
           Credits 
         </div>
         <credits-scroll :credits="credits" />
@@ -57,7 +75,7 @@
           <div 
             v-for="company in item.production_companies" 
             :key="company.id"  
-            class="fs-6 fw-lighter border border-light rounded py-2 px-3" 
+            class="fs-6 fw-lighter rounded-pill border border-light rounded py-1 px-4" 
           >
             {{ company.name }}
           </div> 
@@ -68,14 +86,19 @@
 </template>
 <script>
 import CreditsScroll from '@/components/CreditsScroll.vue';
+import VideosScroll from '@/components/VideosScroll.vue';
 import { posterPath } from '@/api/tmdb-api';
 
 export default {
-  name: 'MoviePageView',
+  name: 'MovieView',
   components: {
     CreditsScroll,
+    VideosScroll,
   },
   computed: {
+    isLoading() {
+      return this.$store.getters['movie/getIsLoading'];
+    },
     item() {
       return this.$store.getters['movie/getItem'];
     },
@@ -83,7 +106,7 @@ export default {
       return this.$store.getters['movie/getActors'];
     },
     posterUrl() {
-      return `${posterPath}${this.item.poster_path}`;
+      return this.item.poster_path? `${posterPath}${this.item.poster_path}`: require('../assets/no-image.png');
     },
     backgroundUrl() {
       return `backgroundImage: linear-gradient(0deg, rgba(19, 21, 46, 0.7), rgba(19, 21, 46, 0.7)), url(${posterPath}${this.item.backdrop_path})`;
@@ -91,7 +114,10 @@ export default {
     releaseDate() {
       const releaseDate = new Date(Date.parse(this.item.release_date));
       return releaseDate.toLocaleString('en', { dateStyle: 'long' });
-    }
+    },
+    videos() {
+      return this.$store.getters['movie/getVideos'];
+    },
   },
    mounted() {
     this.$store.dispatch('movie/fetchMovieDetails',{ id:this.$route.params.id });
@@ -100,7 +126,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.movie-page{
+.movie-view{
   --image-height-for-movie-page: 500px;
   --title-height-for-movie-page: 150px;
   padding-top: var(--title-height-for-movie-page);

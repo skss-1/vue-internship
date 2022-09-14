@@ -43,7 +43,7 @@
             <div 
               v-for="genre in item.genres" 
               :key="genre.id" 
-              class="fs-6 fw-lighter border border-light rounded  py-1 px-2 py-md-2 px-md-3" 
+              class="fs-6 fw-lighter border border-light rounded-pill py-1 px-4" 
             >
               {{ genre.name }}
             </div> 
@@ -69,7 +69,7 @@
           <div 
             v-for="company in item.production_companies" 
             :key="company.id"  
-            class="fs-6 fw-lighter border border-light rounded py-2 px-3" 
+            class="fs-6 fw-lighter border border-light rounded-pill py-1 px-4 py-2 px-3" 
           >
             {{ company.name }}
           </div> 
@@ -120,13 +120,13 @@ export default {
   background-color: #13152E;
   color: #fff;
   .background-poster{ 
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: var(--image-height-for-movie-page);
-  width: 100%;
-  background-size: cover;
-  background-position: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: var(--image-height-for-movie-page);
+    width: 100%;
+    background-size: cover;
+    background-position: center;
   }
 }
 .top-container{

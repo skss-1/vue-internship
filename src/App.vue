@@ -20,5 +20,7 @@ export default {
 @import '~bootstrap/scss/bootstrap';
 #app {
   font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  background-color: #020916;
 }
 </style>
