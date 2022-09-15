@@ -47,13 +47,22 @@
                   Top Rated
                 </router-link>
               </li>
-              <li class="nav-item me-0">
+              <li class="nav-item me-0 me-md-4 me-lg-5">
                 <router-link
                   to="/upcoming"
                   class="nav-link text-end"
                   :class="upcomingDisabledClass"
                 >
                   Upcoming
+                </router-link>
+              </li>
+              <li class="nav-item me-0 ms-auto notes rounded-pill d-flex align-items-center">
+                <router-link
+                  to="/release-notes"
+                  class="nav-link text-center"
+                  :class="upcomingDisabledClass"
+                >
+                  Release notes
                 </router-link>
               </li>
             </ul>
@@ -102,5 +111,18 @@ export default {
   
   .nav-item:not(:last-child) {
     margin-right: 50px;
+  }
+
+  .notes {
+    border: 2px solid var(--bs-nav-link-color);
+    padding: 0px 8px;
+    white-space: normal;
+    font-size: 18px;
+    font-style: italic;
+    width: 100px;
+    a {
+      padding: 0 2px;
+      line-height: 1;
+    }
   }
 </style>
