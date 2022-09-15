@@ -31,6 +31,11 @@ const routes = [
     component: () => import('@/views/HomeView.vue'),
   },
   {
+    path: '/release-notes',
+    name: 'release-notes',
+    component: () => import('@/views/NoteView.vue'),
+  },
+  {
     path: '/movie/:id',
     name: 'movie-page',
     component: () => import('@/views/MovieView'),
